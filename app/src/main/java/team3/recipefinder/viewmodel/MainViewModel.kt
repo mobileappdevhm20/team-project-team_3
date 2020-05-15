@@ -1,4 +1,4 @@
-package team3.recipefinder.ui.main
+package team3.recipefinder.viewmodel
 
 import androidx.lifecycle.ViewModel
 
