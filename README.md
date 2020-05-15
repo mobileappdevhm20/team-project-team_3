@@ -1,0 +1,6 @@
+# Recify [![Build Status](https://travis-ci.com/mobileappdevhm20/team-project-team_3.svg?token=KCq2CEY76tLP3Hx6qSMb&branch=master)](https://travis-ci.com/mobileappdevhm20/team-project-team_3)
+You don't know what to cook and have no time? Recify provides YOU with the best suggestion for your ingredients from all over the internet.
+### Storyboard
+![Storyboard](https://github.com/mobileappdevhm20/team-project-team_3/raw/develop/docs/recipefinder.png "Storyboard")
+### Prototype
+[Recify App Prototype](https://www.figma.com/proto/6evHuOysZnhX9llKyLIDB6/Recify?node-id=1%3A8&scaling=scale-down)
