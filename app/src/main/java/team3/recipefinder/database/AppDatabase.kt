@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import team3.recipefinder.dao.CookbookDao
 import team3.recipefinder.dao.RecipeDao
 import team3.recipefinder.model.*
 
@@ -12,10 +13,13 @@ import team3.recipefinder.model.*
     Ingredient::class,
     RecipeStep::class,
     RelRecipeIngredient::class,
-    RelRecipeStep::class
+    RelRecipeStep::class,
+    Cookbook::class,
+    RelCookbookRecipes::class
 ], version = 1)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
+    abstract fun cookbookDao(): CookbookDao
 }
 
 fun getAppDatabase(context: Context): AppDatabase {

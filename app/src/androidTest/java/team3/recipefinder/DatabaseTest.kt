@@ -9,6 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import team3.recipefinder.database.AppDatabase
 import team3.recipefinder.database.getAppDatabase
+import team3.recipefinder.model.Cookbook
 import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
 import team3.recipefinder.model.RecipeStep
@@ -99,5 +100,68 @@ class DatabaseTest {
         val expected = listOf("Peal the banana", "Pop the corn")
         Assert.assertEquals(expected,
             db.recipeDao().getAllStepsByRecipe(1).map { it.description })
+    }
+
+    @Test
+    fun testCookbook() {
+        // Insert cookbooks
+        db.cookbookDao().apply {
+            insertCookbook(Cookbook(0, "testCookbook")) // ID 1
+            insertCookbook(Cookbook(0, "testCookbook2")) // ID 2
+        }
+
+        // Test getAll
+        val expected = listOf("testCookbook", "testCookbook2")
+        Assert.assertEquals(expected, db.cookbookDao().getAll().map { it.name })
+
+        // Test get
+        Assert.assertEquals("testCookbook2", db.cookbookDao().get(2).name)
+    }
+
+    @Test
+    fun testCookbookManagement() {
+        // Insert recipes
+        db.recipeDao().apply {
+            insertRecipe(Recipe(0, "testRecipe")) // ID 1
+            insertRecipe(Recipe(0, "testRecipe2")) // ID 2
+        }
+        // Insert cookbooks
+        db.cookbookDao().apply {
+            insertCookbook(Cookbook(0, "testCookbook")) // ID 1
+            insertCookbook(Cookbook(0, "testCookbook2")) // ID 2
+
+            // Relations
+            addRecipeToCookbook(1, 1)
+            addRecipeToCookbook(1, 2)
+            addRecipeToCookbook(2, 1)
+            addRecipeToCookbook(2, 2)
+
+            removeRecipeFromCookbook(2,2)
+        }
+
+        // Test ingredients of recipe 1
+        val expected = listOf("testRecipe", "testRecipe2")
+        Assert.assertEquals(expected,
+            db.cookbookDao().getAllRecipesByCookbook(1).map { it.name })
+
+        // Test ingredients of recipe 2
+        val expected2 = listOf("testRecipe")
+        Assert.assertEquals(expected2,
+            db.cookbookDao().getAllRecipesByCookbook(2).map { it.name })
+    }
+
+    @Test
+    fun deleteCookbookTest() {
+        // Insert cookbooks
+        db.cookbookDao().apply {
+            insertCookbook(Cookbook(0, "testCookbook")) // ID 1
+            insertCookbook(Cookbook(0, "testCookbook2")) // ID 2
+
+            deleteCookbook(Cookbook(1, "testCookbook"))
+        }
+
+        // Test getAll
+        val expected = listOf("testCookbook2")
+        Assert.assertEquals(expected, db.cookbookDao().getAll().map { it.name })
     }
 }
