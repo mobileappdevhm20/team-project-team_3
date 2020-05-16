@@ -1,6 +1,8 @@
 package team3.recipefinder.model
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity(tableName = "recipe")
 data class Recipe (
