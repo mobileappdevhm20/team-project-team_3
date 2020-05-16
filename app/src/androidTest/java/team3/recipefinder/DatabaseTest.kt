@@ -103,6 +103,21 @@ class DatabaseTest {
     }
 
     @Test
+    fun testDeleteRecipe() {
+        // Insert recipe
+        db.recipeDao().apply {
+            insertRecipe(Recipe(0, "testRecipe")) // ID 1
+            insertRecipe(Recipe(0, "testRecipe2")) // ID 2
+
+            deleteRecipe(Recipe(1, "testRecipe"))
+        }
+
+        // Test getAll
+        val expected = listOf("testRecipe2")
+        Assert.assertEquals(expected, db.recipeDao().getAll().map { it.name })
+    }
+
+    @Test
     fun testCookbook() {
         // Insert cookbooks
         db.cookbookDao().apply {

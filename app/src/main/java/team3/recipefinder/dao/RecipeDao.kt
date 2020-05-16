@@ -1,6 +1,7 @@
 package team3.recipefinder.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import team3.recipefinder.model.Ingredient
@@ -52,4 +53,7 @@ interface RecipeDao {
     @Query("""DELETE FROM rel_recipe_step
         WHERE recipeId = :recipeId AND stepId = :stepId""")
     fun removeStepFromRecipe(stepId: Int, recipeId: Int)
+
+    @Delete
+    fun deleteRecipe(recipe: Recipe)
 }
