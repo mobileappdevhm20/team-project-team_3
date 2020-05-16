@@ -4,17 +4,16 @@ import android.app.Application;
 import androidx.lifecycle.ViewModel
 
 import androidx.lifecycle.ViewModelProvider;
+import team3.recipefinder.database.AppDatabase
 
-import team3.recipefinder.model.Recipe;
 
-
-class DetailRecipeViewModelFactory (
-    private val recipe: String,
+class RecipeViewModelFactory(
+    private val dataSource: AppDatabase,
     private val application: Application) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DetailRecipeViewModel::class.java)) {
-            return DetailRecipeViewModel(recipe, application) as T
+        if (modelClass.isAssignableFrom(RecipeViewModel::class.java)) {
+            return RecipeViewModel(dataSource, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

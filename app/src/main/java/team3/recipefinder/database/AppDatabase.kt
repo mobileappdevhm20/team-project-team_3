@@ -22,6 +22,6 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun cookbookDao(): CookbookDao
 }
 
-fun getAppDatabase(context: Context): AppDatabase {
+ fun getAppDatabase(context: Context): AppDatabase {
     return Room.databaseBuilder(context, AppDatabase::class.java, "app_database").build()
 }
