@@ -4,28 +4,24 @@
     <data>
         <variable
             name="recipeViewModel"
-            type="team3.recipefinder.viewmodel.recipe.detail.RecipeViewModel" />
+            type="team3.recipefinder.viewmodel.recipe.overview.RecipeViewModel" />
     </data>
 <FrameLayout
 
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="sendMessage"
-        android:text="Button" />
+
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="Button2"
-        android:onClick="@{() -> recipeViewModel.addRecipe()}"
-        />
+        android:layout_gravity="bottom"
+        android:onClick="showAddRecipeDialog"
+        android:text="Button" />
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipeView"

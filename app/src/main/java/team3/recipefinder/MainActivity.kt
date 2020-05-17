@@ -17,16 +17,14 @@ import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
 import team3.recipefinder.model.RecipeStep
 import team3.recipefinder.viewmodel.recipe.detail.DetailRecipeActivity
-import team3.recipefinder.viewmodel.recipe.detail.RecipeAdapter
-import team3.recipefinder.viewmodel.recipe.detail.RecipeViewModel
-import team3.recipefinder.viewmodel.recipe.detail.RecipeViewModelFactory
+import team3.recipefinder.viewmodel.recipe.overview.*
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var viewModel : RecipeViewModel
+class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
+    private lateinit var viewModel: RecipeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       // setContentView(R.layout.main_activity)
+        // setContentView(R.layout.main_activity)
 
         // Setup DataBinding
         var binding: MainActivityBinding =
@@ -39,7 +37,10 @@ class MainActivity : AppCompatActivity() {
 
         // Create ViewModel
         val viewModelFactory =
-            RecipeViewModelFactory(dataSource, application)
+            RecipeViewModelFactory(
+                dataSource,
+                application
+            )
         viewModel = ViewModelProvider(this, viewModelFactory).get(RecipeViewModel::class.java)
 
         // Bind model to layout
@@ -47,7 +48,8 @@ class MainActivity : AppCompatActivity() {
         binding.recipeViewModel = viewModel
 
         // Register Adapter for the RecyclerView
-        val adapter = RecipeAdapter()
+        val adapter =
+            RecipeAdapter(RecipeListener(viewModel))
         binding.recipeView.adapter = adapter
 
         // Observe LiveData
@@ -58,16 +60,25 @@ class MainActivity : AppCompatActivity() {
                 adapter.notifyDataSetChanged()
             }
         })
-
-
+        viewModel.navigateToSelectedRecipe.observe(this, Observer {
+            if (null != it) {
+                val message = it.name
+                val intent = Intent(this, DetailRecipeActivity::class.java).apply {
+                    putExtra(EXTRA_MESSAGE, message)
+                }
+                startActivity(intent)
+                viewModel.displayPropertyDetailsComplete()
+            }
+        })
     }
+
     /** Called when the user taps the Send button */
     fun sendMessage(view: View) {
         Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
 //val Recipe = new Recipe()
-        val recipe= Recipe(1,"hallo")
-        val ingredient = listOf(Ingredient(1,"ia"),Ingredient(2,"ib"))
-        val step = listOf(RecipeStep(1,"sa"),RecipeStep(2,"sb"))
+        val recipe = Recipe(1, "hallo")
+        val ingredient = listOf(Ingredient(1, "ia"), Ingredient(2, "ib"))
+        val step = listOf(RecipeStep(1, "sa"), RecipeStep(2, "sb"))
 
         val message = "hallo"
         val intent = Intent(this, DetailRecipeActivity::class.java).apply {
@@ -77,4 +88,28 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    fun clickTimer(t: Recipe) {
+        val message = t.id
+        val intent = Intent(this, DetailRecipeActivity::class.java).apply {
+            putExtra(EXTRA_MESSAGE, message)
+        }
+        startActivity(intent)
+    }
+
+    fun showAddRecipeDialog(view: View) {
+        val editTimerFragment =
+            AddRecipeFragment()
+        editTimerFragment.show(supportFragmentManager, "Edit Timer")
+    }
+
+    override fun onDialogPositiveClick(timerName: String?) {
+        viewModel.addD(timerName!!)
+    }
+
+    override fun onDialogNegativeClick() {
+        // viewModel.doneShowingEditFragment()
+    }
+
+
 }

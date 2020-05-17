@@ -1,7 +1,10 @@
-package team3.recipefinder.viewmodel.recipe.detail
+package team3.recipefinder.viewmodel.recipe.overview
 
 import android.app.Application
+import android.content.Intent
+import android.provider.AlarmClock
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,10 +25,17 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
 
     var recipes = database.getAll()
 
+    // Internally, we use a MutableLiveData to handle navigation to the selected property
+    private val _navigateToSelectedRecipe = MutableLiveData<Recipe>()
 
-    fun addRecipe() {
+    // The external immutable LiveData for the navigation property
+    val navigateToSelectedRecipe: LiveData<Recipe>
+        get() = _navigateToSelectedRecipe
+
+
+    fun addD(name :String) {
         uiScope.launch {
-            val recipe = Recipe(0, "hallo")
+            val recipe = Recipe(0, name)
             add(recipe)
         }
     }
@@ -34,6 +44,15 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
         withContext(Dispatchers.IO) {
             database.insertRecipe(t)
         }
+    }
+
+    fun displayPropertyDetails(r: Recipe) {
+        Log.i("RecipeClick", "Bind called with Recipe$r")
+
+        _navigateToSelectedRecipe.value = r
+    }
+    fun displayPropertyDetailsComplete() {
+        _navigateToSelectedRecipe.value = null
     }
 
 

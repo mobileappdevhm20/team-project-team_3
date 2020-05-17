@@ -8,7 +8,9 @@
             name="recipe"
             type="team3.recipefinder.model.Recipe" />
 
-
+        <variable
+            name="listener"
+            type="team3.recipefinder.viewmodel.recipe.overview.RecipeListener" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +27,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="@{() -> listener.onClick(recipe)}">
 
             <TextView
                 android:id="@+id/recipe_name"

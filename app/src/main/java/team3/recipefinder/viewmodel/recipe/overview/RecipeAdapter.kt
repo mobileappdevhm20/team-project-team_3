@@ -1,4 +1,4 @@
-package team3.recipefinder.viewmodel.recipe.detail
+package team3.recipefinder.viewmodel.recipe.overview
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import team3.recipefinder.databinding.RecipeViewHolderBinding
 import team3.recipefinder.model.Recipe
 
-class RecipeAdapter() :
-    ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(RecipeDiffCallback()) {
+class RecipeAdapter( val listener: RecipeListener ) :
+    ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(
+        RecipeDiffCallback()
+    ) {
 
     class RecipeViewHolder private constructor(private val binding: RecipeViewHolderBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -18,23 +20,28 @@ class RecipeAdapter() :
             fun from(parent: ViewGroup): RecipeViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = RecipeViewHolderBinding.inflate(layoutInflater, parent, false)
-                return RecipeViewHolder(binding)
+                return RecipeViewHolder(
+                    binding
+                )
             }
         }
 
-        fun bind(recipe: Recipe) {
+        fun bind(recipe: Recipe, listener: RecipeListener) {
             Log.i("RecipeAdapter", "Bind called with Recipe$recipe")
             binding.recipe = recipe
+            binding.listener =listener
             binding.executePendingBindings()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        return RecipeViewHolder.from(parent)
+        return RecipeViewHolder.from(
+            parent
+        )
     }
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) =
-        holder.bind(getItem(position))
+        holder.bind(getItem(position),listener)
 }
 
 class RecipeDiffCallback : DiffUtil.ItemCallback<Recipe>() {
