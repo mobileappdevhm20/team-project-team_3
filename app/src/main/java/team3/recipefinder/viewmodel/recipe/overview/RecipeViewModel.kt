@@ -13,15 +13,18 @@ import androidx.lifecycle.Transformations
 import kotlinx.coroutines.*
 import team3.recipefinder.dao.RecipeDao
 import team3.recipefinder.database.AppDatabase
+import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Recipe
 
 
-class RecipeViewModel(val database: RecipeDao, application: Application) :
+class RecipeViewModel( application: Application) :
     AndroidViewModel(application) {
 
     private var viewModelJob = Job()
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
+    private var database: RecipeDao=  getAppDatabase(application).recipeDao()
 
     var recipes = database.getAll()
 
@@ -31,6 +34,7 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
     // The external immutable LiveData for the navigation property
     val navigateToSelectedRecipe: LiveData<Recipe>
         get() = _navigateToSelectedRecipe
+
 
 
     fun addD(name :String) {

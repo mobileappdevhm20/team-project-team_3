@@ -7,13 +7,11 @@ import team3.recipefinder.dao.RecipeDao
 import java.lang.IllegalArgumentException
 
 class RecipeViewModelFactory(
-    private val dataSource: RecipeDao,
     private val application: Application
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(RecipeViewModel::class.java)) {
             return RecipeViewModel(
-                dataSource,
                 application
             ) as T
         }

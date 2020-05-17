@@ -32,13 +32,9 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
 
         val application = requireNotNull(this).application
 
-        // Get DAO instance
-        val dataSource = getAppDatabase(application).recipeDao()
-
         // Create ViewModel
         val viewModelFactory =
             RecipeViewModelFactory(
-                dataSource,
                 application
             )
         viewModel = ViewModelProvider(this, viewModelFactory).get(RecipeViewModel::class.java)
@@ -72,30 +68,7 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
         })
     }
 
-    /** Called when the user taps the Send button */
-    fun sendMessage(view: View) {
-        Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
-//val Recipe = new Recipe()
-        val recipe = Recipe(1, "hallo")
-        val ingredient = listOf(Ingredient(1, "ia"), Ingredient(2, "ib"))
-        val step = listOf(RecipeStep(1, "sa"), RecipeStep(2, "sb"))
 
-        val message = "hallo"
-        val intent = Intent(this, DetailRecipeActivity::class.java).apply {
-            putExtra(EXTRA_MESSAGE, message)
-        }
-        startActivity(intent)
-
-
-    }
-
-    fun clickTimer(t: Recipe) {
-        val message = t.id
-        val intent = Intent(this, DetailRecipeActivity::class.java).apply {
-            putExtra(EXTRA_MESSAGE, message)
-        }
-        startActivity(intent)
-    }
 
     fun showAddRecipeDialog(view: View) {
         val editTimerFragment =

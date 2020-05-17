@@ -8,12 +8,14 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="242dp"
-        android:layout_height="283dp"
-        android:text="TextView"
+        android:layout_width="178dp"
+        android:layout_height="20dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.39"
+        app:layout_constraintHorizontal_bias="0.412"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.126"
+        tools:text="Recipe Name" />
 </androidx.constraintlayout.widget.ConstraintLayout>
