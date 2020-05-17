@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="recipeViewModel"
+            type="team3.recipefinder.viewmodel.recipe.detail.RecipeViewModel" />
+    </data>
+<FrameLayout
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/button2"
@@ -12,4 +17,26 @@
         android:layout_height="wrap_content"
         android:onClick="sendMessage"
         android:text="Button" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Button2"
+        android:onClick="@{() -> recipeViewModel.addRecipe()}"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recipeView"
+        android:layout_width="377dp"
+        android:layout_height="308dp"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 </FrameLayout>
+</layout>
