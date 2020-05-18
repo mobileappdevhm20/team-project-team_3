@@ -32,9 +32,13 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
 
         val application = requireNotNull(this).application
 
+        // Get DAO instance
+        val dataSource = getAppDatabase(application).recipeDao()
+
         // Create ViewModel
         val viewModelFactory =
             RecipeViewModelFactory(
+                dataSource,
                 application
             )
         viewModel = ViewModelProvider(this, viewModelFactory).get(RecipeViewModel::class.java)
@@ -58,7 +62,7 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
         })
         viewModel.navigateToSelectedRecipe.observe(this, Observer {
             if (null != it) {
-                val message = it.name
+                val message = it.id.toString()
                 val intent = Intent(this, DetailRecipeActivity::class.java).apply {
                     putExtra(EXTRA_MESSAGE, message)
                 }
@@ -67,7 +71,6 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
             }
         })
     }
-
 
 
     fun showAddRecipeDialog(view: View) {

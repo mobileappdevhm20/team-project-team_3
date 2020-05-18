@@ -2,13 +2,14 @@ package team3.recipefinder.viewmodel.recipe.detail
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.*
 import team3.recipefinder.dao.RecipeDao
 import team3.recipefinder.database.getAppDatabase
+import team3.recipefinder.model.Recipe
 
-class DetailViewModel( application: Application) :
+class DetailViewModel(private val recipeKey: Int = 0, dataSource: RecipeDao, application: Application) :
     AndroidViewModel(application) {
 
 
@@ -16,15 +17,25 @@ class DetailViewModel( application: Application) :
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private var database: RecipeDao =  getAppDatabase(application).recipeDao()
-
-  //  lateinit var recipe
+    val database = dataSource
 
 
+  val recipe =  database.get(recipeKey)
     init {
+    //    recipe.value=Recipe(0,"Load")
+      //  getK(recipeKey)
+    }
+    /*
+    fun getK(name: Int) {
+        uiScope.launch {
 
+            get(name)
+        }
     }
 
-
-
+    private suspend fun get(t: Int) {
+        withContext(Dispatchers.IO) {
+            recipe.value = database.get(t)        }
+    }
+*/
 }

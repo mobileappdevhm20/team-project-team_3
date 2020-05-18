@@ -5,11 +5,16 @@ import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.widget.TextView
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_recipe_detail.*
 import team3.recipefinder.R
+import team3.recipefinder.database.getAppDatabase
+import team3.recipefinder.viewmodel.recipe.overview.RecipeViewModel
+import team3.recipefinder.viewmodel.recipe.overview.RecipeViewModelFactory
 
 class DetailRecipeActivity : AppCompatActivity() {
+    private lateinit var viewModel: DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +22,24 @@ class DetailRecipeActivity : AppCompatActivity() {
 
         // Get the Intent that started this activity and extract the string
         val message = intent.getStringExtra(EXTRA_MESSAGE)
-      //  val textview = findViewById<TextView>(R.id.textView2)
-        //textview.text = message
+       val int = message.toInt()
+        // val textview = findViewById<TextView>(R.id.recipe_name)
+      //  textview.text = message
 
-    }}
+       val application = requireNotNull(this).application
+
+        // Get DAO instance
+        val dataSource = getAppDatabase(application).recipeDao()
+
+        // Create ViewModel
+        val viewModelFactory =
+            DetailViewModelFactory(
+                int,
+                dataSource,
+                application
+            )
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
+
+    }
+}

@@ -9,12 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import team3.recipefinder.databinding.RecipeViewHolderBinding
 import team3.recipefinder.model.Recipe
 
-class RecipeAdapter( val listener: RecipeListener ) :
+class RecipeAdapter(val listener: RecipeListener) :
     ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(
         RecipeDiffCallback()
     ) {
 
-    class RecipeViewHolder private constructor(private val binding: RecipeViewHolderBinding) : RecyclerView.ViewHolder(binding.root) {
+    class RecipeViewHolder private constructor(private val binding: RecipeViewHolderBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         companion object {
             fun from(parent: ViewGroup): RecipeViewHolder {
@@ -29,7 +30,7 @@ class RecipeAdapter( val listener: RecipeListener ) :
         fun bind(recipe: Recipe, listener: RecipeListener) {
             Log.i("RecipeAdapter", "Bind called with Recipe$recipe")
             binding.recipe = recipe
-            binding.listener =listener
+            binding.listener = listener
             binding.executePendingBindings()
         }
     }
@@ -41,7 +42,7 @@ class RecipeAdapter( val listener: RecipeListener ) :
     }
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) =
-        holder.bind(getItem(position),listener)
+        holder.bind(getItem(position), listener)
 }
 
 class RecipeDiffCallback : DiffUtil.ItemCallback<Recipe>() {

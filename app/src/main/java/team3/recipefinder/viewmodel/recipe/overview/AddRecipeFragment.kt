@@ -13,7 +13,7 @@ class AddRecipeFragment() : DialogFragment() {
     // Use this instance of the interface to deliver action events
     private lateinit var listener: EditRecipeListener
 
-    private lateinit var recipeNameField : EditText
+    private lateinit var recipeNameField: EditText
 
     interface EditRecipeListener {
         fun onDialogPositiveClick(name: String?)
@@ -32,11 +32,13 @@ class AddRecipeFragment() : DialogFragment() {
 
 
             builder.setView(view)
-                .setPositiveButton(R.string.text_edit
+                .setPositiveButton(
+                    R.string.text_edit
                 ) { _, _ ->
                     listener.onDialogPositiveClick(recipeNameField.text.toString())
                 }
-                .setNegativeButton(R.string.text_cancel
+                .setNegativeButton(
+                    R.string.text_cancel
                 ) { _, _ ->
                     listener.onDialogNegativeClick()
                 }
@@ -51,8 +53,10 @@ class AddRecipeFragment() : DialogFragment() {
             listener = context as EditRecipeListener
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
-            throw ClassCastException((context.toString() +
-                    " must implement NoticeDialogListener"))
+            throw ClassCastException(
+                (context.toString() +
+                        " must implement NoticeDialogListener")
+            )
         }
     }
 

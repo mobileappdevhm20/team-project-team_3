@@ -16,7 +16,7 @@ interface RecipeDao {
     fun getAll(): LiveData<List<Recipe>>
 
     @Query("SELECT * FROM recipe WHERE id = :id")
-    fun get(id: Int): Recipe
+    fun get(id: Int): LiveData<Recipe>
 
     @Insert
     fun insertRecipe(recipe: Recipe)

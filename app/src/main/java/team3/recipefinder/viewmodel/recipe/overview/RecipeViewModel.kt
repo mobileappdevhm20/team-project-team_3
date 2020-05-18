@@ -17,14 +17,13 @@ import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Recipe
 
 
-class RecipeViewModel( application: Application) :
+class RecipeViewModel(val database: RecipeDao, application: Application) :
     AndroidViewModel(application) {
 
     private var viewModelJob = Job()
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private var database: RecipeDao=  getAppDatabase(application).recipeDao()
 
     var recipes = database.getAll()
 
@@ -36,8 +35,7 @@ class RecipeViewModel( application: Application) :
         get() = _navigateToSelectedRecipe
 
 
-
-    fun addD(name :String) {
+    fun addD(name: String) {
         uiScope.launch {
             val recipe = Recipe(0, name)
             add(recipe)
@@ -55,6 +53,7 @@ class RecipeViewModel( application: Application) :
 
         _navigateToSelectedRecipe.value = r
     }
+
     fun displayPropertyDetailsComplete() {
         _navigateToSelectedRecipe.value = null
     }
