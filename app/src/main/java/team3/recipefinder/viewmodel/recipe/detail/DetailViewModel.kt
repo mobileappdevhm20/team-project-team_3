@@ -21,21 +21,7 @@ class DetailViewModel(private val recipeKey: Int = 0, dataSource: RecipeDao, app
 
 
   val recipe =  database.get(recipeKey)
-    init {
-    //    recipe.value=Recipe(0,"Load")
-      //  getK(recipeKey)
-    }
-    /*
-    fun getK(name: Int) {
-        uiScope.launch {
+    val ingrediants  = database.getAllIngredients()
+    val steps = database.getAllStepsByRecipe(recipeKey)
 
-            get(name)
-        }
-    }
-
-    private suspend fun get(t: Int) {
-        withContext(Dispatchers.IO) {
-            recipe.value = database.get(t)        }
-    }
-*/
 }

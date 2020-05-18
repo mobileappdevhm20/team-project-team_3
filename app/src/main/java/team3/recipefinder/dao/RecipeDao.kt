@@ -18,6 +18,7 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe WHERE id = :id")
     fun get(id: Int): LiveData<Recipe>
 
+
     @Insert
     fun insertRecipe(recipe: Recipe)
 
@@ -25,7 +26,11 @@ interface RecipeDao {
             INNER JOIN rel_recipe_ingredient r 
             ON i.id = r.ingredientId 
             WHERE r.recipeId = :recipeId""")
-    fun getAllIngredientsByRecipe(recipeId: Int): List<Ingredient>
+    fun getAllIngredientsByRecipe(recipeId: Int): LiveData<List<Ingredient>>
+
+
+    @Query("SELECT * FROM ingredient")
+    fun getAllIngredients(): LiveData<List<Ingredient>>
 
     @Insert
     fun insertIngredient(ingredient: Ingredient)
@@ -45,7 +50,7 @@ interface RecipeDao {
             INNER JOIN rel_recipe_step r 
             ON s.id = r.stepId 
             WHERE r.recipeId = :recipeId""")
-    fun getAllStepsByRecipe(recipeId: Int): List<RecipeStep>
+    fun getAllStepsByRecipe(recipeId: Int): LiveData<List<RecipeStep>>
 
     @Query("""INSERT INTO rel_recipe_step (recipeId, stepId)
         VALUES (:recipeId, :stepId)""")

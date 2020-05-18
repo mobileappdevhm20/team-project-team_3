@@ -5,17 +5,12 @@ import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-
 import androidx.lifecycle.ViewModelProvider
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.MainActivityBinding
-import team3.recipefinder.model.Ingredient
-import team3.recipefinder.model.Recipe
-import team3.recipefinder.model.RecipeStep
 import team3.recipefinder.viewmodel.recipe.detail.DetailRecipeActivity
 import team3.recipefinder.viewmodel.recipe.overview.*
 
@@ -74,13 +69,20 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
 
 
     fun showAddRecipeDialog(view: View) {
-        val editTimerFragment =
-            AddRecipeFragment()
+        val pageNumber: String = view.getTag().toString()
+        val args = Bundle()
+        args?.putString("name", pageNumber)
+
+        val editTimerFragment = AddRecipeFragment()
+        editTimerFragment.arguments = args
         editTimerFragment.show(supportFragmentManager, "Edit Timer")
     }
 
-    override fun onDialogPositiveClick(timerName: String?) {
-        viewModel.addD(timerName!!)
+    override fun onDialogPositiveClick(id: String?, value: String?) {
+        when (id) {
+            "25" -> viewModel.addRecipe(value!!)
+            "27" -> viewModel.addIngredient(value!!)
+        }
     }
 
     override fun onDialogNegativeClick() {

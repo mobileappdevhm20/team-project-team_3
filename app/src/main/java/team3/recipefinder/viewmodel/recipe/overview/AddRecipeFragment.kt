@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
@@ -13,10 +14,10 @@ class AddRecipeFragment() : DialogFragment() {
     // Use this instance of the interface to deliver action events
     private lateinit var listener: EditRecipeListener
 
-    private lateinit var recipeNameField: EditText
+    private lateinit var recipeNameField : EditText
 
     interface EditRecipeListener {
-        fun onDialogPositiveClick(name: String?)
+        fun onDialogPositiveClick(id:String?,name: String?)
         fun onDialogNegativeClick()
     }
 
@@ -28,17 +29,20 @@ class AddRecipeFragment() : DialogFragment() {
             val view = inflater.inflate(R.layout.dialog_set_timer_value, null)
 
             recipeNameField = view.findViewById(R.id.timer_name)
+            var abc=""
+            if(arguments != null) {
+               abc = requireArguments().getString("name").toString()
 
-
+                var textView = view.findViewById<TextView>(R.id.text_timer_name)
+                textView.text = abc.toString()
+            }
 
             builder.setView(view)
-                .setPositiveButton(
-                    R.string.text_edit
+                .setPositiveButton(R.string.text_edit
                 ) { _, _ ->
-                    listener.onDialogPositiveClick(recipeNameField.text.toString())
+                    listener.onDialogPositiveClick(abc,recipeNameField.text.toString())
                 }
-                .setNegativeButton(
-                    R.string.text_cancel
+                .setNegativeButton(R.string.text_cancel
                 ) { _, _ ->
                     listener.onDialogNegativeClick()
                 }
@@ -53,10 +57,8 @@ class AddRecipeFragment() : DialogFragment() {
             listener = context as EditRecipeListener
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
-            throw ClassCastException(
-                (context.toString() +
-                        " must implement NoticeDialogListener")
-            )
+            throw ClassCastException((context.toString() +
+                    " must implement NoticeDialogListener"))
         }
     }
 

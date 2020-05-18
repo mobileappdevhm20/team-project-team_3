@@ -14,6 +14,7 @@ import kotlinx.coroutines.*
 import team3.recipefinder.dao.RecipeDao
 import team3.recipefinder.database.AppDatabase
 import team3.recipefinder.database.getAppDatabase
+import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
 
 
@@ -35,16 +36,28 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
         get() = _navigateToSelectedRecipe
 
 
-    fun addD(name: String) {
+    fun addRecipe(name: String) {
         uiScope.launch {
             val recipe = Recipe(0, name)
-            add(recipe)
+            addR(recipe)
+        }
+    }
+    fun addIngredient(name: String) {
+        uiScope.launch {
+            val recipe = Ingredient(0, name)
+            addI(recipe)
         }
     }
 
-    private suspend fun add(t: Recipe) {
+    private suspend fun addI(i: Ingredient) {
         withContext(Dispatchers.IO) {
-            database.insertRecipe(t)
+            database.insertIngredient(i)
+        }
+    }
+
+    private suspend fun addR(r: Recipe) {
+        withContext(Dispatchers.IO) {
+            database.insertRecipe(r)
         }
     }
 

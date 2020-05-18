@@ -1,38 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="recipeViewModel"
             type="team3.recipefinder.viewmodel.recipe.overview.RecipeViewModel" />
     </data>
-<FrameLayout
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <FrameLayout
 
-
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:onClick="showAddRecipeDialog"
-        android:text="Button" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:onClick="showAddRecipeDialog"
+            android:tag="25"
+            android:text="addRecipe" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recipeView"
-        android:layout_width="377dp"
-        android:layout_height="308dp"
-        android:clipToPadding="false"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:onClick="showAddRecipeDialog"
+            android:tag="26"
+            android:text="addStep" />
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:onClick="showAddRecipeDialog"
+            android:tag="27"
+            android:text="addIngrediant" />
 
-</FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recipeView"
+            android:layout_width="377dp"
+            android:layout_height="308dp"
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </FrameLayout>
 </layout>
