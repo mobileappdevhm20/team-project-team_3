@@ -27,6 +27,24 @@ class DatabaseTest {
     }
 
     @Test
+    fun insertShouldIncrementId() {
+        Assert.assertEquals(1,
+            db.recipeDao().insertStep(RecipeStep(0, "test")))
+        Assert.assertEquals(2,
+            db.recipeDao().insertStep(RecipeStep(0, "test")))
+
+        Assert.assertEquals(1,
+            db.recipeDao().insertRecipe(Recipe(0, "test")))
+        Assert.assertEquals(2,
+            db.recipeDao().insertRecipe(Recipe(0, "test")))
+
+        Assert.assertEquals(1,
+            db.recipeDao().insertIngredient(Ingredient(0, "test")))
+        Assert.assertEquals(2,
+            db.recipeDao().insertIngredient(Ingredient(0, "test")))
+    }
+
+    @Test
     fun testInsertRecipe() {
         // Insert recipe
         db.recipeDao().apply {
