@@ -34,7 +34,8 @@ interface RecipeDao {
 
 
     @Insert
-    fun insertIngredient(ingredient: Ingredient) : Long
+
+    fun insertIngredient(ingredient: Ingredient): Long
 
     @Query("""INSERT INTO rel_recipe_ingredient (recipeId, ingredientId)
         VALUES (:recipeId, :ingredientId)""")
