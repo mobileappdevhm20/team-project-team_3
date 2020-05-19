@@ -6,5 +6,5 @@ import team3.recipefinder.model.Recipe
 
 class RecipeListener(private val viewModel: RecipeViewModel) {
     fun onClick(t: Recipe) = viewModel.displayPropertyDetails(t)
-
+    fun onEdit(t: Recipe) = viewModel.editPropertyDetails(t)
 }

@@ -16,49 +16,55 @@ interface RecipeDao {
     fun getAll(): LiveData<List<Recipe>>
 
     @Query("SELECT * FROM recipe WHERE id = :id")
-    fun get(id: Int): LiveData<Recipe>
+    fun get(id: Long): LiveData<Recipe>
 
 
     @Insert
-    fun insertRecipe(recipe: Recipe)
+    fun insertRecipe(recipe: Recipe): Long
 
     @Query("""SELECT i.* FROM ingredient i 
             INNER JOIN rel_recipe_ingredient r 
             ON i.id = r.ingredientId 
             WHERE r.recipeId = :recipeId""")
-    fun getAllIngredientsByRecipe(recipeId: Int): LiveData<List<Ingredient>>
+    fun getAllIngredientsByRecipe(recipeId: Long): LiveData<List<Ingredient>>
 
 
     @Query("SELECT * FROM ingredient")
     fun getAllIngredients(): LiveData<List<Ingredient>>
 
+
     @Insert
-    fun insertIngredient(ingredient: Ingredient)
+    fun insertIngredient(ingredient: Ingredient) : Long
 
     @Query("""INSERT INTO rel_recipe_ingredient (recipeId, ingredientId)
         VALUES (:recipeId, :ingredientId)""")
-    fun assignIngredientToRecipe(ingredientId: Int, recipeId: Int)
+    fun assignIngredientToRecipe(ingredientId: Long, recipeId: Long)
 
     @Query("""DELETE FROM rel_recipe_ingredient
         WHERE recipeId = :recipeId AND ingredientId = :ingredientId""")
-    fun removeIngredientFromRecipe(ingredientId: Int, recipeId: Int)
+    fun removeIngredientFromRecipe(ingredientId: Long, recipeId: Long)
 
     @Insert
-    fun insertStep(step: RecipeStep)
+    fun insertStep(step: RecipeStep): Long
 
     @Query("""SELECT s.* FROM step s
             INNER JOIN rel_recipe_step r 
             ON s.id = r.stepId 
             WHERE r.recipeId = :recipeId""")
-    fun getAllStepsByRecipe(recipeId: Int): LiveData<List<RecipeStep>>
+    fun getAllStepsByRecipe(recipeId: Long): LiveData<List<RecipeStep>>
+
+    @Query("SELECT * FROM step")
+    fun getAllSteps(): LiveData<List<RecipeStep>>
+
+
 
     @Query("""INSERT INTO rel_recipe_step (recipeId, stepId)
         VALUES (:recipeId, :stepId)""")
-    fun assignStepToRecipe(stepId: Int, recipeId: Int)
+    fun assignStepToRecipe(stepId: Long, recipeId: Long)
 
     @Query("""DELETE FROM rel_recipe_step
         WHERE recipeId = :recipeId AND stepId = :stepId""")
-    fun removeStepFromRecipe(stepId: Int, recipeId: Int)
+    fun removeStepFromRecipe(stepId: Long, recipeId: Long)
 
     @Delete
     fun deleteRecipe(recipe: Recipe)

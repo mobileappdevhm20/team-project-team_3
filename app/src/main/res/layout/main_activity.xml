@@ -24,14 +24,7 @@
             android:tag="25"
             android:text="addRecipe" />
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:onClick="showAddRecipeDialog"
-            android:tag="26"
-            android:text="addStep" />
+
 
         <Button
             android:id="@+id/button5"

@@ -3,4 +3,5 @@
  <string name="text_recipe_name">Recipe name</string>
     <string name="text_edit">Save changes</string>
     <string name="text_cancel">Cancel</string>
+    <string name="edit_text">Edit</string>
 </resources>

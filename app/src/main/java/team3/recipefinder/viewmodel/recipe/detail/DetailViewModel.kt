@@ -9,7 +9,7 @@ import team3.recipefinder.dao.RecipeDao
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Recipe
 
-class DetailViewModel(private val recipeKey: Int = 0, dataSource: RecipeDao, application: Application) :
+class DetailViewModel(private val recipeKey: Long = 0, dataSource: RecipeDao, application: Application) :
     AndroidViewModel(application) {
 
 
@@ -22,6 +22,6 @@ class DetailViewModel(private val recipeKey: Int = 0, dataSource: RecipeDao, app
 
   val recipe =  database.get(recipeKey)
     val ingrediants  = database.getAllIngredients()
-    val steps = database.getAllStepsByRecipe(recipeKey)
+  //  val steps = database.getAllStepsByRecipe(recipeKey)
 
 }

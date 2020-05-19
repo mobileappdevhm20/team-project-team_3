@@ -1,6 +1,7 @@
 package team3.recipefinder.viewmodel.recipe.overview
 
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.provider.AlarmClock
 import android.util.Log
@@ -16,6 +17,7 @@ import team3.recipefinder.database.AppDatabase
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
+import team3.recipefinder.viewmodel.recipe.edit.EditRecipeActivity
 
 
 class RecipeViewModel(val database: RecipeDao, application: Application) :
@@ -42,6 +44,7 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
             addR(recipe)
         }
     }
+
     fun addIngredient(name: String) {
         uiScope.launch {
             val recipe = Ingredient(0, name)
@@ -65,6 +68,24 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
         Log.i("RecipeClick", "Bind called with Recipe$r")
 
         _navigateToSelectedRecipe.value = r
+    }
+
+    fun editPropertyDetails(r: Recipe) {
+        showEditActivity(getApplication(), r)
+    }
+
+
+    private fun showEditActivity(context: Context, r: Recipe) {
+        val message = r.id.toString()
+
+        val intent = Intent(getApplication(), EditRecipeActivity::class.java).apply {
+            putExtra(AlarmClock.EXTRA_MESSAGE, message)
+
+        }
+        if (intent.resolveActivity(context.packageManager) != null) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        }
     }
 
     fun displayPropertyDetailsComplete() {

@@ -25,7 +25,7 @@ class DetailRecipeActivity : AppCompatActivity() {
 
         // Get the Intent that started this activity and extract the string
         val message = intent.getStringExtra(EXTRA_MESSAGE)
-        val int = message.toInt()
+        val int = message.toLong()
         // val textview = findViewById<TextView>(R.id.recipe_name)
         //  textview.text = message
 
