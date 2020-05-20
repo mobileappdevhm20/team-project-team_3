@@ -2,7 +2,9 @@ package team3.recipefinder.viewmodel.recipe.edit
 
 import android.app.Application
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.*
@@ -28,30 +30,44 @@ class EditViewModel(
 
 
     val recipe = database.get(recipeKey)
-    val ingrediants = database.getAllIngredients()
-    var steps = database.getAllStepsByRecipe(recipeKey)
-//var steps= database.getAllSteps()
+    val ingredients = database.getAllIngredients()
+    val steps = database.getAllStepsByRecipe(recipeKey)
+
+    //var steps= database.getAllSteps()
+    private val _editMode = MutableLiveData<Boolean>()
+
+    // The external immutable LiveData for the navigation property
+    val editMode: LiveData<Boolean>
+        get() = _editMode
+
+
+    init {
+        disableEdit()
+    }
 
     fun addIngredient(name: String) {
         Log.i("adddStip", "step CALLED ${name}")
 
     }
 
+
+    fun enableEdit() {
+        _editMode.value = true
+    }
+
+    fun disableEdit() {
+        _editMode.value = false
+
+    }
+
     private suspend fun addS(s: RecipeStep) {
-        Log.i("jfdkslf", "dsjklf $s")
 
         withContext(Dispatchers.IO) {
 
-         var a =  database.insertStep(s)
-            Log.i("jfdkslf", " id recipe ${recipe.value!!.id}")
-            Log.i("jfdkslf", " id step ${s.id}")
+            var k = database.insertStep(s)
 
-            database.assignStepToRecipe(a, recipe.value!!.id)
-var aaa = database.getAllSteps()
-            Log.i("jfdkslf", "dsjklf ${aaa}")
+            database.assignStepToRecipe(k, recipe.value!!.id)
 
-         //   steps = database.getAllStepsByRecipe(recipe.value!!.id)
-            Log.i("jfdkslf", "steps recipe ${steps}")
 
         }
     }
@@ -62,5 +78,6 @@ var aaa = database.getAllSteps()
             addS(step)
         }
     }
+
 }
 

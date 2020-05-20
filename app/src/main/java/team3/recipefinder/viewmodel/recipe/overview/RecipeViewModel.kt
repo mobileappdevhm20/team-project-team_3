@@ -30,13 +30,6 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
 
     var recipes = database.getAll()
 
-    // Internally, we use a MutableLiveData to handle navigation to the selected property
-    private val _navigateToSelectedRecipe = MutableLiveData<Recipe>()
-
-    // The external immutable LiveData for the navigation property
-    val navigateToSelectedRecipe: LiveData<Recipe>
-        get() = _navigateToSelectedRecipe
-
 
     fun addRecipe(name: String) {
         uiScope.launch {
@@ -64,11 +57,6 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
         }
     }
 
-    fun displayPropertyDetails(r: Recipe) {
-        Log.i("RecipeClick", "Bind called with Recipe$r")
-
-        _navigateToSelectedRecipe.value = r
-    }
 
     fun editPropertyDetails(r: Recipe) {
         showEditActivity(getApplication(), r)
@@ -86,10 +74,6 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
-    }
-
-    fun displayPropertyDetailsComplete() {
-        _navigateToSelectedRecipe.value = null
     }
 
 

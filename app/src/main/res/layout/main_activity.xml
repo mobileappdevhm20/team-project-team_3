@@ -22,8 +22,8 @@
             android:layout_gravity="bottom"
             android:onClick="showAddRecipeDialog"
             android:tag="25"
-            android:text="addRecipe" />
-
+            android:text="addRecipe"
+            android:visibility="visible" />
 
 
         <Button

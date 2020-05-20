@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.MainActivityBinding
-import team3.recipefinder.viewmodel.recipe.detail.DetailRecipeActivity
 import team3.recipefinder.viewmodel.recipe.overview.*
 
 class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
@@ -55,16 +54,7 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
                 adapter.notifyDataSetChanged()
             }
         })
-        viewModel.navigateToSelectedRecipe.observe(this, Observer {
-            if (null != it) {
-                val message = it.id.toString()
-                val intent = Intent(this, DetailRecipeActivity::class.java).apply {
-                    putExtra(EXTRA_MESSAGE, message)
-                }
-                startActivity(intent)
-                viewModel.displayPropertyDetailsComplete()
-            }
-        })
+
     }
 
 

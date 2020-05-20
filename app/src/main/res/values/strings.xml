@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">recipefinder</string>
- <string name="text_recipe_name">Recipe name</string>
+    <string name="text_recipe_name">Recipe name</string>
     <string name="text_edit">Save changes</string>
     <string name="text_cancel">Cancel</string>
     <string name="edit_text">Edit</string>
+    <string name="text_done">Done Edit</string>
+    <string name="text_addStep">Add Step</string>
+    <string name="text_addIngredient">Add Ingredient</string>
 </resources>
