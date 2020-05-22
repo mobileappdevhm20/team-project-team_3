@@ -54,10 +54,10 @@ class DatabaseTest {
 
         // Test getAll
         val expected = listOf("testRecipe", "testRecipe2")
-        Assert.assertEquals(expected, db.recipeDao().getAll().map { it.name })
+        Assert.assertEquals(expected, db.recipeDao().getAll().value?.map { it.name })
 
         // Test get
-        Assert.assertEquals("testRecipe2", db.recipeDao().get(2).name)
+        Assert.assertEquals("testRecipe2", db.recipeDao().get(2).value?.name)
     }
 
     @Test
@@ -86,12 +86,12 @@ class DatabaseTest {
         // Test ingredients of recipe 1
         val expected = listOf("Tomato", "Milk")
         Assert.assertEquals(expected,
-            db.recipeDao().getAllIngredientsByRecipe(1).map { it.name })
+            db.recipeDao().getAllIngredientsByRecipe(1).value?.map { it.name })
 
         // Test ingredients of recipe 2
         val expected2 = listOf("Butter")
         Assert.assertEquals(expected2,
-            db.recipeDao().getAllIngredientsByRecipe(2).map { it.name })
+            db.recipeDao().getAllIngredientsByRecipe(2).value?.map { it.name })
     }
 
     @Test
@@ -117,7 +117,7 @@ class DatabaseTest {
         // Test ingredients of recipe 1
         val expected = listOf("Peal the banana", "Pop the corn")
         Assert.assertEquals(expected,
-            db.recipeDao().getAllStepsByRecipe(1).map { it.description })
+            db.recipeDao().getAllStepsByRecipe(1).value?.map { it.description })
     }
 
     @Test
@@ -132,7 +132,7 @@ class DatabaseTest {
 
         // Test getAll
         val expected = listOf("testRecipe2")
-        Assert.assertEquals(expected, db.recipeDao().getAll().map { it.name })
+        Assert.assertEquals(expected, db.recipeDao().getAll().value?.map { it.name })
     }
 
     @Test

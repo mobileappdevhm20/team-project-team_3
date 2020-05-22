@@ -31,7 +31,8 @@ class EditViewModel(
 
     val recipe = database.get(recipeKey)
     val ingredients = database.getAllIngredients()
-    val steps = database.getAllStepsByRecipe(recipeKey)
+    val stepsRecipe = database.getAllStepsByRecipe(recipeKey)
+    val ingredientRecipe = database.getAllIngredientsByRecipe(recipeKey)
 
     //var steps= database.getAllSteps()
     private val _editMode = MutableLiveData<Boolean>()
@@ -45,11 +46,6 @@ class EditViewModel(
         disableEdit()
     }
 
-    fun addIngredient(name: String) {
-        Log.i("adddStip", "step CALLED ${name}")
-
-    }
-
 
     fun enableEdit() {
         _editMode.value = true
@@ -57,18 +53,24 @@ class EditViewModel(
 
     fun disableEdit() {
         _editMode.value = false
+    }
 
+    fun addIngredient(id: Long) {
+        uiScope.launch {
+            addI(id)
+        }
+    }
+
+    private suspend fun addI(s: Long) {
+        withContext(Dispatchers.IO) {
+            database.assignStepToRecipe(s, recipe.value!!.id)
+        }
     }
 
     private suspend fun addS(s: RecipeStep) {
-
         withContext(Dispatchers.IO) {
-
             var k = database.insertStep(s)
-
             database.assignStepToRecipe(k, recipe.value!!.id)
-
-
         }
     }
 

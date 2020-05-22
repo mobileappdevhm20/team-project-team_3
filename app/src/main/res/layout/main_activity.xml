@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:onClick="showAddRecipeDialog"
-            android:tag="25"
+            android:tag="@string/text_recipeName"
             android:text="addRecipe"
             android:visibility="visible" />
 
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:onClick="showAddRecipeDialog"
-            android:tag="27"
+            android:tag="@string/text_ingredientName"
             android:text="addIngrediant" />
 
         <androidx.recyclerview.widget.RecyclerView

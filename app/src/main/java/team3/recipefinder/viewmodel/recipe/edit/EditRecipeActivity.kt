@@ -1,5 +1,6 @@
 package team3.recipefinder.viewmodel.recipe.edit
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
@@ -7,6 +8,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -15,11 +17,14 @@ import kotlinx.android.synthetic.main.activity_recipe_detail.*
 import team3.recipefinder.R
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.ActivityRecipeDetailBinding
+import team3.recipefinder.model.Ingredient
 import team3.recipefinder.viewmodel.recipe.overview.AddRecipeFragment
 
-class EditRecipeActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
+class EditRecipeActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener,
+    AddIngrFragment.EditListListener {
     private lateinit var viewModel: EditViewModel
 
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_detail)
@@ -55,30 +60,25 @@ class EditRecipeActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeList
         })
 
 
-        viewModel.steps.observe(this, Observer { it ->
+        viewModel.stepsRecipe.observe(this, Observer { it ->
             val listView = findViewById<ListView>(R.id.stepList)
-            var pairedDevices1: MutableList<String> = ArrayList()
-            it?.forEach { a ->
-                pairedDevices1.add(a.description)
 
-            }
-            val adapter =
-                ArrayAdapter(this, android.R.layout.simple_list_item_1, pairedDevices1)
+            val adapter = ArrayAdapter(
+                this, android.R.layout.simple_list_item_1,
+                it.map { s -> s.description }.toList()
+            )
 
             listView.adapter = adapter
         })
 
-        viewModel.ingredients.observe(this, Observer { it ->
 
+        viewModel.ingredientRecipe.observe(this, Observer { it ->
             val listView = findViewById<ListView>(R.id.ingredientList)
-            var pairedDevices1: MutableList<String> = ArrayList()
-            it?.forEach { a ->
-                pairedDevices1.add(a.name)
 
-            }
-            val adapter =
-                ArrayAdapter(this, android.R.layout.simple_list_item_1, pairedDevices1)
-
+            val adapter = ArrayAdapter(
+                this, android.R.layout.simple_list_item_1,
+                it.map { i -> i.name }.toList()
+            )
             listView.adapter = adapter
         })
 
@@ -102,21 +102,33 @@ class EditRecipeActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeList
 
 
     fun showAddRecipeDialog(view: View) {
-        val pageNumber: String = view.getTag().toString()
+        val id: String = view.getTag().toString()
         val args = Bundle()
-        args?.putString("name", pageNumber)
+        args?.putString("name", id)
 
         val editTimerFragment = AddRecipeFragment()
         editTimerFragment.arguments = args
         editTimerFragment.show(supportFragmentManager, "Edit Timer")
     }
 
+    fun showAddRecipeDialog1(view: View) {
+        val args = Bundle()
+
+
+        args?.putParcelableArrayList("name", viewModel.ingredients.value?.let { ArrayList(it) })
+        val editTimerFragment = AddIngrFragment()
+        editTimerFragment.arguments = args
+        editTimerFragment.show(supportFragmentManager, "Edit Timer")
+    }
+
 
     override fun onDialogPositiveClick(id: String?, value: String?) {
-        Log.i("edi", "jkdfslafj $id")
-        if (value != null) {
-            viewModel.addStep(value)
+        when (id) {
+            getString(R.string.text_stepName) -> viewModel.addStep(value!!)
         }
+    }
+    override fun onDialogPositiveClick1(id: String?, value: String?) {
+        Toast.makeText(this, "bframgment ${value}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDialogNegativeClick() {

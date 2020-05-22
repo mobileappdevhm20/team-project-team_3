@@ -69,9 +69,12 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
     }
 
     override fun onDialogPositiveClick(id: String?, value: String?) {
+
+
+
         when (id) {
-            "25" -> viewModel.addRecipe(value!!)
-            "27" -> viewModel.addIngredient(value!!)
+            getString(R.string.text_recipeName) -> viewModel.addRecipe(value!!)
+            getString(R.string.text_ingredientName) -> viewModel.addIngredient(value!!)
         }
     }
 

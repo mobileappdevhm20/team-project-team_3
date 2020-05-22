@@ -1,23 +1,27 @@
-package team3.recipefinder.viewmodel.recipe.overview
+package team3.recipefinder.viewmodel.recipe.edit
 
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.TextView
+import android.util.Log
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
+import team3.recipefinder.model.Ingredient
 
-class AddRecipeFragment() : DialogFragment() {
+
+class AddIngrFragment() : DialogFragment() {
 
     // Use this instance of the interface to deliver action events
-    private lateinit var listener: EditRecipeListener
+    private lateinit var listener: EditListListener
 
-    private lateinit var recipeNameField: EditText
 
-    interface EditRecipeListener {
-        fun onDialogPositiveClick(id: String?, name: String?)
+    interface EditListListener {
+        fun onDialogPositiveClick1(id: String?, name: String?)
         fun onDialogNegativeClick()
     }
 
@@ -26,22 +30,33 @@ class AddRecipeFragment() : DialogFragment() {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
-            val view = inflater.inflate(R.layout.dialog_set_value_input, null)
+            val view = inflater.inflate(R.layout.dialog_set_list, null)
 
-            recipeNameField = view.findViewById(R.id.timer_name)
-            var textValue = ""
-            if (arguments != null) {
-                textValue = requireArguments().getString("name").toString()
+            val a = requireArguments().getParcelableArrayList<Ingredient>("name")
+            var ab  ="dslf"
+            var mRgAllButtons = view.findViewById<RadioGroup>(R.id.radiogroup);
 
-                var textView = view.findViewById<TextView>(R.id.text_timer_name)
-                textView.text = textValue.toString()
+            if (a != null) {
+
+
+
+                var number = a.size
+                for (item: Ingredient in a) {
+                    val rdbtn = RadioButton(context)
+                    rdbtn.id = item.id.toInt()
+                    rdbtn.text = "Item: " + item.name
+                    rdbtn.isChecked=true
+                    mRgAllButtons.addView(rdbtn)
+                }
             }
 
             builder.setView(view)
                 .setPositiveButton(
                     R.string.text_edit
                 ) { _, _ ->
-                    listener.onDialogPositiveClick(textValue, recipeNameField.text.toString())
+                    ab=      mRgAllButtons.checkedRadioButtonId.toString()
+
+                    listener.onDialogPositiveClick1("i", ab)
                 }
                 .setNegativeButton(
                     R.string.text_cancel
@@ -56,7 +71,7 @@ class AddRecipeFragment() : DialogFragment() {
         super.onAttach(context)
 
         try {
-            listener = context as EditRecipeListener
+            listener = context as EditListListener
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
@@ -67,9 +82,7 @@ class AddRecipeFragment() : DialogFragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState?.run {
-            putString("name", recipeNameField.text.toString())
-        }
+
         super.onSaveInstanceState(outState)
     }
 }

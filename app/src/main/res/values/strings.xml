@@ -7,4 +7,7 @@
     <string name="text_done">Done Edit</string>
     <string name="text_addStep">Add Step</string>
     <string name="text_addIngredient">Add Ingredient</string>
+    <string name="text_ingredientName">Ingredient:</string>
+    <string name="text_stepName">Step:</string>
+    <string name="text_recipeName">Recipe:</string>
 </resources>
