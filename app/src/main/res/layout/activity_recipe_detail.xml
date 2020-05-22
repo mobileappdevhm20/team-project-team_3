@@ -20,17 +20,44 @@
             android:layout_height="33dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.182"
+            app:layout_constraintHorizontal_bias="0.121"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.083"
+            app:layout_constraintVertical_bias="0.06"
+
             tools:text="@string/text_recipe_name" />
 
-        <Button
+        <TextView
+            android:id="@+id/ingrediant_name"
+            android:layout_width="99dp"
+            android:layout_height="33dp"
+            android:text="@string/text_ingredientName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.157"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.116" />
+
+        <TextView
+            android:id="@+id/recipe_name3"
+            android:layout_width="99dp"
+            android:layout_height="33dp"
+            android:text="@string/text_stepName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.019"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.515" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+
             android:id="@+id/addStepButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="showAddRecipeDialog"
+            android:src="@android:drawable/ic_menu_add"
             android:tag="@string/text_stepName"
             android:text="@string/text_addStep"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -40,20 +67,21 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.938" />
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addIngredientButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:clickable="false"
             android:onClick="showAddRecipeDialog1"
+            android:src="@android:drawable/ic_menu_add"
             android:text="@string/text_addIngredient"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.386"
+            app:layout_constraintHorizontal_bias="0.385"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.474" />
+            app:layout_constraintVertical_bias="0.499" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/editButton"
@@ -64,23 +92,25 @@
             android:text="@string/edit_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.554"
+            app:layout_constraintHorizontal_bias="0.597"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.062" />
+            app:layout_constraintVertical_bias="0.023" />
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+
             android:id="@+id/doneEditButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> model.disableEdit()}"
+            android:src="@android:drawable/checkbox_on_background"
             android:text="@string/text_done"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.889"
+            app:layout_constraintHorizontal_bias="0.911"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.084" />
+            app:layout_constraintVertical_bias="0.953" />
 
         <ListView
             android:id="@+id/ingredientList"
@@ -88,10 +118,10 @@
             android:layout_height="186dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.304"
+            app:layout_constraintHorizontal_bias="0.33"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.209" />
+            app:layout_constraintVertical_bias="0.277" />
 
         <ListView
             android:id="@+id/stepList"

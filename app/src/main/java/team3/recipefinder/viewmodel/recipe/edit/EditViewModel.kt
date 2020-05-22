@@ -34,7 +34,6 @@ class EditViewModel(
     val stepsRecipe = database.getAllStepsByRecipe(recipeKey)
     val ingredientRecipe = database.getAllIngredientsByRecipe(recipeKey)
 
-    //var steps= database.getAllSteps()
     private val _editMode = MutableLiveData<Boolean>()
 
     // The external immutable LiveData for the navigation property
@@ -61,9 +60,9 @@ class EditViewModel(
         }
     }
 
-    private suspend fun addI(s: Long) {
+    private suspend fun addI(i: Long) {
         withContext(Dispatchers.IO) {
-            database.assignStepToRecipe(s, recipe.value!!.id)
+            database.assignIngredientToRecipe(i, recipe.value!!.id)
         }
     }
 

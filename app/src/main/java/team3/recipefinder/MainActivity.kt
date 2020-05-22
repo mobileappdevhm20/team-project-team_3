@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // setContentView(R.layout.main_activity)
 
         // Setup DataBinding
         var binding: MainActivityBinding =
@@ -71,7 +70,6 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
     override fun onDialogPositiveClick(id: String?, value: String?) {
 
 
-
         when (id) {
             getString(R.string.text_recipeName) -> viewModel.addRecipe(value!!)
             getString(R.string.text_ingredientName) -> viewModel.addIngredient(value!!)
@@ -79,7 +77,6 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
     }
 
     override fun onDialogNegativeClick() {
-        // viewModel.doneShowingEditFragment()
     }
 
 

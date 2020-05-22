@@ -71,7 +71,7 @@ class EditRecipeActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeList
             listView.adapter = adapter
         })
 
-
+        viewModel.ingredients.observe(this, Observer { })
         viewModel.ingredientRecipe.observe(this, Observer { it ->
             val listView = findViewById<ListView>(R.id.ingredientList)
 
@@ -127,8 +127,13 @@ class EditRecipeActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeList
             getString(R.string.text_stepName) -> viewModel.addStep(value!!)
         }
     }
+
     override fun onDialogPositiveClick1(id: String?, value: String?) {
-        Toast.makeText(this, "bframgment ${value}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "bframgment ${value?.toLong()}", Toast.LENGTH_SHORT).show()
+        if (value != null && value != "-1") {
+
+            viewModel.addIngredient(value.toLong())
+        }
     }
 
     override fun onDialogNegativeClick() {
