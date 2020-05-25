@@ -15,7 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.recipe_detail_activity.*
 import team3.recipefinder.database.getAppDatabase
-import team3.recipefinder.databinding.ActivityRecipeDetailBinding
+import team3.recipefinder.databinding.RecipeDetailActivityBinding
 import team3.recipefinder.dialog.AddIngrFragment
 import team3.recipefinder.viewModelFactory.EditViewModelFactory
 import team3.recipefinder.dialog.AddRecipeFragment
@@ -30,7 +30,7 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recipe_detail_activity)
 
-        var binding: ActivityRecipeDetailBinding =
+        var binding: RecipeDetailActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.recipe_detail_activity)
 
         // Get the Intent that started this activity and extract the string
