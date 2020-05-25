@@ -1,8 +1,6 @@
 package team3.recipefinder
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.MainActivityBinding
-import team3.recipefinder.viewmodel.recipe.overview.*
+import team3.recipefinder.dialog.AddRecipeFragment
+import team3.recipefinder.viewmodel.RecipeViewModel
+import team3.recipefinder.viewModelFactory.RecipeViewModelFactory
 
 class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
     private lateinit var viewModel: RecipeViewModel

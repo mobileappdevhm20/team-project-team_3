@@ -1,4 +1,4 @@
-package team3.recipefinder.viewmodel.recipe.overview
+package team3.recipefinder
 
 import android.util.Log
 import android.view.LayoutInflater

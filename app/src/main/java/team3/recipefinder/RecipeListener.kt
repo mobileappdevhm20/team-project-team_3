@@ -1,7 +1,8 @@
-package team3.recipefinder.viewmodel.recipe.overview
+package team3.recipefinder
 
 
 import team3.recipefinder.model.Recipe
+import team3.recipefinder.viewmodel.RecipeViewModel
 
 
 class RecipeListener(private val viewModel: RecipeViewModel) {

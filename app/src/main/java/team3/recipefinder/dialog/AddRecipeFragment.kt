@@ -1,4 +1,4 @@
-package team3.recipefinder.viewmodel.recipe.overview
+package team3.recipefinder.dialog
 
 import android.app.Dialog
 import android.content.Context

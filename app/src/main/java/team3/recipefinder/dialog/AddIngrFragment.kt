@@ -1,11 +1,8 @@
-package team3.recipefinder.viewmodel.recipe.edit
+package team3.recipefinder.dialog
 
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog

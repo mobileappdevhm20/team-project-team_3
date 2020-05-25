@@ -1,4 +1,4 @@
-package team3.recipefinder.viewmodel.recipe.edit
+package team3.recipefinder.viewmodel
 
 import android.app.Application
 import android.util.Log
@@ -14,7 +14,7 @@ import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
 import team3.recipefinder.model.RecipeStep
 
-class EditViewModel(
+class RecipeDetailViewModel(
     private val recipeKey: Long = 0,
     dataSource: RecipeDao,
     application: Application

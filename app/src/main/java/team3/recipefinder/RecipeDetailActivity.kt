@@ -1,4 +1,4 @@
-package team3.recipefinder.viewmodel.recipe.edit
+package team3.recipefinder
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -13,24 +13,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.activity_recipe_detail.*
-import team3.recipefinder.R
+import kotlinx.android.synthetic.main.recipe_detail_activity.*
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.ActivityRecipeDetailBinding
-import team3.recipefinder.model.Ingredient
-import team3.recipefinder.viewmodel.recipe.overview.AddRecipeFragment
+import team3.recipefinder.dialog.AddIngrFragment
+import team3.recipefinder.viewModelFactory.EditViewModelFactory
+import team3.recipefinder.dialog.AddRecipeFragment
+import team3.recipefinder.viewmodel.RecipeDetailViewModel
 
-class EditRecipeActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener,
+class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener,
     AddIngrFragment.EditListListener {
-    private lateinit var viewModel: EditViewModel
+    private lateinit var viewModel: RecipeDetailViewModel
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_recipe_detail)
+        setContentView(R.layout.recipe_detail_activity)
 
         var binding: ActivityRecipeDetailBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_recipe_detail)
+            DataBindingUtil.setContentView(this, R.layout.recipe_detail_activity)
 
         // Get the Intent that started this activity and extract the string
         val message = intent.getStringExtra(EXTRA_MESSAGE)
@@ -49,7 +50,7 @@ class EditRecipeActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeList
                 application
             )
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(EditViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(RecipeDetailViewModel::class.java)
 
         binding.model = viewModel
 

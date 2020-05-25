@@ -1,11 +1,11 @@
-package team3.recipefinder.viewmodel.recipe.overview
+package team3.recipefinder.viewModelFactory
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import team3.recipefinder.dao.RecipeDao
+import team3.recipefinder.viewmodel.RecipeViewModel
 import java.lang.IllegalArgumentException
-import javax.sql.CommonDataSource
 
 class RecipeViewModelFactory(
     private val dataSource: RecipeDao,

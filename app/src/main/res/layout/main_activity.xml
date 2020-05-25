@@ -6,7 +6,7 @@
 
         <variable
             name="recipeViewModel"
-            type="team3.recipefinder.viewmodel.recipe.overview.RecipeViewModel" />
+            type="team3.recipefinder.viewmodel.RecipeViewModel" />
     </data>
 
     <FrameLayout
@@ -23,7 +23,8 @@
             android:onClick="showAddRecipeDialog"
             android:tag="@string/text_recipeName"
             android:text="addRecipe"
-            android:visibility="visible" />
+            android:visibility="visible"
+            />
 
 
         <Button
