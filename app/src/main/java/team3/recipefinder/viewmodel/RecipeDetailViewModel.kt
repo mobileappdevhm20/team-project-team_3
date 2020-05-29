@@ -54,15 +54,15 @@ class RecipeDetailViewModel(
         _editMode.value = false
     }
 
-    fun addIngredient(id: Long) {
+    fun addIngredient(id: Long,amount: String) {
         uiScope.launch {
-            addI(id)
+            addI(id,amount)
         }
     }
 
-    private suspend fun addI(i: Long) {
+    private suspend fun addI(i: Long,amount: String) {
         withContext(Dispatchers.IO) {
-            database.assignIngredientToRecipe(i, recipe.value!!.id,"aa")
+            database.assignIngredientToRecipe(i, recipe.value!!.id,amount)
         }
     }
 

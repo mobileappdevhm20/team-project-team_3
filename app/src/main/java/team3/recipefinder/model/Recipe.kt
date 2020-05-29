@@ -7,21 +7,22 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "recipe")
-data class Recipe (
+data class Recipe(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "description") val description: String
 
 )
+
 @Parcelize
 @Entity(tableName = "ingredient")
-data class Ingredient (
+data class Ingredient(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "name") val name: String
 ) : Parcelable
 
 @Entity(tableName = "step")
-data class RecipeStep (
+data class RecipeStep(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "description") val description: String
 )
@@ -33,6 +34,13 @@ data class RelRecipeIngredient(
     @ColumnInfo(name = "ingredientId") val ingredientId: Long,
     @ColumnInfo(name = "amount") val amount: String
 )
+
+data class IngredientAmount(
+    val id: Long,
+    val name: String,
+    val amount: String
+)
+
 
 @Entity(tableName = "rel_recipe_step")
 data class RelRecipeStep(

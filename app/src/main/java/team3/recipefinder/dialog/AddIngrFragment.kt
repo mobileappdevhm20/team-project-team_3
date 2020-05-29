@@ -1,10 +1,10 @@
 package team3.recipefinder.dialog
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.view.View
+import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
@@ -20,10 +20,11 @@ class AddIngrFragment() : DialogFragment() {
 
 
     interface EditListListener {
-        fun onDialogPositiveClick1(id: String?, name: String?)
+        fun onDialogPositiveClick1(amount: String?, name: String?)
     }
 
 
+    @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -32,7 +33,7 @@ class AddIngrFragment() : DialogFragment() {
 
             val a = requireArguments().getParcelableArrayList<Ingredient>("name")
             var ab = "dslf"
-            var mRgAllButtons = view.findViewById<RadioGroup>(R.id.radiogroup);
+            val mRgAllButtons = view.findViewById<RadioGroup>(R.id.radiogroup);
 
             if (a != null) {
 
@@ -40,11 +41,13 @@ class AddIngrFragment() : DialogFragment() {
                 for (item: Ingredient in a) {
                     val rdbtn = RadioButton(context)
                     rdbtn.id = item.id.toInt()
-                    rdbtn.text = "Item: " + item.name
+                    rdbtn.text = "Item: ${item.name}"
                     rdbtn.isChecked = true
                     mRgAllButtons.addView(rdbtn)
                 }
             }
+            var amountTextedit = view.findViewById<EditText>(R.id.amount)
+
 
             builder.setView(view)
                 .setPositiveButton(
@@ -52,7 +55,7 @@ class AddIngrFragment() : DialogFragment() {
                 ) { _, _ ->
                     ab = mRgAllButtons.checkedRadioButtonId.toString()
 
-                    listener.onDialogPositiveClick1("i", ab)
+                    listener.onDialogPositiveClick1(amountTextedit.text.toString(), ab)
                 }
                 .setNegativeButton(
                     R.string.text_cancel

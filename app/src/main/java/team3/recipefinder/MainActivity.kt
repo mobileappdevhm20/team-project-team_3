@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import team3.recipefinder.activity.LoginActivity
-import team3.recipefinder.R
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.MainActivityBinding
 import team3.recipefinder.dialog.AddRecipeFragment
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
         }
 
 	 // Setup DataBinding
-        var binding: MainActivityBinding =
+        val binding: MainActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.main_activity)
 
         val application = requireNotNull(this).application
@@ -82,18 +81,18 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
 
 
     fun showAddRecipeDialog(view: View) {
-        val pageNumber: String = view.getTag().toString()
+        val pageNumber: String = view.tag.toString()
         val args = Bundle()
-        args?.putString("name", pageNumber)
+        args.putString("name", pageNumber)
 
         val editTimerFragment = AddRecipeFragment()
         editTimerFragment.arguments = args
         editTimerFragment.show(supportFragmentManager, "Edit Timer")
     }
 
-    override fun onDialogPositiveClick(id: String?, value: String?) {
+    override fun onDialogPositiveClick(id: String?, name: String?) {
         when (id) {
-            getString(R.string.text_recipeName) -> viewModel.addRecipe(value!!)
+            getString(R.string.text_recipeName) -> viewModel.addRecipe(name!!)
         }
     }
 

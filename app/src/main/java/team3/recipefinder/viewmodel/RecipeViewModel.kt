@@ -8,7 +8,6 @@ import androidx.lifecycle.AndroidViewModel
 
 import kotlinx.coroutines.*
 import team3.recipefinder.dao.RecipeDao
-import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
 import team3.recipefinder.RecipeDetailActivity
 
