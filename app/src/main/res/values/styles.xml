@@ -11,8 +11,6 @@
     <style name="RecifyTheme.Base.Toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="actionMenuTextColor">@color/primaryTextColor</item>
-        <item name="android:textSize">20sp</item>
-
     </style>
 
     <!-- This configures the styles for the title within the Toolbar  -->
@@ -23,15 +21,14 @@
 
     <!-- This configures the styles for the title within the Toolbar  -->
     <style name="RecifyTheme.Base.TitleText">
-        <item name="android:textSize">30sp</item>
-        <item name="android:textColor">@android:color/white</item>
-    </style>
-
-    <!-- This configures the styles for the title within the Toolbar  -->
-    <style name="RecifyTheme.Base.TitleTextActivity">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">40sp</item>
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
+    <!-- This configures the styles for the title within the Toolbar  -->
+    <style name="RecifyTheme.Base.SubtitleRecipeDetail">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
 
 </resources>

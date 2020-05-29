@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="recipeViewModel"
             type="team3.recipefinder.viewmodel.RecipeViewModel" />
@@ -13,6 +12,10 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/tool_bar" />
 
 
         <Button

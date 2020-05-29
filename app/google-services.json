@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "203124846406",
+    "firebase_url": "https://recify-93ddb.firebaseio.com",
+    "project_id": "recify-93ddb",
+    "storage_bucket": "recify-93ddb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203124846406:android:b19467ba65944ff19bff47",
+        "android_client_info": {
+          "package_name": "com.team3.recify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203124846406-nechvdkrug9fq9c217c42fcti3vi0jju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCT39JMqQkv7hT1WWlVwtZP3sRz_1_55Es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203124846406-nechvdkrug9fq9c217c42fcti3vi0jju.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203124846406:android:a7e5ffff54971d369bff47",
+        "android_client_info": {
+          "package_name": "team3.recipefinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203124846406-nechvdkrug9fq9c217c42fcti3vi0jju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCT39JMqQkv7hT1WWlVwtZP3sRz_1_55Es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203124846406-nechvdkrug9fq9c217c42fcti3vi0jju.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
