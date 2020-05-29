@@ -17,7 +17,7 @@ interface CookbookDao {
     fun get(id: Int): Cookbook
 
     @Insert
-    fun insertCookbook(recipe: Cookbook)
+    fun insertCookbook(recipe: Cookbook): Long
 
     @Query("""SELECT rc.* FROM recipe rc
             INNER JOIN rel_cookbook_recipes r 
