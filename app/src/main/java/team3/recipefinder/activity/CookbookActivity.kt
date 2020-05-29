@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_cookbook.*
+import kotlinx.android.synthetic.main.main_activity.view.*
 import team3.recipefinder.R
 import team3.recipefinder.adapter.RecipeListAdapter
 import team3.recipefinder.model.Recipe
@@ -26,5 +27,8 @@ class CookbookActivity : AppCompatActivity() {
         recipeList.adapter = recipeListAdapter
         recipeListAdapter.recipes.addAll(mockedRecipeData)
         recipeListAdapter.notifyDataSetChanged()
+
+        setSupportActionBar(findViewById(R.id.toolbar))
+        title = "Cookbook name"
     }
 }
