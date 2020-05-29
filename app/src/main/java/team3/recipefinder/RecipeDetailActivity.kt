@@ -1,15 +1,17 @@
 package team3.recipefinder
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -25,6 +27,7 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
     AddIngrFragment.EditListListener {
     private lateinit var viewModel: RecipeDetailViewModel
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +59,8 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
 
         viewModel.recipe.observe(this, Observer {
             Log.i("MainActivity", "OBSERVER CALLED RR ${it.name}")
-            val textview = findViewById<TextView>(R.id.recipe_name)
-            textview.text = it.name
+            val toolBar = findViewById<Toolbar>(R.id.toolbar)
+            toolBar.title = it.name
         })
 
 

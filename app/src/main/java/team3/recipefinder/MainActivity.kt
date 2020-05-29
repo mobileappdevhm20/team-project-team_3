@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
-        
+
         if(auth.currentUser == null){
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -76,6 +76,8 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
             }
         })
 
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
     }
 
 
@@ -90,17 +92,10 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
     }
 
     override fun onDialogPositiveClick(id: String?, value: String?) {
-
-
         when (id) {
             getString(R.string.text_recipeName) -> viewModel.addRecipe(value!!)
             getString(R.string.text_ingredientName) -> viewModel.addIngredient(value!!)
         }
-
-        setContentView(R.layout.main_activity)
-
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
     }
 
     override fun onDialogNegativeClick() {

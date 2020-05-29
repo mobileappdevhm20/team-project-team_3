@@ -19,18 +19,6 @@
             android:id="@+id/toolbar"
             layout="@layout/tool_bar" />
 
-        <TextView
-            android:id="@+id/recipe_name"
-            style="@style/RecifyTheme.Base.TitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/text_recipe_name" />
-
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"

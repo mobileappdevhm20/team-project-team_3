@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -8,47 +10,52 @@
             type="team3.recipefinder.viewmodel.RecipeViewModel" />
     </data>
 
-    <FrameLayout
-
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
         <include
             android:id="@+id/toolbar"
             layout="@layout/tool_bar" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize">
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:onClick="showAddRecipeDialog"
-            android:tag="@string/text_recipeName"
-            android:text="addRecipe"
-            android:visibility="visible"
-            />
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:onClick="showAddRecipeDialog"
+                android:tag="@string/text_recipeName"
+                android:text="addRecipe"
+                android:visibility="visible"
+                />
 
 
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:onClick="showAddRecipeDialog"
-            android:tag="@string/text_ingredientName"
-            android:text="addIngrediant" />
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:onClick="showAddRecipeDialog"
+                android:tag="@string/text_ingredientName"
+                android:text="addIngrediant" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recipeView"
-            android:layout_width="377dp"
-            android:layout_height="308dp"
-            android:clipToPadding="false"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recipeView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
-    </FrameLayout>
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
