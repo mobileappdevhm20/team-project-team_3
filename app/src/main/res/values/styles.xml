@@ -27,7 +27,7 @@
 
     <!-- This configures the styles for the title within the Toolbar  -->
     <style name="RecifyTheme.Base.SubtitleRecipeDetail">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">27sp</item>
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 

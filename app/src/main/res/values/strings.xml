@@ -19,7 +19,8 @@
     <string name="text_done">Done Edit</string>
     <string name="text_addStep">Add Instruction</string>
     <string name="text_addIngredient">Add Ingredient</string>
-    <string name="text_ingredientName">Ingredient:</string>
-    <string name="text_stepName">Instruction:</string>
+    <string name="text_ingredientName">Ingredients</string>
+    <string name="text_stepName">Instructions</string>
     <string name="text_recipeName">Recipe:</string>
+    <string name="share_recipe">share_recipe</string>
 </resources>

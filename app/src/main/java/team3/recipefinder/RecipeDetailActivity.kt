@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
@@ -19,9 +20,10 @@ import kotlinx.android.synthetic.main.recipe_detail_activity.*
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
 import team3.recipefinder.dialog.AddIngrFragment
-import team3.recipefinder.viewModelFactory.EditViewModelFactory
 import team3.recipefinder.dialog.AddRecipeFragment
+import team3.recipefinder.viewModelFactory.EditViewModelFactory
 import team3.recipefinder.viewmodel.RecipeDetailViewModel
+
 
 class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener,
     AddIngrFragment.EditListListener {
@@ -71,8 +73,9 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
                 this, android.R.layout.simple_list_item_1,
                 it.map { s -> s.description }.toList()
             )
-
             listView.adapter = adapter
+
+            justifyListViewHeightBasedOnChildren(listView)
         })
 
         viewModel.ingredients.observe(this, Observer { })
@@ -84,17 +87,21 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
                 it.map { i -> i.name }.toList()
             )
             listView.adapter = adapter
+
+            justifyListViewHeightBasedOnChildren(listView)
         })
 
         viewModel.editMode.observe(this, Observer {
 
             if (it) {
                 editButton.setVisibility(View.GONE);
+                shareButton.setVisibility(View.GONE);
                 addStepButton.setVisibility(View.VISIBLE);
                 doneEditButton.setVisibility(View.VISIBLE);
                 addIngredientButton.setVisibility(View.VISIBLE);
             } else {
                 editButton.setVisibility(View.VISIBLE);
+                shareButton.setVisibility(View.VISIBLE);
                 addStepButton.setVisibility(View.GONE);
                 doneEditButton.setVisibility(View.GONE);
                 addIngredientButton.setVisibility(View.GONE);
@@ -142,5 +149,20 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
 
     override fun onDialogNegativeClick() {
 
+    }
+
+    fun justifyListViewHeightBasedOnChildren(listView: ListView) {
+        val adapter = listView.adapter ?: return
+        val vg: ViewGroup = listView
+        var totalHeight = 0
+        for (i in 0 until adapter.count) {
+            val listItem = adapter.getView(i, null, vg)
+            listItem.measure(0, 0)
+            totalHeight += listItem.measuredHeight
+        }
+        val par = listView.layoutParams
+        par.height = totalHeight + listView.dividerHeight * (adapter.count - 1)
+        listView.layoutParams = par
+        listView.requestLayout()
     }
 }
