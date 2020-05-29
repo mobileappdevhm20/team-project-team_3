@@ -3,6 +3,8 @@ package team3.recipefinder.dialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
@@ -19,7 +21,6 @@ class AddIngrFragment() : DialogFragment() {
 
     interface EditListListener {
         fun onDialogPositiveClick1(id: String?, name: String?)
-        fun onDialogNegativeClick()
     }
 
 
@@ -56,7 +57,6 @@ class AddIngrFragment() : DialogFragment() {
                 .setNegativeButton(
                     R.string.text_cancel
                 ) { _, _ ->
-                    listener.onDialogNegativeClick()
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
@@ -76,8 +76,5 @@ class AddIngrFragment() : DialogFragment() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
 
-        super.onSaveInstanceState(outState)
-    }
 }

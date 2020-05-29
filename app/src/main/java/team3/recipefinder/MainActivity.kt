@@ -94,12 +94,9 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
     override fun onDialogPositiveClick(id: String?, value: String?) {
         when (id) {
             getString(R.string.text_recipeName) -> viewModel.addRecipe(value!!)
-            getString(R.string.text_ingredientName) -> viewModel.addIngredient(value!!)
         }
     }
 
-    override fun onDialogNegativeClick() {
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)

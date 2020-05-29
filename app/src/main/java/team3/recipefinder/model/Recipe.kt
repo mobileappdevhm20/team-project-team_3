@@ -9,7 +9,9 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "recipe")
 data class Recipe (
     @PrimaryKey(autoGenerate = true) val id: Long,
-    @ColumnInfo(name = "name") val name: String
+    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "description") val description: String
+
 )
 @Parcelize
 @Entity(tableName = "ingredient")
@@ -28,7 +30,8 @@ data class RecipeStep (
 data class RelRecipeIngredient(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "recipeId") val recipeId: Long,
-    @ColumnInfo(name = "ingredientId") val ingredientId: Long
+    @ColumnInfo(name = "ingredientId") val ingredientId: Long,
+    @ColumnInfo(name = "amount") val amount: String
 )
 
 @Entity(tableName = "rel_recipe_step")

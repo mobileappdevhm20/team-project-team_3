@@ -37,9 +37,9 @@ interface RecipeDao {
 
     fun insertIngredient(ingredient: Ingredient): Long
 
-    @Query("""INSERT INTO rel_recipe_ingredient (recipeId, ingredientId)
-        VALUES (:recipeId, :ingredientId)""")
-    fun assignIngredientToRecipe(ingredientId: Long, recipeId: Long)
+    @Query("""INSERT INTO rel_recipe_ingredient (recipeId, ingredientId,amount)
+        VALUES (:recipeId, :ingredientId, :amount)""")
+    fun assignIngredientToRecipe(ingredientId: Long, recipeId: Long, amount: String)
 
     @Query("""DELETE FROM rel_recipe_ingredient
         WHERE recipeId = :recipeId AND ingredientId = :ingredientId""")

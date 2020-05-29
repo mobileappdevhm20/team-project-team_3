@@ -129,6 +129,8 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
     override fun onDialogPositiveClick(id: String?, value: String?) {
         when (id) {
             getString(R.string.text_stepName) -> viewModel.addStep(value!!)
+            getString(R.string.text_ingredientName) -> viewModel.addIngredient(value!!)
+
         }
     }
 
@@ -140,7 +142,4 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
         }
     }
 
-    override fun onDialogNegativeClick() {
-
-    }
 }
