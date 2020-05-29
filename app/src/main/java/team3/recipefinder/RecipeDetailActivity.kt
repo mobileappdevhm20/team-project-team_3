@@ -114,7 +114,7 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
         editTimerFragment.show(supportFragmentManager, "Edit_Timer")
     }
 
-    fun showAddRecipeDialog1() {
+    fun showAddRecipeDialog1(view: View) {
         val args = Bundle()
 
         args.putParcelableArrayList("name", viewModel.ingredients.value?.let { ArrayList(it) })
