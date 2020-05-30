@@ -21,8 +21,11 @@
     <string name="text_addIngredient">Add Ingredient</string>
     <string name="text_ingredientName">Ingredients</string>
     <string name="text_stepName">Instructions</string>
-    <string name="text_recipeName">Recipe:</string>
+    <string name="text_recipeFragName">Recipe:</string>
+    <string name="text_ingredientFragName">Ingredient:</string>
     <string name="share_recipe">share_recipe</string>
     <string name="text_ingredientAmount">Amount</string>
     <string name="edit_icon_ingredient">edit_icon_ingredient</string>
+    <string name="create_recipe">Create Recipe</string>
+    <string name="create_ingredient">Create Ingredient</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.provider.AlarmClock
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 
 import kotlinx.coroutines.*

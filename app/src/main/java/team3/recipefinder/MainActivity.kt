@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -15,7 +13,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import team3.recipefinder.activity.LoginActivity
-import team3.recipefinder.R
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.MainActivityBinding
 import team3.recipefinder.dialog.AddRecipeFragment
@@ -26,8 +23,6 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
     private lateinit var viewModel: RecipeViewModel
 
     private lateinit var auth: FirebaseAuth
-
-    private lateinit var logoutBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,20 +76,28 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
     }
 
 
-    fun showAddRecipeDialog(view: View) {
-        val pageNumber: String = view.getTag().toString()
+    fun showAddRecipeDialog() {
         val args = Bundle()
-        args?.putString("name", pageNumber)
+        args.putString("name", resources.getString(R.string.text_recipeFragName))
 
-        val editTimerFragment = AddRecipeFragment()
-        editTimerFragment.arguments = args
-        editTimerFragment.show(supportFragmentManager, "Edit Timer")
+        val createRecipeFragment = AddRecipeFragment()
+        createRecipeFragment.arguments = args
+        createRecipeFragment.show(supportFragmentManager, "Create Recipe")
     }
 
-    override fun onDialogPositiveClick(id: String?, value: String?) {
+    fun showAddIngredientDialog() {
+        val args = Bundle()
+        args.putString("name", resources.getString(R.string.text_ingredientFragName))
+
+        val createRecipeFragment = AddRecipeFragment()
+        createRecipeFragment.arguments = args
+        createRecipeFragment.show(supportFragmentManager, "Create Ingredient")
+    }
+
+    override fun onDialogPositiveClick(id: String?, name: String?) {
         when (id) {
-            getString(R.string.text_recipeName) -> viewModel.addRecipe(value!!)
-            getString(R.string.text_ingredientName) -> viewModel.addIngredient(value!!)
+            getString(R.string.text_recipeFragName) -> viewModel.addRecipe(name!!)
+            getString(R.string.text_ingredientFragName) -> viewModel.addIngredient(name!!)
         }
     }
 
@@ -121,7 +124,14 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
             Toast.makeText(this, "Successfully Logged Out", Toast.LENGTH_LONG).show()
             true
         }
-
+        R.id.user_setting_create_recipe -> {
+            showAddRecipeDialog()
+            true
+        }
+        R.id.user_setting_create_ingredient -> {
+            showAddIngredientDialog()
+            true
+        }
         else -> {
             super.onOptionsItemSelected(item)
         }

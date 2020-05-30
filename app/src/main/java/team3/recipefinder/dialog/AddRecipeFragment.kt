@@ -34,7 +34,7 @@ class AddRecipeFragment() : DialogFragment() {
                 textValue = requireArguments().getString("name").toString()
 
                 var textView = view.findViewById<TextView>(R.id.text_timer_name)
-                textView.text = textValue.toString()
+                textView.text = textValue
             }
 
             builder.setView(view)
