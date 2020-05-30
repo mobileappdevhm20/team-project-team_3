@@ -31,4 +31,10 @@
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
+    <!-- This configures the styles for the title within the Toolbar  -->
+    <style name="RecifyTheme.Base.IngredientDetails">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
 </resources>

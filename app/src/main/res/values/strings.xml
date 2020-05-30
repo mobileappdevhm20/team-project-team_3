@@ -23,4 +23,6 @@
     <string name="text_stepName">Instructions</string>
     <string name="text_recipeName">Recipe:</string>
     <string name="share_recipe">share_recipe</string>
+    <string name="text_ingredientAmount">Amount</string>
+    <string name="edit_icon_ingredient">edit_icon_ingredient</string>
 </resources>

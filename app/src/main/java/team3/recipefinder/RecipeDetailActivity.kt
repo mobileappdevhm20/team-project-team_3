@@ -1,6 +1,10 @@
 package team3.recipefinder
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.StateListDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
@@ -23,11 +27,14 @@ import team3.recipefinder.dialog.AddIngrFragment
 import team3.recipefinder.dialog.AddRecipeFragment
 import team3.recipefinder.viewModelFactory.EditViewModelFactory
 import team3.recipefinder.viewmodel.RecipeDetailViewModel
+import ßteam3.recipefinder.adapter.IngredientListAdapter
 
 
 class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener,
     AddIngrFragment.EditListListener {
     private lateinit var viewModel: RecipeDetailViewModel
+    private var editModeActive = false
+    private var ingredientListNameHolder: List<String> = emptyList()
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("RestrictedApi")
@@ -80,31 +87,27 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
 
         viewModel.ingredients.observe(this, Observer { })
         viewModel.ingredientRecipe.observe(this, Observer { it ->
-            val listView = findViewById<ListView>(R.id.ingredientList)
-
-            val adapter = ArrayAdapter(
-                this, android.R.layout.simple_list_item_1,
-                it.map { i -> i.name }.toList()
-            )
-            listView.adapter = adapter
-
-            justifyListViewHeightBasedOnChildren(listView)
+            ingredientListNameHolder = it.map { i -> i.name }.toList()
+            createAndSetListViewAdapter(ingredientListNameHolder, editModeActive)
         })
 
         viewModel.editMode.observe(this, Observer {
+            editModeActive = it
+            createAndSetListViewAdapter(ingredientListNameHolder, editModeActive)
+            changeListItemBehaviour(it)
 
             if (it) {
-                editButton.setVisibility(View.GONE);
-                shareButton.setVisibility(View.GONE);
-                addStepButton.setVisibility(View.VISIBLE);
-                doneEditButton.setVisibility(View.VISIBLE);
-                addIngredientButton.setVisibility(View.VISIBLE);
+                editButton.visibility = View.GONE
+                shareButton.visibility = View.GONE
+                addStepButton.visibility = View.VISIBLE
+                doneEditButton.visibility = View.VISIBLE
+                addIngredientButton.visibility = View.VISIBLE
             } else {
-                editButton.setVisibility(View.VISIBLE);
-                shareButton.setVisibility(View.VISIBLE);
-                addStepButton.setVisibility(View.GONE);
-                doneEditButton.setVisibility(View.GONE);
-                addIngredientButton.setVisibility(View.GONE);
+                editButton.visibility = View.VISIBLE
+                shareButton.visibility = View.VISIBLE
+                addStepButton.visibility = View.GONE
+                doneEditButton.visibility = View.GONE
+                addIngredientButton.visibility = View.GONE
             }
         })
 
@@ -151,7 +154,46 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
 
     }
 
-    fun justifyListViewHeightBasedOnChildren(listView: ListView) {
+    private fun changeListItemBehaviour(editMode: Boolean) {
+        val color: Drawable
+        val transparent: Drawable = ColorDrawable(Color.TRANSPARENT)
+        val clickable: Boolean
+        if (editMode) {
+            color = ColorDrawable(Color.LTGRAY)
+            clickable = true
+        } else {
+            color = ColorDrawable(Color.TRANSPARENT)
+            clickable = false
+        }
+
+        val selector =
+            StateListDrawable().apply {
+                addState(
+                    intArrayOf(android.R.attr.state_pressed),
+                    color
+                )
+                addState(
+                    intArrayOf(-android.R.attr.state_pressed),
+                    transparent
+                )
+                setEnterFadeDuration(500)
+                setExitFadeDuration(700)
+            }
+        ingredientList.selector = selector
+        ingredientList.isClickable = clickable
+    }
+
+
+    private fun createAndSetListViewAdapter(ingredientNames: List<String>, editMode: Boolean) {
+        val listView = findViewById<ListView>(R.id.ingredientList)
+        val ingredientListAdapter = IngredientListAdapter(this, ingredientNames, editMode)
+
+        listView.adapter = ingredientListAdapter
+
+        justifyListViewHeightBasedOnChildren(listView)
+    }
+
+    private fun justifyListViewHeightBasedOnChildren(listView: ListView) {
         val adapter = listView.adapter ?: return
         val vg: ViewGroup = listView
         var totalHeight = 0

@@ -3,4 +3,6 @@
     <dimen name="spacing_normal">15dp</dimen>
     <dimen name="text_margin">15dp</dimen>
     <dimen name="buttom_margin">15dp</dimen>
+    <dimen name="ingredient_item_height">48dp</dimen>
+    <dimen name="icon_padding">10dp</dimen>
 </resources>
