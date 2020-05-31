@@ -18,7 +18,9 @@ class LaunchTestActivityTest {
     fun launchActivity() {
         // Start activity
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        context.startActivity(Intent(context, AndroidTestActivity::class.java))
+        context.startActivity(Intent(context, AndroidTestActivity::class.java).also {
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        })
 
         // Wait for 20 seconds
         Thread.sleep(20_000)
