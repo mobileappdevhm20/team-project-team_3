@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.StateListDrawable
 import android.os.Build
 import android.os.Bundle
-import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -55,13 +54,11 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
                 R.layout.recipe_detail_activity
             )
 
-        // Get the Intent that started this activity and extract the string
-        val message = intent.getStringExtra(EXTRA_MESSAGE)
-        val recipeKey = message!!.toLong()
+        val recipeKey = intent.getLongExtra("recipe_id", 0L)
 
         val application = requireNotNull(this).application
 
-        // Get DAO instance
+        // Get DAO instance<
         val dataSource = getAppDatabase(application).recipeDao()
 
         // Create ViewModel

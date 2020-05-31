@@ -3,7 +3,6 @@ package team3.recipefinder.viewmodel
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.provider.AlarmClock
 import androidx.lifecycle.AndroidViewModel
 
 import kotlinx.coroutines.*
@@ -57,10 +56,8 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
 
 
     private fun showEditActivity(context: Context, r: Recipe) {
-        val message = r.id.toString()
-
         val intent = Intent(getApplication(), RecipeDetailActivity::class.java).apply {
-            putExtra(AlarmClock.EXTRA_MESSAGE, message)
+            putExtra("recipe_id", r.id)
 
         }
         if (intent.resolveActivity(context.packageManager) != null) {
