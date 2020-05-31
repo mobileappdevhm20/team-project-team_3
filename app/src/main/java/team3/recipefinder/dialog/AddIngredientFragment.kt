@@ -30,7 +30,6 @@ class AddIngredientFragment() : DialogFragment() {
             val view = inflater.inflate(R.layout.dialog_ingredient_list, null)
 
             val a = requireArguments().getParcelableArrayList<Ingredient>("name")
-            var ab = "dslf"
             var mRgAllButtons = view.findViewById<RadioGroup>(R.id.radiogroup);
 
             if (a != null) {
@@ -49,7 +48,7 @@ class AddIngredientFragment() : DialogFragment() {
                 .setPositiveButton(
                     R.string.text_edit
                 ) { _, _ ->
-                    ab = mRgAllButtons.checkedRadioButtonId.toString()
+                    var ab = mRgAllButtons.checkedRadioButtonId.toString()
 
                     listener.onDialogPositiveClick1("i", ab)
                 }

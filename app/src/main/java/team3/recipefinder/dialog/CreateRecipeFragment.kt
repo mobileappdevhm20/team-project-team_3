@@ -67,7 +67,7 @@ class CreateRecipeFragment() : DialogFragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState?.run {
+        outState.run {
             putString("name", recipeNameField.text.toString())
         }
         super.onSaveInstanceState(outState)

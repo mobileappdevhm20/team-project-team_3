@@ -67,7 +67,7 @@ class CreateInstructionFragment: DialogFragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState?.run {
+        outState.run {
             putString("name", instructionNameField.text.toString())
         }
         super.onSaveInstanceState(outState)

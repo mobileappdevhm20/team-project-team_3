@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
     }
 
 
-    fun showAddRecipeDialog() {
+    private fun showAddRecipeDialog() {
         val args = Bundle()
         args.putString("name", resources.getString(R.string.text_recipeFragName))
 
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         createRecipeFragment.show(supportFragmentManager, "Create Recipe")
     }
 
-    fun showAddIngredientDialog() {
+    private fun showAddIngredientDialog() {
         val args = Bundle()
         args.putString("name", resources.getString(R.string.text_ingredientFragName))
 

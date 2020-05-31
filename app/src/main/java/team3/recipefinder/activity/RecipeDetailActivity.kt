@@ -48,7 +48,6 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recipe_detail_activity)
 
-        val ingredientListView: ListView = findViewById(R.id.ingredientList)
         val instructionListView = findViewById<ListView>(R.id.stepList)
 
         val binding: RecipeDetailActivityBinding =
