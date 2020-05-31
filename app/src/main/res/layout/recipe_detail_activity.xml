@@ -144,7 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/buttom_margin"
-                    android:onClick="showAddInstructionDialog"
+                    android:onClick="showCreateInstructionDialog"
                     android:src="@drawable/ic_add_black_24dp"
                     android:tag="@string/text_stepName"
                     android:text="@string/text_addStep"

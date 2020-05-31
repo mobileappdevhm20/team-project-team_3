@@ -95,13 +95,16 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
 
         viewModel.ingredients.observe(this, Observer { })
         viewModel.ingredientRecipe.observe(this, Observer { it ->
+            // Save ingredientNameList and ingredientIdList to update the list view inside the editMode observer
             ingredientListNameHolder = it.map { i -> i.name }.toList()
             ingredientListIdHolder = it.map { i -> i.id }.toList()
             createAndSetListViewAdapter(ingredientListNameHolder, ingredientListIdHolder,  editModeActive)
         })
 
         viewModel.editMode.observe(this, Observer {
+            // Save editmode fot ingredient observer
             editModeActive = it
+            // Update ingredient list view adapter
             createAndSetListViewAdapter(ingredientListNameHolder, ingredientListIdHolder, editModeActive)
             changeListItemBehaviour(it)
 
@@ -121,7 +124,10 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         })
     }
 
-    fun showAddInstructionDialog(view: View) {
+    /**
+     * OnClick method to show create instruction dialog.
+     */
+    fun showCreateInstructionDialog(@Suppress("UNUSED_PARAMETER") view: View) {
         val args = Bundle()
         args.putString("name", resources.getString(R.string.text_stepName))
 
@@ -130,7 +136,10 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         createInstructionFragment.show(supportFragmentManager, "Create Instruction")
     }
 
-    fun showAddIngredientDialog(view: View) {
+    /**
+     * OnClick method to show add ingredient to recipe dialog.
+     */
+    fun showAddIngredientDialog(@Suppress("UNUSED_PARAMETER") view: View) {
         val args = Bundle()
         args.putParcelableArrayList("name", viewModel.ingredients.value?.let { ArrayList(it) })
 
@@ -139,6 +148,13 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         createIngredientFragment.show(supportFragmentManager, "Create Ingredient")
     }
 
+    /**
+     * OnClick method to show add edit ingredient dialog.
+     *
+     * @property currentId the database id of the current ingredient
+     * @property name the name of the current ingredient
+     * @property oldAmount the old amount of the current ingredient
+     */
     fun showEditIngredients(currentId: Long, name: String, oldAmount: String) {
         val args = Bundle()
         args.putLong("ingredientId", currentId)
@@ -152,13 +168,19 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
     }
 
 
+    /**
+     * Method that handles the positiveClick for the different dialogs.
+     */
     override fun onDialogPositiveClick(id: String?, name: String?) {
         when (id) {
             getString(R.string.text_stepName) -> viewModel.addStep(name!!)
         }
     }
 
-    override fun onDialogPositiveClick1(id: String?, name: String?) {
+    /**
+     * Method that handles the positiveClick specificly for the AddIngriedient dialog.
+     */
+    override fun onDialogPositiveClickIngredient(id: String?, name: String?) {
         Toast.makeText(this, "bframgment ${name?.toLong()}", Toast.LENGTH_SHORT).show()
         if (name != null && name != "-1") {
 
@@ -166,12 +188,30 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         }
     }
 
+    /**
+     * Method that handles the negativeClick for the different dialogs.
+     */
     override fun onDialogNegativeClick() {}
 
+    /**
+     * Method that handles the neutralClick specificly for the EditIngredient dialog.
+     *
+     * It deletes the current ingredient from the database
+     *
+     * @property id the database id of the current ingredient
+     * @property name the name of the current ingredient
+     */
     override fun onDialogNeutralClick(id: Long?, name: String?) {
         Log.i("RecipeDetailActivity", "Deleterequest for id = $id and name = $name")
     }
 
+    /**
+     * Helper method to remove the click animation for the listview items if editmode is off.
+     *
+     * It deletes the current ingredient from the database
+     *
+     * @property editMode boolean if the editmode is currently on
+     */
     private fun changeListItemBehaviour(editMode: Boolean) {
         val color: Drawable
         val transparent: Drawable = ColorDrawable(Color.TRANSPARENT)
@@ -201,7 +241,13 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         ingredientList.isClickable = clickable
     }
 
-
+    /**
+     * Helper method to set the custom listview adpater.
+     *
+     * @property ingredientNames a list of all ingredient names to display them in the custom listview
+     * @property ingredientIds a list of all ingredient ids to later delete the ingredient if needed
+     * @property editMode the editmode to decide rather the edit icon should be shown
+     */
     private fun createAndSetListViewAdapter(ingredientNames: List<String>, ingredientIds: List<Long>, editMode: Boolean) {
         val listView = findViewById<ListView>(R.id.ingredientList)
         val ingredientListAdapter = IngredientListAdapter(this, ingredientNames, ingredientIds, editMode)
@@ -211,6 +257,11 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         justifyListViewHeightBasedOnChildren(listView)
     }
 
+    /**
+     * Helper method to display all listview items without having to scoll.
+     *
+     * @property listView the listview that should be edited
+     */
     private fun justifyListViewHeightBasedOnChildren(listView: ListView) {
         val adapter = listView.adapter ?: return
         val vg: ViewGroup = listView

@@ -78,7 +78,10 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
     }
 
 
-    private fun showAddRecipeDialog() {
+    /**
+     * OnClick method to show create recipe dialog.
+     */
+    private fun showRefactorRecipeDialog() {
         val args = Bundle()
         args.putString("name", resources.getString(R.string.text_recipeFragName))
 
@@ -87,7 +90,10 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         createRecipeFragment.show(supportFragmentManager, "Create Recipe")
     }
 
-    private fun showAddIngredientDialog() {
+    /**
+     * OnClick method to show create ingredient dialog.
+     */
+    private fun showCreateIngredientDialog() {
         val args = Bundle()
         args.putString("name", resources.getString(R.string.text_ingredientFragName))
 
@@ -96,6 +102,9 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         createRecipeFragment.show(supportFragmentManager, "Create Ingredient")
     }
 
+    /**
+     * Method that handles the positiveClick for the different dialogs.
+     */
     override fun onDialogPositiveClick(id: String?, name: String?) {
         when (id) {
             getString(R.string.text_recipeFragName) -> viewModel.addRecipe(name!!)
@@ -103,9 +112,15 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         }
     }
 
+    /**
+     * Method that handles the negativeClick for the different dialogs.
+     */
     override fun onDialogNegativeClick() {
     }
 
+    /**
+     * Method to create the options menu of the custom toolbar
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
 
@@ -117,6 +132,9 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         return true
     }
 
+    /**
+     * Method to create onclicklisteners for all optionsmenu items
+     */
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.user_logout_settings -> {
             FirebaseAuth.getInstance().signOut()
@@ -127,11 +145,11 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
             true
         }
         R.id.user_setting_create_recipe -> {
-            showAddRecipeDialog()
+            showRefactorRecipeDialog()
             true
         }
         R.id.user_setting_create_ingredient -> {
-            showAddIngredientDialog()
+            showCreateIngredientDialog()
             true
         }
         else -> {

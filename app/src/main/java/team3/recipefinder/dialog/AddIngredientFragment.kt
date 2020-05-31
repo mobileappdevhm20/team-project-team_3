@@ -18,7 +18,7 @@ class AddIngredientFragment() : DialogFragment() {
 
 
     interface CreateIngredientListener {
-        fun onDialogPositiveClick1(id: String?, name: String?)
+        fun onDialogPositiveClickIngredient(id: String?, name: String?)
         fun onDialogNegativeClick()
     }
 
@@ -50,7 +50,7 @@ class AddIngredientFragment() : DialogFragment() {
                 ) { _, _ ->
                     var ab = mRgAllButtons.checkedRadioButtonId.toString()
 
-                    listener.onDialogPositiveClick1("i", ab)
+                    listener.onDialogPositiveClickIngredient("i", ab)
                 }
                 .setNegativeButton(
                     R.string.text_cancel

@@ -13,6 +13,9 @@ import team3.recipefinder.R
 import team3.recipefinder.activity.RecipeDetailActivity
 import team3.recipefinder.dialog.EditIngredientFragment
 
+/**
+ * Custom adapter to display the ingredients in a custom listview.
+ */
 class IngredientListAdapter(private val inputContext: Context, private val ingredientNames: List<String>, private val ingredientIds: List<Long>, private val editMode: Boolean) : ArrayAdapter<String>(inputContext, R.layout.ingredient_list_item,  ingredientNames){
 
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
