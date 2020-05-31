@@ -39,7 +39,7 @@ class AddIngrFragment() : DialogFragment() {
                 for (item: Ingredient in a) {
                     val rdbtn = RadioButton(context)
                     rdbtn.id = item.id.toInt()
-                    rdbtn.text = "Item: " + item.name
+                    rdbtn.text = item.name
                     rdbtn.isChecked = true
                     mRgAllButtons.addView(rdbtn)
                 }

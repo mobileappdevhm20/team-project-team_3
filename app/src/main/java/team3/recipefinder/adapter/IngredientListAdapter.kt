@@ -1,4 +1,4 @@
-package ßteam3.recipefinder.adapter
+package team3.recipefinder.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

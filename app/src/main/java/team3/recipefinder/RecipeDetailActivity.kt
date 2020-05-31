@@ -27,7 +27,7 @@ import team3.recipefinder.dialog.AddIngrFragment
 import team3.recipefinder.dialog.AddRecipeFragment
 import team3.recipefinder.viewModelFactory.EditViewModelFactory
 import team3.recipefinder.viewmodel.RecipeDetailViewModel
-import ßteam3.recipefinder.adapter.IngredientListAdapter
+import team3.recipefinder.adapter.IngredientListAdapter
 
 
 class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener,
