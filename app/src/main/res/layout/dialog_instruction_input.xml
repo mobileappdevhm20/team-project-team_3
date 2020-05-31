@@ -4,44 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:tag="setTimerFragment">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
+        android:id="@+id/guideline_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="16dp" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+        android:id="@+id/guideline_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="16dp" />
 
     <TextView
-        android:id="@+id/text_timer_name"
+        android:id="@+id/text_instruction_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="14dp"
-        android:text="@string/text_recipe_name"
-        app:layout_constraintEnd_toStartOf="@+id/timer_name"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        android:text="@string/text_instruction"
+        app:layout_constraintEnd_toStartOf="@+id/instruction_value"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/timer_name"
+        android:id="@+id/instruction_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        app:layout_constraintBaseline_toBaselineOf="@+id/text_timer_name"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toEndOf="@+id/text_timer_name" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/text_instruction_name"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toEndOf="@+id/text_instruction_name" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

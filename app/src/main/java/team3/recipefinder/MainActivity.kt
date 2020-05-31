@@ -19,7 +19,7 @@ import team3.recipefinder.dialog.AddRecipeFragment
 import team3.recipefinder.viewModelFactory.RecipeViewModelFactory
 import team3.recipefinder.viewmodel.RecipeViewModel
 
-class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
+class MainActivity : AppCompatActivity(), AddRecipeFragment.CreateRecipeListener {
     private lateinit var viewModel: RecipeViewModel
 
     private lateinit var auth: FirebaseAuth

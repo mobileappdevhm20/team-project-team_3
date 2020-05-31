@@ -23,15 +23,16 @@ import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.recipe_detail_activity.*
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
-import team3.recipefinder.dialog.AddIngrFragment
+import team3.recipefinder.dialog.AddIngredientFragment
 import team3.recipefinder.dialog.AddRecipeFragment
 import team3.recipefinder.viewModelFactory.EditViewModelFactory
 import team3.recipefinder.viewmodel.RecipeDetailViewModel
 import team3.recipefinder.adapter.IngredientListAdapter
+import team3.recipefinder.dialog.AddInstructionFragment
 
 
-class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener,
-    AddIngrFragment.EditListListener {
+class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.CreateRecipeListener,
+    AddIngredientFragment.CreateIngredientListener, AddInstructionFragment.CreateInstructionListener{
     private lateinit var viewModel: RecipeDetailViewModel
     private var editModeActive = false
     private var ingredientListNameHolder: List<String> = emptyList()
@@ -114,39 +115,45 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
 
     }
 
-
-    fun showAddRecipeDialog(view: View) {
-        val id: String = view.getTag().toString()
+    fun showAddInstructionDialog(view: View) {
         val args = Bundle()
-        args?.putString("name", id)
+        args.putString("name", resources.getString(R.string.text_stepName))
 
-        val editTimerFragment = AddRecipeFragment()
-        editTimerFragment.arguments = args
-        editTimerFragment.show(supportFragmentManager, "Edit Timer")
+        val createInstructionFragment = AddInstructionFragment()
+        createInstructionFragment.arguments = args
+        createInstructionFragment.show(supportFragmentManager, "Create Instruction")
     }
 
-    fun showAddRecipeDialog1(view: View) {
+    fun showAddIngredientDialog(view: View) {
+        val args = Bundle()
+        args.putParcelableArrayList("name", viewModel.ingredients.value?.let { ArrayList(it) })
+
+        val createIngredientFragment = AddIngredientFragment()
+        createIngredientFragment.arguments = args
+        createIngredientFragment.show(supportFragmentManager, "Create Ingredient")
+    }
+
+    fun showEditIngredients(view: View) {
         val args = Bundle()
 
-
-        args?.putParcelableArrayList("name", viewModel.ingredients.value?.let { ArrayList(it) })
-        val editTimerFragment = AddIngrFragment()
-        editTimerFragment.arguments = args
-        editTimerFragment.show(supportFragmentManager, "Edit Timer")
+        args.putParcelableArrayList("name", viewModel.ingredients.value?.let { ArrayList(it) })
+        val editIngredientFragment = AddIngredientFragment()
+        editIngredientFragment.arguments = args
+        editIngredientFragment.show(supportFragmentManager, "Edit Ingredient")
     }
 
 
-    override fun onDialogPositiveClick(id: String?, value: String?) {
+    override fun onDialogPositiveClick(id: String?, name: String?) {
         when (id) {
-            getString(R.string.text_stepName) -> viewModel.addStep(value!!)
+            getString(R.string.text_stepName) -> viewModel.addStep(name!!)
         }
     }
 
-    override fun onDialogPositiveClick1(id: String?, value: String?) {
-        Toast.makeText(this, "bframgment ${value?.toLong()}", Toast.LENGTH_SHORT).show()
-        if (value != null && value != "-1") {
+    override fun onDialogPositiveClick1(id: String?, name: String?) {
+        Toast.makeText(this, "bframgment ${name?.toLong()}", Toast.LENGTH_SHORT).show()
+        if (name != null && name != "-1") {
 
-            viewModel.addIngredient(value.toLong())
+            viewModel.addIngredient(name.toLong())
         }
     }
 
