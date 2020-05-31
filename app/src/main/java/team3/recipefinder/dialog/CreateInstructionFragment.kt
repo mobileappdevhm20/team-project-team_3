@@ -9,7 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
 
-class AddInstructionFragment: DialogFragment() {
+class CreateInstructionFragment: DialogFragment() {
 
     // Use this instance of the interface to deliver action events
     private lateinit var listener: CreateInstructionListener

@@ -3,22 +3,24 @@ package team3.recipefinder.dialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
 
-class AddRecipeFragment() : DialogFragment() {
-
+class EditIngredientFragment: DialogFragment() {
     // Use this instance of the interface to deliver action events
-    private lateinit var listener: CreateRecipeListener
+    private lateinit var listener: EditIngredientListener
 
-    private lateinit var recipeNameField: EditText
+    private lateinit var amountTextField: EditText
+    private lateinit var ingredientTextView: TextView
 
-    interface CreateRecipeListener {
+    interface EditIngredientListener {
         fun onDialogPositiveClick(id: String?, name: String?)
         fun onDialogNegativeClick()
+        fun onDialogNeutralClick(id: Long?, name: String?)
     }
 
 
@@ -26,27 +28,38 @@ class AddRecipeFragment() : DialogFragment() {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
-            val view = inflater.inflate(R.layout.dialog_recipe_input, null)
+            val view = inflater.inflate(R.layout.dialog_edit_ingredient, null)
 
-            recipeNameField = view.findViewById(R.id.recipe_value)
-            var textValue = ""
+            amountTextField = view.findViewById(R.id.text_ingredient_amount_value)
+            ingredientTextView = view.findViewById(R.id.text_ingredient_name)
+
+            val ingredientId = requireArguments().getLong("ingredientId")
+            var ingredientName = ""
+
             if (arguments != null) {
-                textValue = requireArguments().getString("name").toString()
+                ingredientName = requireArguments().getString("ingredientName").toString()
+                val oldAmount = requireArguments().getString("oldAmount").toString()
 
-                var textView = view.findViewById<TextView>(R.id.text_recipe_name)
-                textView.text = textValue
+                ingredientTextView.text = ingredientName
+                amountTextField.hint = oldAmount
             }
 
             builder.setView(view)
                 .setPositiveButton(
                     R.string.text_edit
                 ) { _, _ ->
-                    listener.onDialogPositiveClick(textValue, recipeNameField.text.toString())
+                    listener.onDialogPositiveClick(ingredientName, amountTextField.text.toString())
                 }
                 .setNegativeButton(
                     R.string.text_cancel
                 ) { _, _ ->
                     listener.onDialogNegativeClick()
+                }
+                .setNeutralButton(
+                    R.string.text_delete
+                ) {
+                        _, _ ->
+                    listener.onDialogNeutralClick(ingredientId, ingredientName)
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
@@ -56,19 +69,19 @@ class AddRecipeFragment() : DialogFragment() {
         super.onAttach(context)
 
         try {
-            listener = context as CreateRecipeListener
+            listener = context as EditIngredientListener
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
                 (context.toString() +
-                        " must implement CreateRecipeListener")
+                        " must implement EditIngredientListener")
             )
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState?.run {
-            putString("name", recipeNameField.text.toString())
+            putString("name", amountTextField.text.toString())
         }
         super.onSaveInstanceState(outState)
     }
