@@ -4,14 +4,13 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.provider.AlarmClock
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 
 import kotlinx.coroutines.*
 import team3.recipefinder.dao.RecipeDao
 import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
-import team3.recipefinder.RecipeDetailActivity
+import team3.recipefinder.activity.RecipeDetailActivity
 
 
 class RecipeViewModel(val database: RecipeDao, application: Application) :

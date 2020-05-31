@@ -1,4 +1,4 @@
-package team3.recipefinder
+package team3.recipefinder.activity
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -21,21 +21,26 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.recipe_detail_activity.*
+import team3.recipefinder.R
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
 import team3.recipefinder.dialog.AddIngredientFragment
-import team3.recipefinder.dialog.AddRecipeFragment
+import team3.recipefinder.dialog.CreateRecipeFragment
 import team3.recipefinder.viewModelFactory.EditViewModelFactory
 import team3.recipefinder.viewmodel.RecipeDetailViewModel
 import team3.recipefinder.adapter.IngredientListAdapter
-import team3.recipefinder.dialog.AddInstructionFragment
+import team3.recipefinder.dialog.CreateInstructionFragment
+import team3.recipefinder.dialog.EditIngredientFragment
 
 
-class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.CreateRecipeListener,
-    AddIngredientFragment.CreateIngredientListener, AddInstructionFragment.CreateInstructionListener{
+class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener,
+    AddIngredientFragment.CreateIngredientListener,
+    CreateInstructionFragment.CreateInstructionListener,
+    EditIngredientFragment.EditIngredientListener {
     private lateinit var viewModel: RecipeDetailViewModel
     private var editModeActive = false
     private var ingredientListNameHolder: List<String> = emptyList()
+    private var ingredientListIdHolder: List<Long> = emptyList()
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("RestrictedApi")
@@ -43,12 +48,17 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.CreateRecipe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recipe_detail_activity)
 
-        var binding: RecipeDetailActivityBinding =
-            DataBindingUtil.setContentView(this, R.layout.recipe_detail_activity)
+        val ingredientListView: ListView = findViewById(R.id.ingredientList)
+        val instructionListView = findViewById<ListView>(R.id.stepList)
+
+        val binding: RecipeDetailActivityBinding =
+            DataBindingUtil.setContentView(this,
+                R.layout.recipe_detail_activity
+            )
 
         // Get the Intent that started this activity and extract the string
         val message = intent.getStringExtra(EXTRA_MESSAGE)
-        val recipeKey = message.toLong()
+        val recipeKey = message!!.toLong()
 
         val application = requireNotNull(this).application
 
@@ -68,33 +78,32 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.CreateRecipe
         binding.model = viewModel
 
         viewModel.recipe.observe(this, Observer {
-            Log.i("MainActivity", "OBSERVER CALLED RR ${it.name}")
+            Log.i("RecipeDetailActivity", "OBSERVER CALLED FOR ${it.name}")
             val toolBar = findViewById<Toolbar>(R.id.toolbar)
             toolBar.title = it.name
         })
 
 
         viewModel.stepsRecipe.observe(this, Observer { it ->
-            val listView = findViewById<ListView>(R.id.stepList)
-
             val adapter = ArrayAdapter(
                 this, android.R.layout.simple_list_item_1,
                 it.map { s -> s.description }.toList()
             )
-            listView.adapter = adapter
+            instructionListView.adapter = adapter
 
-            justifyListViewHeightBasedOnChildren(listView)
+            justifyListViewHeightBasedOnChildren(instructionListView)
         })
 
         viewModel.ingredients.observe(this, Observer { })
         viewModel.ingredientRecipe.observe(this, Observer { it ->
             ingredientListNameHolder = it.map { i -> i.name }.toList()
-            createAndSetListViewAdapter(ingredientListNameHolder, editModeActive)
+            ingredientListIdHolder = it.map { i -> i.id }.toList()
+            createAndSetListViewAdapter(ingredientListNameHolder, ingredientListIdHolder,  editModeActive)
         })
 
         viewModel.editMode.observe(this, Observer {
             editModeActive = it
-            createAndSetListViewAdapter(ingredientListNameHolder, editModeActive)
+            createAndSetListViewAdapter(ingredientListNameHolder, ingredientListIdHolder, editModeActive)
             changeListItemBehaviour(it)
 
             if (it) {
@@ -111,15 +120,13 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.CreateRecipe
                 addIngredientButton.visibility = View.GONE
             }
         })
-
-
     }
 
     fun showAddInstructionDialog(view: View) {
         val args = Bundle()
         args.putString("name", resources.getString(R.string.text_stepName))
 
-        val createInstructionFragment = AddInstructionFragment()
+        val createInstructionFragment = CreateInstructionFragment()
         createInstructionFragment.arguments = args
         createInstructionFragment.show(supportFragmentManager, "Create Instruction")
     }
@@ -133,11 +140,14 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.CreateRecipe
         createIngredientFragment.show(supportFragmentManager, "Create Ingredient")
     }
 
-    fun showEditIngredients(view: View) {
+    fun showEditIngredients(currentId: Long, name: String, oldAmount: String) {
         val args = Bundle()
+        args.putLong("ingredientId", currentId)
+        args.putString("ingredientName", name)
+        args.putString("oldAmount", oldAmount)
 
-        args.putParcelableArrayList("name", viewModel.ingredients.value?.let { ArrayList(it) })
-        val editIngredientFragment = AddIngredientFragment()
+        val editIngredientFragment =
+            EditIngredientFragment()
         editIngredientFragment.arguments = args
         editIngredientFragment.show(supportFragmentManager, "Edit Ingredient")
     }
@@ -157,8 +167,10 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.CreateRecipe
         }
     }
 
-    override fun onDialogNegativeClick() {
+    override fun onDialogNegativeClick() {}
 
+    override fun onDialogNeutralClick(id: Long?, name: String?) {
+        Log.i("RecipeDetailActivity", "Deleterequest for id = $id and name = $name")
     }
 
     private fun changeListItemBehaviour(editMode: Boolean) {
@@ -191,9 +203,9 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.CreateRecipe
     }
 
 
-    private fun createAndSetListViewAdapter(ingredientNames: List<String>, editMode: Boolean) {
+    private fun createAndSetListViewAdapter(ingredientNames: List<String>, ingredientIds: List<Long>, editMode: Boolean) {
         val listView = findViewById<ListView>(R.id.ingredientList)
-        val ingredientListAdapter = IngredientListAdapter(this, ingredientNames, editMode)
+        val ingredientListAdapter = IngredientListAdapter(this, ingredientNames, ingredientIds, editMode)
 
         listView.adapter = ingredientListAdapter
 

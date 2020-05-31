@@ -30,4 +30,6 @@
     <string name="create_ingredient">Create Ingredient</string>
     <string name="text_instructionFragName">Instructions</string>
     <string name="text_instruction">Instruction:</string>
+    <string name="test_new_amount">New amount:</string>
+    <string name="text_delete">Delete</string>
 </resources>

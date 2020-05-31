@@ -1,4 +1,4 @@
-package team3.recipefinder
+package team3.recipefinder.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import team3.recipefinder.listener.RecipeListener
 import team3.recipefinder.databinding.RecipeViewHolderBinding
 import team3.recipefinder.model.Recipe
 

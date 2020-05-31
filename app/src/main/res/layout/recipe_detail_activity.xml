@@ -38,25 +38,25 @@
             android:src="@drawable/ic_edit_white_24dp"
             android:text="@string/edit_text"
             app:backgroundTint="@color/primaryColor"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toStartOf="@+id/shareButton"
             app:layout_constraintHorizontal_bias="0.96"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"/>
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/shareButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:src="@drawable/ic_share_white_24dp"
             android:text="@string/share_recipe"
-            android:layout_marginStart="10dp"
             app:backgroundTint="@color/primaryColor"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/editButton"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"/>
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -67,9 +67,11 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/ingrediant_name"
                     style="@style/RecifyTheme.Base.SubtitleRecipeDetail"
@@ -92,18 +94,18 @@
                     app:layout_constraintEnd_toStartOf="@id/end_guideline"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@id/start_guideline"
-                    app:layout_constraintTop_toBottomOf="@+id/ingrediant_name"/>
+                    app:layout_constraintTop_toBottomOf="@+id/ingrediant_name" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/addIngredientButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:scaleType="center"
+                    android:layout_marginBottom="@dimen/buttom_margin"
                     android:clickable="false"
                     android:onClick="showAddIngredientDialog"
+                    android:scaleType="center"
                     android:src="@drawable/ic_add_black_24dp"
                     android:text="@string/text_addIngredient"
-                    android:layout_marginBottom="@dimen/buttom_margin"
                     app:backgroundTint="#cccccc"
                     app:fabSize="mini"
                     app:layout_constraintBottom_toTopOf="@+id/instruction_name"
@@ -117,8 +119,8 @@
                     style="@style/RecifyTheme.Base.SubtitleRecipeDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_stepName"
                     android:layout_marginTop="@dimen/text_margin"
+                    android:text="@string/text_stepName"
                     app:layout_constraintBottom_toTopOf="@+id/stepList"
                     app:layout_constraintEnd_toStartOf="@id/end_guideline"
                     app:layout_constraintHorizontal_bias="0"
@@ -129,8 +131,8 @@
                     android:id="@+id/stepList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:isScrollContainer="false"
                     android:layout_marginTop="10dp"
+                    android:isScrollContainer="false"
                     app:layout_constraintBottom_toTopOf="@+id/addStepButton"
                     app:layout_constraintEnd_toStartOf="@id/end_guideline"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -139,20 +141,20 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/addStepButton"
-                    android:layout_marginBottom="@dimen/buttom_margin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/buttom_margin"
                     android:onClick="showAddInstructionDialog"
                     android:src="@drawable/ic_add_black_24dp"
                     android:tag="@string/text_stepName"
                     android:text="@string/text_addStep"
                     app:backgroundTint="#cccccc"
                     app:fabSize="mini"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/end_guideline"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@id/start_guideline"
-                    app:layout_constraintTop_toBottomOf="@+id/stepList"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toBottomOf="@+id/stepList" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/start_guideline"

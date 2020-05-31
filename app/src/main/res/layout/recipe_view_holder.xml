@@ -12,7 +12,7 @@
 
         <variable
             name="listener"
-            type="team3.recipefinder.RecipeListener" />
+            type="team3.recipefinder.listener.RecipeListener" />
     </data>
 
     <LinearLayout

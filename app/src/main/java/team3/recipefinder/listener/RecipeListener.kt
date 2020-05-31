@@ -1,4 +1,4 @@
-package team3.recipefinder
+package team3.recipefinder.listener
 
 
 import team3.recipefinder.model.Recipe

@@ -13,13 +13,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import team3.recipefinder.activity.LoginActivity
+import team3.recipefinder.adapter.RecipeAdapter
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.MainActivityBinding
-import team3.recipefinder.dialog.AddRecipeFragment
+import team3.recipefinder.dialog.CreateRecipeFragment
+import team3.recipefinder.listener.RecipeListener
 import team3.recipefinder.viewModelFactory.RecipeViewModelFactory
 import team3.recipefinder.viewmodel.RecipeViewModel
 
-class MainActivity : AppCompatActivity(), AddRecipeFragment.CreateRecipeListener {
+class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener {
     private lateinit var viewModel: RecipeViewModel
 
     private lateinit var auth: FirebaseAuth
@@ -80,7 +82,7 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.CreateRecipeListener
         val args = Bundle()
         args.putString("name", resources.getString(R.string.text_recipeFragName))
 
-        val createRecipeFragment = AddRecipeFragment()
+        val createRecipeFragment = CreateRecipeFragment()
         createRecipeFragment.arguments = args
         createRecipeFragment.show(supportFragmentManager, "Create Recipe")
     }
@@ -89,7 +91,7 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.CreateRecipeListener
         val args = Bundle()
         args.putString("name", resources.getString(R.string.text_ingredientFragName))
 
-        val createRecipeFragment = AddRecipeFragment()
+        val createRecipeFragment = CreateRecipeFragment()
         createRecipeFragment.arguments = args
         createRecipeFragment.show(supportFragmentManager, "Create Ingredient")
     }
