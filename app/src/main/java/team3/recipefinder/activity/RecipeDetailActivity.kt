@@ -10,16 +10,17 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.recipe_detail_activity.*
+import kotlinx.android.synthetic.main.recipe_instruction_card.view.*
 import team3.recipefinder.R
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
@@ -30,6 +31,8 @@ import team3.recipefinder.viewmodel.RecipeDetailViewModel
 import team3.recipefinder.adapter.IngredientListAdapter
 import team3.recipefinder.dialog.CreateInstructionFragment
 import team3.recipefinder.dialog.EditIngredientFragment
+import team3.recipefinder.model.RecipeStep
+import team3.recipefinder.util.extractTime
 
 
 class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener,
@@ -47,8 +50,6 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recipe_detail_activity)
 
-        val instructionListView = findViewById<ListView>(R.id.stepList)
-
         val binding: RecipeDetailActivityBinding =
             DataBindingUtil.setContentView(this,
                 R.layout.recipe_detail_activity
@@ -58,7 +59,7 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
 
         val application = requireNotNull(this).application
 
-        // Get DAO instance<
+        // Get DAO instance
         val dataSource = getAppDatabase(application).recipeDao()
 
         // Create ViewModel
@@ -79,15 +80,23 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
             toolBar.title = it.name
         })
 
+        viewModel.stepsRecipe.observe(this, Observer { instructions ->
+            stepList.removeAllViews()
+            instructions.forEach { instruction ->
+                val view = layoutInflater.inflate(R.layout.recipe_instruction_card, null)
+                view.findViewById<TextView>(R.id.instructionText).text = instruction.description
 
-        viewModel.stepsRecipe.observe(this, Observer { it ->
-            val adapter = ArrayAdapter(
-                this, android.R.layout.simple_list_item_1,
-                it.map { s -> s.description }.toList()
-            )
-            instructionListView.adapter = adapter
+                val timerValue = instruction.description.extractTime()
 
-            justifyListViewHeightBasedOnChildren(instructionListView)
+                val timerButton = view.findViewById<Button>(R.id.timerButton)
+                val layout = view.findViewById<ConstraintLayout>(R.id.instructionCardLayout)
+
+                if (timerValue == 0) {
+                    layout.removeView(timerButton)
+                }
+
+                stepList.addView(view)
+            }
         })
 
         viewModel.ingredients.observe(this, Observer { })

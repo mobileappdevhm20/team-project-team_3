@@ -4,4 +4,6 @@
     <color name="primaryLightColor">#6dd1ff</color>
     <color name="primaryDarkColor">#0072c7</color>
     <color name="primaryTextColor">#000000</color>
+    <color name="timer_button_color">#E1EEF9</color>
+    <color name="timer_button_text_color">#59AEF2</color>
 </resources>

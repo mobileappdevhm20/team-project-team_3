@@ -127,8 +127,9 @@
                     app:layout_constraintStart_toEndOf="@id/start_guideline"
                     app:layout_constraintTop_toBottomOf="@+id/addIngredientButton" />
 
-                <ListView
+                <LinearLayout
                     android:id="@+id/stepList"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
