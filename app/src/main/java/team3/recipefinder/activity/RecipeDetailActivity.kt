@@ -35,7 +35,8 @@ import team3.recipefinder.util.startTimer
 class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener,
     AddIngredientFragment.CreateIngredientListener,
     CreateInstructionFragment.CreateInstructionListener,
-    EditIngredientFragment.EditIngredientListener , CreateIngredientFragment.EditRecipeListener {
+    EditIngredientFragment.EditIngredientListener , CreateIngredientFragment.EditRecipeListener,
+    EditInstructionFragment.EditInstructionListener{
     private lateinit var viewModel: RecipeDetailViewModel
     private var editModeActive = false
     private var ingredientListNameHolder: List<String> = emptyList()
@@ -108,6 +109,12 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
                     checkMark.setImageResource(R.drawable.green_check)
                 }
 
+                view.setOnLongClickListener {
+                    if (editModeActive) {
+                        showEditInstructions(instruction.id, instruction.description)
+                    }
+                    true
+                }
                 stepList.addView(view)
             }
         })
@@ -187,6 +194,23 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         editIngredientFragment.show(supportFragmentManager, "Edit Ingredient")
     }
 
+    /**
+     * OnClick method to show add edit ingredient dialog.
+     *
+     * @property currentId the database id of the current instruction
+     * @property instruction the instrcution description of the current instruction
+     */
+    fun showEditInstructions(currentId: Long, instruction: String) {
+        val args = Bundle()
+        args.putLong("relInstructionId", currentId)
+        args.putString("oldInstruction", instruction)
+
+        val editInstructionFragment =
+            EditInstructionFragment()
+        editInstructionFragment.arguments = args
+        editInstructionFragment.show(supportFragmentManager, "Edit Instruction")
+    }
+
     private fun showAddItemDialog(id: String) {
         val args = Bundle()
         args.putString("name", id)
@@ -211,7 +235,6 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
      * Method that handles the positiveClick specificly for the AddIngriedient dialog.
      */
     override fun onDialogPositiveEditIngredient(id: Long?, name: String?, amount: String?) {
-        // TODO update ingredient
         viewModel.updateIngredientAmount(id!!, amount!!)
     }
 
@@ -230,10 +253,20 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         }
     }
 
+    override fun onDialogPositiveEditInstruction(id: Long?, instruction: String?) {
+        Toast.makeText(this, "Updating....", Toast.LENGTH_LONG).show()
+        viewModel.updateStep(id!!, instruction!!)
+    }
+
     /**
      * Method that handles the negativeClick for the different dialogs.
      */
     override fun onDialogNegativeClick() {}
+
+    override fun onDialogNeutralEditInstruction(id: Long?) {
+        Toast.makeText(this, "Deleting....", Toast.LENGTH_LONG).show()
+        viewModel.removeStepFromRecipe(id!!)
+    }
 
     override fun openCreateIngredientDialog() {
         showAddItemDialog(getString(R.string.text_ingredientName))}

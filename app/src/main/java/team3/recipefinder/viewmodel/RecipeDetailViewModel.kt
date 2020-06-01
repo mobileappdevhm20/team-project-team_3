@@ -116,5 +116,28 @@ class RecipeDetailViewModel(
         }
     }
 
+    private suspend fun updateStepById(stepId: Long, description: String) {
+        withContext(Dispatchers.IO) {
+            database.updateStep(stepId, description)
+        }
+    }
+
+    fun updateStep(stepId: Long, description: String) {
+        uiScope.launch {
+            updateStepById(stepId, description)
+        }
+    }
+
+    private suspend fun removeStepFromRecipeById(stepId: Long, recipeId: Long) {
+        withContext(Dispatchers.IO) {
+            database.removeStepFromRecipe(stepId, recipeId)
+        }
+    }
+
+    fun removeStepFromRecipe(stepId: Long) {
+        uiScope.launch {
+            removeStepFromRecipeById(stepId, recipeKey)
+        }
+    }
 }
 

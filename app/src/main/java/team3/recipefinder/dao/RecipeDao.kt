@@ -53,6 +53,13 @@ interface RecipeDao {
     @Insert
     fun insertStep(step: RecipeStep): Long
 
+
+    @Query("UPDATE step SET description = :description WHERE id = :stepId")
+    fun updateStep(stepId: Long, description: String)
+
+    @Delete
+    fun deleteStep(step: RecipeStep)
+
     @Query("""SELECT s.* FROM step s
             INNER JOIN rel_recipe_step r 
             ON s.id = r.stepId 
