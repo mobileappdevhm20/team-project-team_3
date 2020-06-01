@@ -40,7 +40,8 @@ data class RelRecipeIngredient(
 data class IngredientAmount(
     val id: Long,
     val name: String,
-    val amount: String
+    val amount: String,
+    val relId: Long
 )
 
 

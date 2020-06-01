@@ -5,10 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
@@ -25,7 +22,8 @@ class AddIngredientFragment() : DialogFragment() {
 
     interface CreateIngredientListener {
         fun onDialogPositiveClickIngredient(amount: String?, name: String?)
-        fun onDialogNegativeClick2()
+        fun onDialogNegativeClick()
+        fun openCreateIngredientDialog()
     }
     private lateinit var viewModel: RecipeDetailViewModel
 
@@ -63,7 +61,7 @@ class AddIngredientFragment() : DialogFragment() {
 
             button.setOnClickListener {
                 dialog?.dismiss()
-                listener.onDialogNegativeClick2()
+                listener.openCreateIngredientDialog()
 
             }
 
@@ -73,13 +71,19 @@ class AddIngredientFragment() : DialogFragment() {
                     R.string.text_edit
                 ) { _, _ ->
                     checkedBox = mRgAllButtons?.checkedRadioButtonId.toString()
-
-                    listener.onDialogPositiveClickIngredient(amountEditText.text.toString(), checkedBox)
+                    if (amountEditText.text.toString() == "") {
+                        Toast.makeText(activity, "Please enter an amount.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        listener.onDialogPositiveClickIngredient(
+                            amountEditText.text.toString(),
+                            checkedBox
+                        )
+                    }
                 }
                 .setNegativeButton(
                     R.string.text_cancel
                 ) { _, _ ->
-                    listener.onDialogNegativeClick2()
+                    listener.onDialogNegativeClick()
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")

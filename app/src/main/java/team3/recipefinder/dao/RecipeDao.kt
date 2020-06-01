@@ -23,19 +23,23 @@ interface RecipeDao {
     @Insert
     fun insertRecipe(recipe: Recipe): Long
 
-    @Query("""SELECT i.*,r.amount FROM ingredient i 
+    @Query("""SELECT i.*,r.amount, r.id as relId FROM ingredient i 
             INNER JOIN rel_recipe_ingredient r 
             ON i.id = r.ingredientId 
             WHERE r.recipeId = :recipeId""")
     fun getAllIngredientsByRecipe(recipeId: Long): LiveData<List<IngredientAmount>>
 
-
     @Query("SELECT * FROM ingredient")
     fun getAllIngredients(): LiveData<List<Ingredient>>
 
+    @Query("UPDATE rel_recipe_ingredient SET amount = :amount WHERE id = :id")
+    fun updateAmountForRecipe(id: Long, amount: String)
+
+    @Query("DELETE FROM rel_recipe_ingredient WHERE id = :id")
+    fun deleteIngredientFromRelationById(id: Long)
+
 
     @Insert
-
     fun insertIngredient(ingredient: Ingredient): Long
 
     @Query("""INSERT INTO rel_recipe_ingredient (recipeId, ingredientId,amount)

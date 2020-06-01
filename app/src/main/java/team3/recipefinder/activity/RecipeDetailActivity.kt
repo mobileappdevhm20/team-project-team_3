@@ -10,9 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -26,13 +24,10 @@ import kotlinx.android.synthetic.main.recipe_detail_activity.*
 import team3.recipefinder.R
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
-import team3.recipefinder.dialog.AddIngredientFragment
-import team3.recipefinder.dialog.CreateRecipeFragment
 import team3.recipefinder.viewModelFactory.EditViewModelFactory
 import team3.recipefinder.viewmodel.RecipeDetailViewModel
 import team3.recipefinder.adapter.IngredientListAdapter
-import team3.recipefinder.dialog.CreateInstructionFragment
-import team3.recipefinder.dialog.EditIngredientFragment
+import team3.recipefinder.dialog.*
 import team3.recipefinder.util.extractTime
 import team3.recipefinder.util.startTimer
 
@@ -40,7 +35,7 @@ import team3.recipefinder.util.startTimer
 class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener,
     AddIngredientFragment.CreateIngredientListener,
     CreateInstructionFragment.CreateInstructionListener,
-    EditIngredientFragment.EditIngredientListener {
+    EditIngredientFragment.EditIngredientListener , CreateIngredientFragment.EditRecipeListener {
     private lateinit var viewModel: RecipeDetailViewModel
     private var editModeActive = false
     private var ingredientListNameHolder: List<String> = emptyList()
@@ -121,7 +116,7 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         viewModel.ingredientRecipe.observe(this, Observer { it ->
             // Save ingredientNameList and ingredientIdList to update the list view inside the editMode observer
             ingredientListNameHolder = it.map { i -> i.name }.toList()
-            ingredientListIdHolder = it.map { i -> i.id }.toList()
+            ingredientListIdHolder = it.map { i -> i.relId }.toList()
             ingredientListAmountHolder = it.map { i -> i.amount }.toList()
             createAndSetListViewAdapter(ingredientListNameHolder, ingredientListAmountHolder, ingredientListIdHolder,  editModeActive)
         })
@@ -196,7 +191,7 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         val args = Bundle()
         args.putString("name", id)
 
-        val editTimerFragment = AddItemFragment()
+        val editTimerFragment = CreateIngredientFragment()
         editTimerFragment.arguments = args
         editTimerFragment.show(supportFragmentManager, "Add Item")
 
@@ -215,8 +210,15 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
     /**
      * Method that handles the positiveClick specificly for the AddIngriedient dialog.
      */
+    override fun onDialogPositiveEditIngredient(id: Long?, name: String?, amount: String?) {
+        // TODO update ingredient
+        viewModel.updateIngredientAmount(id!!, amount!!)
+    }
+
+    /**
+     * Method that handles the positiveClick specificly for the AddIngriedient dialog.
+     */
     override fun onDialogPositiveClickIngredient(amount: String?, name: String?) {
-        Toast.makeText(this, "bframgment ${name?.toLong()}", Toast.LENGTH_SHORT).show()
         val prev: Fragment? = supportFragmentManager.findFragmentByTag("Add Ingredient")
         if (prev != null) {
             val df: DialogFragment = prev as DialogFragment
@@ -233,8 +235,9 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
      */
     override fun onDialogNegativeClick() {}
 
-    override fun onDialogNegativeClick2() {
+    override fun openCreateIngredientDialog() {
         showAddItemDialog(getString(R.string.text_ingredientName))}
+
 
     /**
      * Method that handles the neutralClick specificly for the EditIngredient dialog.
@@ -246,6 +249,7 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
      */
     override fun onDialogNeutralClick(id: Long?, name: String?) {
         Log.i("RecipeDetailActivity", "Deleterequest for id = $id and name = $name")
+        viewModel.deleteIngredientRelation(id!!)
     }
 
     /**
@@ -318,5 +322,23 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         par.height = totalHeight + listView.dividerHeight * (adapter.count - 1)
         listView.layoutParams = par
         listView.requestLayout()
+    }
+
+    override fun saveItem(id: String?, name: String?) {
+        when (id) {
+            getString(R.string.text_stepName) -> {
+                if (name != null) {
+                    viewModel.addStep(name)
+                }
+            }
+            getString(R.string.text_ingredientName) -> {
+
+                if (name != null) {
+                    viewModel.addIngredient(name)
+                } else {
+                    showAddIngredientDialog(View(this))
+                }
+            }
+        }
     }
 }

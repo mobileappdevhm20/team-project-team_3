@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
@@ -18,7 +19,7 @@ class EditIngredientFragment: DialogFragment() {
     private lateinit var ingredientTextView: TextView
 
     interface EditIngredientListener {
-        fun onDialogPositiveClick(id: String?, name: String?)
+        fun onDialogPositiveEditIngredient(id: Long?, name: String?, amount: String?)
         fun onDialogNegativeClick()
         fun onDialogNeutralClick(id: Long?, name: String?)
     }
@@ -48,7 +49,15 @@ class EditIngredientFragment: DialogFragment() {
                 .setPositiveButton(
                     R.string.text_edit
                 ) { _, _ ->
-                    listener.onDialogPositiveClick(ingredientName, amountTextField.text.toString())
+                    if (amountTextField.text.toString() == "") {
+                        Toast.makeText(activity, "Please enter an amount.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        listener.onDialogPositiveEditIngredient(
+                            ingredientId,
+                            ingredientName,
+                            amountTextField.text.toString()
+                        )
+                    }
                 }
                 .setNegativeButton(
                     R.string.text_cancel
@@ -80,7 +89,7 @@ class EditIngredientFragment: DialogFragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState?.run {
+        outState.run {
             putString("name", amountTextField.text.toString())
         }
         super.onSaveInstanceState(outState)

@@ -9,12 +9,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
 
-class AddItemFragment() : DialogFragment() {
+class CreateIngredientFragment() : DialogFragment() {
 
     // Use this instance of the interface to deliver action events
     private lateinit var listener: EditRecipeListener
 
-    private lateinit var recipeNameField: EditText
+    private lateinit var ingredientEditText: EditText
 
     interface EditRecipeListener {
         fun saveItem(id: String?, name: String?)
@@ -25,9 +25,9 @@ class AddItemFragment() : DialogFragment() {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
-            val view = inflater.inflate(R.layout.dialog_item_input, null)
+            val view = inflater.inflate(R.layout.dialog_create_ingredient_input, null)
 
-            recipeNameField = view.findViewById(R.id.name)
+            ingredientEditText = view.findViewById(R.id.name)
             var textValue = ""
             if (arguments != null) {
                 textValue = requireArguments().getString("name").toString()
@@ -40,7 +40,7 @@ class AddItemFragment() : DialogFragment() {
                 .setPositiveButton(
                     R.string.text_edit
                 ) { _, _ ->
-                    listener.saveItem(textValue, recipeNameField.text.toString())
+                    listener.saveItem(textValue, ingredientEditText.text.toString())
                 }
                 .setNegativeButton(
                     R.string.text_cancel
@@ -61,14 +61,14 @@ class AddItemFragment() : DialogFragment() {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
                 (context.toString() +
-                        " must implement NoticeDialogListener")
+                        " must implement EditRecipeListener")
             )
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState?.run {
-            putString("name", recipeNameField.text.toString())
+            putString("name", ingredientEditText.text.toString())
         }
         super.onSaveInstanceState(outState)
     }

@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:autofillHints="TODO Current Amount"
         android:ems="10"
-        android:inputType="number"
+        android:inputType="text"
         app:layout_constraintBaseline_toBaselineOf="@+id/text_ingredient_amount"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toEndOf="@+id/text_ingredient_amount" />

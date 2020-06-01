@@ -16,7 +16,7 @@ import team3.recipefinder.dialog.EditIngredientFragment
 /**
  * Custom adapter to display the ingredients in a custom listview.
  */
-class IngredientListAdapter(private val inputContext: Context, private val ingredientNames: List<String>, private val ingredientAmounts: List<String>, private val ingredientIds: List<Long>, private val editMode: Boolean) : ArrayAdapter<String>(inputContext, R.layout.ingredient_list_item,  ingredientNames){
+class IngredientListAdapter(private val inputContext: Context, private val ingredientNames: List<String>, private val ingredientAmounts: List<String>, private val relationIds: List<Long>, private val editMode: Boolean) : ArrayAdapter<String>(inputContext, R.layout.ingredient_list_item,  ingredientNames){
 
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
         val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -26,9 +26,10 @@ class IngredientListAdapter(private val inputContext: Context, private val ingre
         val name = rowView.findViewById(R.id.ingredient_item__name) as TextView
         val editImageView = rowView.findViewById(R.id.edit_ingredient) as ImageView
 
-        val currentId = ingredientIds[position]
+        val currentId = relationIds[position]
         val currentIngredient = ingredientNames[position]
         val currentAmount = ingredientAmounts[position]
+
 
         amount.text = currentAmount
         name.text = currentIngredient

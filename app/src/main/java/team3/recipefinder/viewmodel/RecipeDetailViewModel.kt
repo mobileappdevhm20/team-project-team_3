@@ -73,6 +73,30 @@ class RecipeDetailViewModel(
         }
     }
 
+    private suspend fun updateIngredient(id: Long, amount: String) {
+        withContext(Dispatchers.IO) {
+            database.updateAmountForRecipe(id, amount)
+        }
+    }
+
+    private suspend fun deleteIngredientFromRecipe(id: Long) {
+        withContext(Dispatchers.IO) {
+            database.deleteIngredientFromRelationById(id)
+        }
+    }
+
+    fun updateIngredientAmount(id: Long, amount: String) {
+        uiScope.launch {
+            updateIngredient(id, amount)
+        }
+    }
+
+    fun deleteIngredientRelation(id: Long) {
+        uiScope.launch {
+            deleteIngredientFromRecipe(id)
+        }
+    }
+
     fun addStep(name: String) {
         uiScope.launch {
             val step = RecipeStep(0, name)
