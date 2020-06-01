@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -25,10 +26,15 @@ import kotlinx.android.synthetic.main.recipe_detail_activity.*
 import team3.recipefinder.R
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
+import team3.recipefinder.dialog.AddIngredientFragment
+import team3.recipefinder.dialog.CreateRecipeFragment
 import team3.recipefinder.viewModelFactory.EditViewModelFactory
 import team3.recipefinder.viewmodel.RecipeDetailViewModel
 import team3.recipefinder.adapter.IngredientListAdapter
-import team3.recipefinder.dialog.*
+import team3.recipefinder.dialog.CreateInstructionFragment
+import team3.recipefinder.dialog.EditIngredientFragment
+import team3.recipefinder.util.extractTime
+import team3.recipefinder.util.startTimer
 
 
 class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener,
@@ -40,14 +46,13 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
     private var ingredientListNameHolder: List<String> = emptyList()
     private var ingredientListAmountHolder: List<String> = emptyList()
     private var ingredientListIdHolder: List<Long> = emptyList()
+    private val checkedSteps = hashSetOf<Long>()
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recipe_detail_activity)
-
-        val instructionListView = findViewById<ListView>(R.id.stepList)
 
         val binding: RecipeDetailActivityBinding =
             DataBindingUtil.setContentView(this,
@@ -58,7 +63,7 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
 
         val application = requireNotNull(this).application
 
-        // Get DAO instance<
+        // Get DAO instance
         val dataSource = getAppDatabase(application).recipeDao()
 
         // Create ViewModel
@@ -79,15 +84,37 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
             toolBar.title = it.name
         })
 
+        viewModel.stepsRecipe.observe(this, Observer { instructions ->
+            stepList.removeAllViews()
+            instructions.forEach { instruction ->
+                val view = layoutInflater.inflate(R.layout.recipe_instruction_card, null)
+                view.findViewById<TextView>(R.id.instructionText).text = instruction.description
 
-        viewModel.stepsRecipe.observe(this, Observer { it ->
-            val adapter = ArrayAdapter(
-                this, android.R.layout.simple_list_item_1,
-                it.map { s -> s.description }.toList()
-            )
-            instructionListView.adapter = adapter
+                val timerValue = instruction.description.extractTime()
 
-            justifyListViewHeightBasedOnChildren(instructionListView)
+                val timerButton = view.findViewById<Button>(R.id.timerButton)
+                val layout = view.findViewById<ConstraintLayout>(R.id.instructionCardLayout)
+                val checkMark = view.findViewById<ImageView>(R.id.checkMark)
+
+                if (timerValue == 0) {
+                    layout.removeView(timerButton)
+                } else {
+                    timerButton.setOnClickListener { timerValue.startTimer(this, instruction.description) }
+                }
+
+                if (checkedSteps.contains(instruction.id)) {
+                    checkMark.setImageResource(R.drawable.green_check)
+                } else {
+                    checkMark.setImageResource(R.drawable.gray_check)
+                }
+
+                checkMark.setOnClickListener {
+                    checkedSteps.plusElement(instruction.id)
+                    checkMark.setImageResource(R.drawable.green_check)
+                }
+
+                stepList.addView(view)
+            }
         })
 
         viewModel.ingredients.observe(this, Observer { })
