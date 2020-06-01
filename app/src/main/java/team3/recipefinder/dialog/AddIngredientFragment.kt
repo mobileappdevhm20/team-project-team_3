@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -12,9 +11,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.Observer
 import team3.recipefinder.R
-import team3.recipefinder.databinding.RecipeDetailActivityBinding
 import team3.recipefinder.model.Ingredient
 import team3.recipefinder.viewmodel.RecipeDetailViewModel
 import java.util.ArrayList
@@ -28,7 +25,7 @@ class AddIngredientFragment() : DialogFragment() {
 
     interface EditListListener {
         fun onDialogPositiveClick1(amount: String?, name: String?)
-        fun onDialogPositiveClick2()
+        fun onDialogNegativeClick2()
 
     }
     private lateinit var viewModel: RecipeDetailViewModel
@@ -55,7 +52,7 @@ class AddIngredientFragment() : DialogFragment() {
 
             button.setOnClickListener {
                 dialog?.dismiss()
-                listener.onDialogPositiveClick2()
+                listener.onDialogNegativeClick2()
 
             }
 

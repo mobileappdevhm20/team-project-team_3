@@ -166,7 +166,7 @@ class RecipeDetailActivity : AppCompatActivity(), AddItemFragment.EditRecipeList
 
     }
 
-    override fun onDialogPositiveClick2() {
+    override fun onDialogNegativeClick2() {
         showAddItemDialog(getString(R.string.text_ingredientName))}
 
 
