@@ -1,72 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:tag="setTimerFragment">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp" />
-
+    android:tag="setTimerFragment"
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/buttonAddIngediant"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:tag="@string/text_ingredientName"
         android:text="@string/text_addIngredient"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="32dp" />
+        android:layout_marginEnd="@dimen/fragment_margin"
+        android:layout_marginStart="@dimen/fragment_margin"
+        android:layout_width="match_parent" />
 
     <EditText
         android:id="@+id/amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="96dp"
+        android:autofillHints="5 tbs"
         android:hint="@string/amount"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        android:inputType="text"
+        android:layout_marginEnd="@dimen/fragment_margin"
+        android:layout_marginStart="@dimen/fragment_margin"/>
 
     <ScrollView
         android:id="@+id/scrollView2"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/amount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddIngediant">
+        android:layout_marginEnd="@dimen/fragment_margin"
+        android:layout_marginStart="@dimen/fragment_margin">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RadioGroup
-                android:id="@+id/radiogroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:orientation="vertical">
+        <RadioGroup
+            android:id="@+id/radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            </RadioGroup>
+        </RadioGroup>
+
         </LinearLayout>
     </ScrollView>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
