@@ -15,12 +15,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.recipe_detail_activity.*
-import kotlinx.android.synthetic.main.recipe_instruction_card.view.*
 import team3.recipefinder.R
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
@@ -31,7 +29,6 @@ import team3.recipefinder.viewmodel.RecipeDetailViewModel
 import team3.recipefinder.adapter.IngredientListAdapter
 import team3.recipefinder.dialog.CreateInstructionFragment
 import team3.recipefinder.dialog.EditIngredientFragment
-import team3.recipefinder.model.RecipeStep
 import team3.recipefinder.util.extractTime
 
 
@@ -43,6 +40,7 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
     private var editModeActive = false
     private var ingredientListNameHolder: List<String> = emptyList()
     private var ingredientListIdHolder: List<Long> = emptyList()
+    private val checkedSteps = hashSetOf<Long>()
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("RestrictedApi")
@@ -90,9 +88,21 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
 
                 val timerButton = view.findViewById<Button>(R.id.timerButton)
                 val layout = view.findViewById<ConstraintLayout>(R.id.instructionCardLayout)
+                val checkMark = view.findViewById<ImageView>(R.id.checkMark)
 
                 if (timerValue == 0) {
                     layout.removeView(timerButton)
+                }
+
+                if (checkedSteps.contains(instruction.id)) {
+                    checkMark.setImageResource(R.drawable.green_check)
+                } else {
+                    checkMark.setImageResource(R.drawable.gray_check)
+                }
+
+                checkMark.setOnClickListener {
+                    checkedSteps.plusElement(instruction.id)
+                    checkMark.setImageResource(R.drawable.green_check)
                 }
 
                 stepList.addView(view)
