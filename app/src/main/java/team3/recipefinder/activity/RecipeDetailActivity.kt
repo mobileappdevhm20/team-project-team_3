@@ -30,6 +30,7 @@ import team3.recipefinder.adapter.IngredientListAdapter
 import team3.recipefinder.dialog.CreateInstructionFragment
 import team3.recipefinder.dialog.EditIngredientFragment
 import team3.recipefinder.util.extractTime
+import team3.recipefinder.util.startTimer
 
 
 class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener,
@@ -92,6 +93,8 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
 
                 if (timerValue == 0) {
                     layout.removeView(timerButton)
+                } else {
+                    timerButton.setOnClickListener { timerValue.startTimer(this, instruction.description) }
                 }
 
                 if (checkedSteps.contains(instruction.id)) {
