@@ -1,6 +1,7 @@
 package team3.recipefinder.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -21,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.recipe_detail_activity.*
+import team3.recipefinder.MainActivity
 import team3.recipefinder.R
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
@@ -36,7 +38,7 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
     AddIngredientFragment.CreateIngredientListener,
     CreateInstructionFragment.CreateInstructionListener,
     EditIngredientFragment.EditIngredientListener , CreateIngredientFragment.EditRecipeListener,
-    EditInstructionFragment.EditInstructionListener{
+    EditInstructionFragment.EditInstructionListener, EditRecipeFragment.EditRecipeListener{
     private lateinit var viewModel: RecipeDetailViewModel
     private var editModeActive = false
     private var ingredientListNameHolder: List<String> = emptyList()
@@ -78,6 +80,16 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
             Log.i("RecipeDetailActivity", "OBSERVER CALLED FOR ${it.name}")
             val toolBar = findViewById<Toolbar>(R.id.toolbar)
             toolBar.title = it.name
+            toolBar.setOnClickListener {
+                if (editModeActive) {
+                    val args = Bundle()
+                    args.putString("oldName", toolBar.title.toString())
+
+                    val editRecipeFragment = EditRecipeFragment()
+                    editRecipeFragment.arguments = args
+                    editRecipeFragment.show(supportFragmentManager, "Edit Recipe")
+                }
+            }
         })
 
         viewModel.stepsRecipe.observe(this, Observer { instructions ->
@@ -140,15 +152,21 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
                 shareButton.visibility = View.GONE
                 addStepButton.visibility = View.VISIBLE
                 doneEditButton.visibility = View.VISIBLE
+                deleteRecipeButton.visibility = View.VISIBLE
                 addIngredientButton.visibility = View.VISIBLE
             } else {
                 editButton.visibility = View.VISIBLE
                 shareButton.visibility = View.VISIBLE
                 addStepButton.visibility = View.GONE
                 doneEditButton.visibility = View.GONE
+                deleteRecipeButton.visibility = View.GONE
                 addIngredientButton.visibility = View.GONE
             }
         })
+
+        toolbar.setOnClickListener {
+
+        }
     }
 
     /**
@@ -200,7 +218,7 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
      * @property currentId the database id of the current instruction
      * @property instruction the instrcution description of the current instruction
      */
-    fun showEditInstructions(currentId: Long, instruction: String) {
+    private fun showEditInstructions(currentId: Long, instruction: String) {
         val args = Bundle()
         args.putLong("relInstructionId", currentId)
         args.putString("oldInstruction", instruction)
@@ -211,14 +229,34 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         editInstructionFragment.show(supportFragmentManager, "Edit Instruction")
     }
 
-    private fun showAddItemDialog(id: String) {
+    /**
+     * OnClick method to show create ingredient dialog.
+     *
+     * @property id the database id of the current ingredient
+     */
+    private fun showCreateIngredientDialog(id: String) {
         val args = Bundle()
         args.putString("name", id)
 
         val editTimerFragment = CreateIngredientFragment()
         editTimerFragment.arguments = args
-        editTimerFragment.show(supportFragmentManager, "Add Item")
+        editTimerFragment.show(supportFragmentManager, "Create Ingredient")
 
+    }
+
+    /**
+     * OnClick method to handle a recipe delete request.
+     */
+    fun deleteRecipe(@Suppress("UNUSED_PARAMETER") view: View) {
+        viewModel.deleteRecipeStepRelation()
+        viewModel.deleteRecipeIngredientRelation()
+        viewModel.deleteRecipe()
+
+        removeObservers()
+
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 
@@ -258,6 +296,10 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         viewModel.updateStep(id!!, instruction!!)
     }
 
+    override fun onDialogPositiveEditRecipe(name: String?) {
+        viewModel.updateRecipeName(name!!)
+    }
+
     /**
      * Method that handles the negativeClick for the different dialogs.
      */
@@ -269,7 +311,7 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
     }
 
     override fun openCreateIngredientDialog() {
-        showAddItemDialog(getString(R.string.text_ingredientName))}
+        showCreateIngredientDialog(getString(R.string.text_ingredientName))}
 
 
     /**
@@ -373,5 +415,16 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
                 }
             }
         }
+    }
+
+    /**
+     * Helper method to destroy all observers on deletion
+     */
+    private fun removeObservers() {
+        viewModel.recipe.removeObservers(this)
+        viewModel.ingredients.removeObservers(this)
+        viewModel.ingredientRecipe.removeObservers(this)
+        viewModel.editMode.removeObservers(this)
+        viewModel.stepsRecipe.removeObservers(this)
     }
 }

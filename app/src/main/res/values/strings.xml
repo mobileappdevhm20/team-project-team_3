@@ -35,4 +35,5 @@
     <string name="start_timer">START TIMER</string>
     <string name="text_recipeName">Recipe:</string>
     <string name="amount">amount</string>
+    <string name="button_delete_recipe">Delete</string>
 </resources>

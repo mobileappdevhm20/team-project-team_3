@@ -139,5 +139,55 @@ class RecipeDetailViewModel(
             removeStepFromRecipeById(stepId, recipeKey)
         }
     }
+
+    private suspend fun deleteRecipeIngredientRelationById(recipeId: Long) {
+        withContext(Dispatchers.IO) {
+            database.deleteIngredientFromRelationById(recipeId)
+        }
+    }
+
+    fun deleteRecipeIngredientRelation() {
+        uiScope.launch {
+            deleteRecipeIngredientRelationById(recipeKey)
+        }
+    }
+
+    private suspend fun deleteRecipeStepRelationById(recipeId: Long) {
+        withContext(Dispatchers.IO) {
+            database.deleteRecipeStepRelations(recipeId)
+        }
+    }
+
+    fun deleteRecipeStepRelation() {
+        uiScope.launch {
+            deleteRecipeStepRelationById(recipeKey)
+        }
+    }
+
+    private suspend fun deleteRecipeById(recipeId: Long) {
+        withContext(Dispatchers.IO) {
+            database.deleteRecipeById(recipeId)
+        }
+    }
+
+    fun deleteRecipe() {
+        uiScope.launch {
+            deleteRecipeById(recipeKey)
+        }
+    }
+
+    private suspend fun updateRecipeNameById(recipeId: Long, name: String) {
+        withContext(Dispatchers.IO) {
+            database.updateRecipeName(recipeId, name)
+        }
+    }
+
+    fun updateRecipeName(name: String) {
+        uiScope.launch {
+            updateRecipeNameById(recipeKey, name)
+        }
+    }
+
+
 }
 

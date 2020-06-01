@@ -34,8 +34,6 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
-        }else{
-            Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show()
         }
 
 	 // Setup DataBinding

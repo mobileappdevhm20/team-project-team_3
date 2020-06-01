@@ -175,6 +175,21 @@
         </ScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/deleteRecipeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="deleteRecipe"
+            android:src="@drawable/ic_delete_white_24dp"
+            android:text="@string/text_done"
+            app:backgroundTint="@color/delete_button_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.099"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.953" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/doneEditButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

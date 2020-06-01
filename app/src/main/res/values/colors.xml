@@ -6,4 +6,5 @@
     <color name="primaryTextColor">#000000</color>
     <color name="timer_button_color">#E1EEF9</color>
     <color name="timer_button_text_color">#59AEF2</color>
+    <color name="delete_button_color">#DA4141</color>
 </resources>

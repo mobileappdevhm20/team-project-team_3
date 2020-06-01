@@ -23,6 +23,9 @@ interface RecipeDao {
     @Insert
     fun insertRecipe(recipe: Recipe): Long
 
+    @Query("UPDATE recipe SET name = :name WHERE id = :recipeId")
+    fun updateRecipeName(recipeId: Long, name: String)
+
     @Query("""SELECT i.*,r.amount, r.id as relId FROM ingredient i 
             INNER JOIN rel_recipe_ingredient r 
             ON i.id = r.ingredientId 
@@ -50,6 +53,10 @@ interface RecipeDao {
         WHERE recipeId = :recipeId AND ingredientId = :ingredientId""")
     fun removeIngredientFromRecipe(ingredientId: Long, recipeId: Long)
 
+    @Query("""DELETE FROM rel_recipe_ingredient
+            WHERE recipeId = :recipeId""")
+    fun deleteRecipeIngredientRelations(recipeId: Long)
+
     @Insert
     fun insertStep(step: RecipeStep): Long
 
@@ -73,6 +80,15 @@ interface RecipeDao {
     @Query("""DELETE FROM rel_recipe_step
         WHERE recipeId = :recipeId AND stepId = :stepId""")
     fun removeStepFromRecipe(stepId: Long, recipeId: Long)
+
+    @Query("""DELETE FROM rel_recipe_step
+            WHERE recipeId = :recipeId""")
+    fun deleteRecipeStepRelations(recipeId: Long)
+
+
+    @Query("""DELETE FROM recipe
+            WHERE id = :recipeId""")
+    fun deleteRecipeById(recipeId: Long)
 
     @Delete
     fun deleteRecipe(recipe: Recipe)
