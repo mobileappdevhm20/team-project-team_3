@@ -40,13 +40,25 @@ class AddIngredientFragment() : DialogFragment() {
             val view = inflater.inflate(R.layout.dialog_ingredient_input, null)
 
             val ingredients = requireArguments().getParcelableArrayList<Ingredient>("name")
+            var checkedBox = "-1"
 
-      addRadio(view,ingredients)
+            val mRgAllButtons = view?.findViewById<RadioGroup>(R.id.radiogroup);
+
+            if (ingredients != null) {
 
 
+                for (item: Ingredient in ingredients) {
+                    val rdbtn = RadioButton(context)
+                    rdbtn.id = item.id.toInt()
+                    rdbtn.text = item.name
+                    rdbtn.isChecked = true
+                    mRgAllButtons?.addView(rdbtn)
+                }
+
+            }
             var amountEditText = view.findViewById<EditText>(R.id.amount)
 
-            var checkedBox = "-1"
+
 
             val button: Button = view.findViewById(R.id.buttonAddIngediant)
 
@@ -61,7 +73,7 @@ class AddIngredientFragment() : DialogFragment() {
                 .setPositiveButton(
                     R.string.text_edit
                 ) { _, _ ->
-                   // checkedBox = mRgAllButtons.checkedRadioButtonId.toString()
+                    checkedBox = mRgAllButtons?.checkedRadioButtonId.toString()
 
                     listener.onDialogPositiveClick1(amountEditText.text.toString(), checkedBox)
                 }
@@ -73,23 +85,6 @@ class AddIngredientFragment() : DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-
-    private fun addRadio(view: View, ingredients: ArrayList<Ingredient>?){
-        val mRgAllButtons = view?.findViewById<RadioGroup>(R.id.radiogroup);
-
-        if (ingredients != null) {
-
-
-            for (item: Ingredient in ingredients) {
-                val rdbtn = RadioButton(context)
-                rdbtn.id = item.id.toInt()
-                rdbtn.text = item.name
-                rdbtn.isChecked = true
-                mRgAllButtons?.addView(rdbtn)
-            }
-
-        }
-    }
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
