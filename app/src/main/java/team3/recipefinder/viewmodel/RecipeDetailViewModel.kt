@@ -54,15 +54,15 @@ class RecipeDetailViewModel(
         _editMode.value = false
     }
 
-    fun addIngredient(id: Long) {
+    fun addIngredient(id: Long,amount: String) {
         uiScope.launch {
-            addI(id)
+            addI(id,amount)
         }
     }
 
-    private suspend fun addI(i: Long) {
+    private suspend fun addI(i: Long,amount: String) {
         withContext(Dispatchers.IO) {
-            database.assignIngredientToRecipe(i, recipe.value!!.id)
+            database.assignIngredientToRecipe(i, recipe.value!!.id,amount)
         }
     }
 
@@ -77,6 +77,18 @@ class RecipeDetailViewModel(
         uiScope.launch {
             val step = RecipeStep(0, name)
             addS(step)
+        }
+    }
+    fun addIngredient(name: String) {
+        uiScope.launch {
+            val recipe = Ingredient(0, name)
+            addI(recipe)
+        }
+    }
+
+    private suspend fun addI(i: Ingredient) {
+        withContext(Dispatchers.IO) {
+            database.insertIngredient(i)
         }
     }
 

@@ -108,7 +108,6 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
     override fun onDialogPositiveClick(id: String?, name: String?) {
         when (id) {
             getString(R.string.text_recipeFragName) -> viewModel.addRecipe(name!!)
-            getString(R.string.text_ingredientFragName) -> viewModel.addIngredient(name!!)
         }
     }
 

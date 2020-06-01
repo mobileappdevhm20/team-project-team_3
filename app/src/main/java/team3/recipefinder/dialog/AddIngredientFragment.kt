@@ -1,14 +1,20 @@
 package team3.recipefinder.dialog
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
 import team3.recipefinder.model.Ingredient
+import team3.recipefinder.viewmodel.RecipeDetailViewModel
+import java.util.ArrayList
 
 
 class AddIngredientFragment() : DialogFragment() {
@@ -18,44 +24,62 @@ class AddIngredientFragment() : DialogFragment() {
 
 
     interface CreateIngredientListener {
-        fun onDialogPositiveClickIngredient(id: String?, name: String?)
-        fun onDialogNegativeClick()
+        fun onDialogPositiveClickIngredient(amount: String?, name: String?)
+        fun onDialogNegativeClick2()
     }
+    private lateinit var viewModel: RecipeDetailViewModel
 
 
+    @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
-            val view = inflater.inflate(R.layout.dialog_ingredient_list, null)
+            val view = inflater.inflate(R.layout.dialog_ingredient_input, null)
 
-            val a = requireArguments().getParcelableArrayList<Ingredient>("name")
-            var mRgAllButtons = view.findViewById<RadioGroup>(R.id.radiogroup);
+            val ingredients = requireArguments().getParcelableArrayList<Ingredient>("name")
+            var checkedBox = "-1"
 
-            if (a != null) {
+            val mRgAllButtons = view?.findViewById<RadioGroup>(R.id.radiogroup);
+
+            if (ingredients != null) {
 
 
-                for (item: Ingredient in a) {
+                for (item: Ingredient in ingredients) {
                     val rdbtn = RadioButton(context)
                     rdbtn.id = item.id.toInt()
                     rdbtn.text = item.name
                     rdbtn.isChecked = true
-                    mRgAllButtons.addView(rdbtn)
+                    mRgAllButtons?.addView(rdbtn)
                 }
+
             }
+            var amountEditText = view.findViewById<EditText>(R.id.amount)
+
+
+
+            val button: Button = view.findViewById(R.id.buttonAddIngediant)
+
+            button.setOnClickListener {
+                dialog?.dismiss()
+                listener.onDialogNegativeClick2()
+
+            }
+
 
             builder.setView(view)
                 .setPositiveButton(
                     R.string.text_edit
                 ) { _, _ ->
-                    var ab = mRgAllButtons.checkedRadioButtonId.toString()
+                    checkedBox = mRgAllButtons?.checkedRadioButtonId.toString()
 
-                    listener.onDialogPositiveClickIngredient("i", ab)
+                    listener.onDialogPositiveClickIngredient(amountEditText.text.toString(), checkedBox)
                 }
                 .setNegativeButton(
                     R.string.text_cancel
                 ) { _, _ ->
-                    listener.onDialogNegativeClick()
+                    listener.onDialogNegativeClick2()
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
@@ -75,8 +99,5 @@ class AddIngredientFragment() : DialogFragment() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
 
-        super.onSaveInstanceState(outState)
-    }
 }

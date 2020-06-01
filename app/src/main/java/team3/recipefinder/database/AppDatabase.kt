@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import team3.recipefinder.dao.CookbookDao
 import team3.recipefinder.dao.RecipeDao
 import team3.recipefinder.model.*
+
 
 @Database(entities = [
     Recipe::class,

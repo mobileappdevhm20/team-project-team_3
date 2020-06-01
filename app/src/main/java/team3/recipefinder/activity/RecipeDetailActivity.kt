@@ -17,19 +17,18 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.recipe_detail_activity.*
 import team3.recipefinder.R
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
-import team3.recipefinder.dialog.AddIngredientFragment
-import team3.recipefinder.dialog.CreateRecipeFragment
 import team3.recipefinder.viewModelFactory.EditViewModelFactory
 import team3.recipefinder.viewmodel.RecipeDetailViewModel
 import team3.recipefinder.adapter.IngredientListAdapter
-import team3.recipefinder.dialog.CreateInstructionFragment
-import team3.recipefinder.dialog.EditIngredientFragment
+import team3.recipefinder.dialog.*
 
 
 class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener,
@@ -39,6 +38,7 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
     private lateinit var viewModel: RecipeDetailViewModel
     private var editModeActive = false
     private var ingredientListNameHolder: List<String> = emptyList()
+    private var ingredientListAmountHolder: List<String> = emptyList()
     private var ingredientListIdHolder: List<Long> = emptyList()
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -95,14 +95,15 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
             // Save ingredientNameList and ingredientIdList to update the list view inside the editMode observer
             ingredientListNameHolder = it.map { i -> i.name }.toList()
             ingredientListIdHolder = it.map { i -> i.id }.toList()
-            createAndSetListViewAdapter(ingredientListNameHolder, ingredientListIdHolder,  editModeActive)
+            ingredientListAmountHolder = it.map { i -> i.amount }.toList()
+            createAndSetListViewAdapter(ingredientListNameHolder, ingredientListAmountHolder, ingredientListIdHolder,  editModeActive)
         })
 
         viewModel.editMode.observe(this, Observer {
             // Save editmode fot ingredient observer
             editModeActive = it
             // Update ingredient list view adapter
-            createAndSetListViewAdapter(ingredientListNameHolder, ingredientListIdHolder, editModeActive)
+            createAndSetListViewAdapter(ingredientListNameHolder, ingredientListAmountHolder, ingredientListIdHolder, editModeActive)
             changeListItemBehaviour(it)
 
             if (it) {
@@ -164,6 +165,16 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         editIngredientFragment.show(supportFragmentManager, "Edit Ingredient")
     }
 
+    private fun showAddItemDialog(id: String) {
+        val args = Bundle()
+        args.putString("name", id)
+
+        val editTimerFragment = AddItemFragment()
+        editTimerFragment.arguments = args
+        editTimerFragment.show(supportFragmentManager, "Add Item")
+
+    }
+
 
     /**
      * Method that handles the positiveClick for the different dialogs.
@@ -177,11 +188,16 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
     /**
      * Method that handles the positiveClick specificly for the AddIngriedient dialog.
      */
-    override fun onDialogPositiveClickIngredient(id: String?, name: String?) {
+    override fun onDialogPositiveClickIngredient(amount: String?, name: String?) {
         Toast.makeText(this, "bframgment ${name?.toLong()}", Toast.LENGTH_SHORT).show()
-        if (name != null && name != "-1") {
+        val prev: Fragment? = supportFragmentManager.findFragmentByTag("Add Ingredient")
+        if (prev != null) {
+            val df: DialogFragment = prev as DialogFragment
+            df.dismiss()
+        }
+        if (amount != null && name != null && name != "-1") {
 
-            viewModel.addIngredient(name.toLong())
+            viewModel.addIngredient(name.toLong(), amount)
         }
     }
 
@@ -189,6 +205,9 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
      * Method that handles the negativeClick for the different dialogs.
      */
     override fun onDialogNegativeClick() {}
+
+    override fun onDialogNegativeClick2() {
+        showAddItemDialog(getString(R.string.text_ingredientName))}
 
     /**
      * Method that handles the neutralClick specificly for the EditIngredient dialog.
@@ -245,9 +264,9 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
      * @property ingredientIds a list of all ingredient ids to later delete the ingredient if needed
      * @property editMode the editmode to decide rather the edit icon should be shown
      */
-    private fun createAndSetListViewAdapter(ingredientNames: List<String>, ingredientIds: List<Long>, editMode: Boolean) {
+    private fun createAndSetListViewAdapter(ingredientNames: List<String>, ingredientAmounts: List<String>, ingredientIds: List<Long>, editMode: Boolean) {
         val listView = findViewById<ListView>(R.id.ingredientList)
-        val ingredientListAdapter = IngredientListAdapter(this, ingredientNames, ingredientIds, editMode)
+        val ingredientListAdapter = IngredientListAdapter(this, ingredientNames, ingredientAmounts, ingredientIds, editMode)
 
         listView.adapter = ingredientListAdapter
 

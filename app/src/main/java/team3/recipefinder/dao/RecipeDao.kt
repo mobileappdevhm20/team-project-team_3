@@ -6,6 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import team3.recipefinder.model.Ingredient
+import team3.recipefinder.model.IngredientAmount
 import team3.recipefinder.model.Recipe
 import team3.recipefinder.model.RecipeStep
 
@@ -22,11 +23,11 @@ interface RecipeDao {
     @Insert
     fun insertRecipe(recipe: Recipe): Long
 
-    @Query("""SELECT i.* FROM ingredient i 
+    @Query("""SELECT i.*,r.amount FROM ingredient i 
             INNER JOIN rel_recipe_ingredient r 
             ON i.id = r.ingredientId 
             WHERE r.recipeId = :recipeId""")
-    fun getAllIngredientsByRecipe(recipeId: Long): LiveData<List<Ingredient>>
+    fun getAllIngredientsByRecipe(recipeId: Long): LiveData<List<IngredientAmount>>
 
 
     @Query("SELECT * FROM ingredient")
@@ -37,9 +38,9 @@ interface RecipeDao {
 
     fun insertIngredient(ingredient: Ingredient): Long
 
-    @Query("""INSERT INTO rel_recipe_ingredient (recipeId, ingredientId)
-        VALUES (:recipeId, :ingredientId)""")
-    fun assignIngredientToRecipe(ingredientId: Long, recipeId: Long)
+    @Query("""INSERT INTO rel_recipe_ingredient (recipeId, ingredientId,amount)
+        VALUES (:recipeId, :ingredientId, :amount)""")
+    fun assignIngredientToRecipe(ingredientId: Long, recipeId: Long, amount: String)
 
     @Query("""DELETE FROM rel_recipe_ingredient
         WHERE recipeId = :recipeId AND ingredientId = :ingredientId""")
@@ -53,11 +54,6 @@ interface RecipeDao {
             ON s.id = r.stepId 
             WHERE r.recipeId = :recipeId""")
     fun getAllStepsByRecipe(recipeId: Long): LiveData<List<RecipeStep>>
-
-    @Query("SELECT * FROM step")
-    fun getAllSteps(): LiveData<List<RecipeStep>>
-
-
 
     @Query("""INSERT INTO rel_recipe_step (recipeId, stepId)
         VALUES (:recipeId, :stepId)""")

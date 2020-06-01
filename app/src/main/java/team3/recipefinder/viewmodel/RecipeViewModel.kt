@@ -7,7 +7,6 @@ import androidx.lifecycle.AndroidViewModel
 
 import kotlinx.coroutines.*
 import team3.recipefinder.dao.RecipeDao
-import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
 import team3.recipefinder.activity.RecipeDetailActivity
 
@@ -25,21 +24,8 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
 
     fun addRecipe(name: String) {
         uiScope.launch {
-            val recipe = Recipe(0, name)
+            val recipe = Recipe(0, name,"Test Description","BeispielUrl")
             addR(recipe)
-        }
-    }
-
-    fun addIngredient(name: String) {
-        uiScope.launch {
-            val recipe = Ingredient(0, name)
-            addI(recipe)
-        }
-    }
-
-    private suspend fun addI(i: Ingredient) {
-        withContext(Dispatchers.IO) {
-            database.insertIngredient(i)
         }
     }
 
