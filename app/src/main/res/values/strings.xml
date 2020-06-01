@@ -22,4 +22,5 @@
     <string name="text_ingredientName">Ingredient:</string>
     <string name="text_stepName">Instruction:</string>
     <string name="text_recipeName">Recipe:</string>
+    <string name="amount">amount</string>
 </resources>

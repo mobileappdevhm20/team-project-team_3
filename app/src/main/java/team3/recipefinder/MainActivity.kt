@@ -17,11 +17,11 @@ import com.google.firebase.auth.FirebaseAuth
 import team3.recipefinder.activity.LoginActivity
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.MainActivityBinding
-import team3.recipefinder.dialog.AddRecipeFragment
+import team3.recipefinder.dialog.AddItemFragment
 import team3.recipefinder.viewModelFactory.RecipeViewModelFactory
 import team3.recipefinder.viewmodel.RecipeViewModel
 
-class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
+class MainActivity : AppCompatActivity(), AddItemFragment.EditRecipeListener {
     private lateinit var viewModel: RecipeViewModel
 
     private lateinit var auth: FirebaseAuth
@@ -32,15 +32,15 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
 
-        if(auth.currentUser == null){
+        if (auth.currentUser == null) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
-        }else{
+        } else {
             Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show()
         }
 
-	 // Setup DataBinding
+        // Setup DataBinding
         val binding: MainActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.main_activity)
 
@@ -85,14 +85,18 @@ class MainActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener {
         val args = Bundle()
         args.putString("name", pageNumber)
 
-        val editTimerFragment = AddRecipeFragment()
+        val editTimerFragment = AddItemFragment()
         editTimerFragment.arguments = args
         editTimerFragment.show(supportFragmentManager, "Edit Timer")
     }
 
-    override fun onDialogPositiveClick(id: String?, name: String?) {
+    override fun saveItem(id: String?, name: String?) {
         when (id) {
-            getString(R.string.text_recipeName) -> viewModel.addRecipe(name!!)
+            getString(R.string.text_recipeName) -> {
+                if (name != null) {
+                    viewModel.addRecipe(name)
+                }
+            }
         }
     }
 

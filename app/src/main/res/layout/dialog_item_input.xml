@@ -21,36 +21,27 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="16dp" />
 
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/text_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="showAddRecipeDialog"
-        android:tag="@string/text_ingredientName"
-        android:text="addIngrediant"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/text_recipe_name"
+        app:layout_constraintEnd_toStartOf="@+id/name"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/amount"
-        android:layout_width="match_parent"
+        android:id="@+id/name"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/radiogroup"
-        tools:layout_editor_absoluteX="16dp"
-        android:hint="amount"/>
-
-    <RadioGroup
-        android:id="@+id/radiogroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        tools:layout_editor_absoluteX="0dp">
-
-    </RadioGroup>
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintBaseline_toBaselineOf="@+id/text_name"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toEndOf="@+id/text_name"
+        android:autofillHints="value" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

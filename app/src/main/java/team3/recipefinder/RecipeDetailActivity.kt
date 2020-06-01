@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -18,13 +19,13 @@ import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.recipe_detail_activity.*
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
-import team3.recipefinder.dialog.AddIngrFragment
-import team3.recipefinder.dialog.AddRecipeFragment
+import team3.recipefinder.dialog.AddIngredientFragment
+import team3.recipefinder.dialog.AddItemFragment
 import team3.recipefinder.viewModelFactory.EditViewModelFactory
 import team3.recipefinder.viewmodel.RecipeDetailViewModel
 
-class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeListener,
-    AddIngrFragment.EditListListener {
+class RecipeDetailActivity : AppCompatActivity(), AddItemFragment.EditRecipeListener,
+    AddIngredientFragment.EditListListener {
     private lateinit var viewModel: RecipeDetailViewModel
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -62,7 +63,6 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
             toolBar.title = it.name
         })
 
-
         viewModel.stepsRecipe.observe(this, Observer {
             val listView = findViewById<ListView>(R.id.stepList)
 
@@ -74,13 +74,16 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
             listView.adapter = adapter
         })
 
-        viewModel.ingredients.observe(this, Observer { })
+        viewModel.ingredients.observe(this, Observer {
+           if(viewModel.editMode.value!!){
+            showAddIngredientDialog()
+        }})
         viewModel.ingredientRecipe.observe(this, Observer {
             val listView = findViewById<ListView>(R.id.ingredientList)
 
             val adapter = ArrayAdapter(
                 this, android.R.layout.simple_list_item_1,
-                it.map { i -> i.amount+" "+i.name }.toList()
+                it.map { i -> i.amount + " " + i.name }.toList()
             )
             listView.adapter = adapter
         })
@@ -104,31 +107,49 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
     }
 
 
-    fun showAddRecipeDialog(view: View) {
-        val id: String = view.tag.toString()
+    fun showAddItemDialogListener(view: View) {
+        showAddItemDialog(view.tag.toString())
+
+    }
+
+    private fun showAddItemDialog(id: String) {
         val args = Bundle()
         args.putString("name", id)
 
-        val editTimerFragment = AddRecipeFragment()
+        val editTimerFragment = AddItemFragment()
         editTimerFragment.arguments = args
         editTimerFragment.show(supportFragmentManager, "Edit_Timer")
+
     }
 
-    fun showAddRecipeDialog1(view: View) {
+    fun showAddIngredientDialogListener(view: View) {
+        showAddIngredientDialog()
+    }
+
+    private fun showAddIngredientDialog() {
         val args = Bundle()
 
         args.putParcelableArrayList("name", viewModel.ingredients.value?.let { ArrayList(it) })
-        val editTimerFragment = AddIngrFragment()
+        val editTimerFragment = AddIngredientFragment()
         editTimerFragment.arguments = args
         editTimerFragment.show(supportFragmentManager, "Edit_Timer1")
     }
 
-
-    override fun onDialogPositiveClick(id: String?, name: String?) {
+    override fun saveItem(id: String?, name: String?) {
         when (id) {
-            getString(R.string.text_stepName) -> viewModel.addStep(name!!)
-            getString(R.string.text_ingredientName) -> viewModel.addIngredient(name!!)
+            getString(R.string.text_stepName) -> {
+                if (name != null) {
+                    viewModel.addStep(name)
+                }
+            }
+            getString(R.string.text_ingredientName) -> {
 
+                if (name != null) {
+                    viewModel.addIngredient(name)
+                } else {
+                    showAddIngredientDialog()
+                }
+            }
         }
     }
 
@@ -138,11 +159,15 @@ class RecipeDetailActivity : AppCompatActivity(), AddRecipeFragment.EditRecipeLi
             val df: DialogFragment = prev as DialogFragment
             df.dismiss()
         }
-        if (amount != null&&name != null && name != "-1") {
+        if (amount != null && name != null && name != "-1") {
 
-                viewModel.addIngredient(name.toLong(),amount)
-            }
+            viewModel.addIngredient(name.toLong(), amount)
+        }
 
     }
+
+    override fun onDialogPositiveClick2() {
+        showAddItemDialog(getString(R.string.text_ingredientName))}
+
 
 }
