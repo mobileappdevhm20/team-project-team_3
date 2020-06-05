@@ -32,7 +32,7 @@ class RecipeActivityTest {
     fun startRecipeActivity() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
 
-        val recipeId = db.recipeDao().insertRecipe(Recipe(0, "Test-Recipe"))
+        val recipeId = db.recipeDao().insertRecipe(Recipe(0, "Test-Recipe","description","imageUrl"))
 
         val addStepToRecipe: (Long) -> Unit = { db.recipeDao().assignStepToRecipe(it, recipeId) }
 
