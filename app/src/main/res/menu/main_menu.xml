@@ -20,6 +20,16 @@
                 android:enabled="false"
                 app:showAsAction="ifRoom" />
             <item
+                android:id="@+id/user_setting_create_recipe"
+                android:icon="@drawable/ic_fastfood_black_24dp"
+                android:title="@string/create_recipe"
+                app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/user_setting_create_ingredient"
+                android:icon="@drawable/ic_restaurant_menu_black_24dp"
+                android:title="@string/create_ingredient"
+                app:showAsAction="ifRoom"/>
+            <item
                 android:id="@+id/user_setting_settings"
                 android:icon="@drawable/ic_settings_black_24dp"
                 android:title="@string/user_settings"
