@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="primaryColor">#18a0fb</color>
+    <color name="primaryLightColor">#6dd1ff</color>
+    <color name="primaryDarkColor">#0072c7</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="timer_button_color">#E1EEF9</color>
+    <color name="timer_button_text_color">#59AEF2</color>
+    <color name="delete_button_color">#DA4141</color>
 </resources>
