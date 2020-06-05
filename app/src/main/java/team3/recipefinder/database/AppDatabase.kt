@@ -20,6 +20,11 @@ import team3.recipefinder.model.*
 abstract class AppDatabase: RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
     abstract fun cookbookDao(): CookbookDao
+    companion object{
+        @Volatile
+        private var INSTANCE :AppDatabase? = null
+
+    }
 }
 
 fun getAppDatabase(context: Context): AppDatabase {
