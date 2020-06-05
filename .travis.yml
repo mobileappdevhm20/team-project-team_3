@@ -30,6 +30,7 @@ before_script:
 
 script:
   - ./gradlew assembleDebug
+  - ./gradlew test build
 
 deploy:
   provider: releases
