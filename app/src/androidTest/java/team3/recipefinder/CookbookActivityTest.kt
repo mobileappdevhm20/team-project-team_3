@@ -31,8 +31,8 @@ class CookbookActivityTest {
    fun launchCookbookActivity() {
         // Create recipes
         val recipes = listOf(
-            db.recipeDao().insertRecipe(Recipe(0, "test 1")),
-            db.recipeDao().insertRecipe(Recipe(0, "test 2"))
+            db.recipeDao().insertRecipe(Recipe(0, "test 1", "description", "imageUrl")),
+            db.recipeDao().insertRecipe(Recipe(0, "test 2", "description", "imagerUrl"))
         )
 
         // Create cookbook
