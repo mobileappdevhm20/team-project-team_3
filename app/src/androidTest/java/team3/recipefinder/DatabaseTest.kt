@@ -28,28 +28,40 @@ class DatabaseTest {
 
     @Test
     fun insertShouldIncrementId() {
-        Assert.assertEquals(1,
-            db.recipeDao().insertStep(RecipeStep(0, "test")))
-        Assert.assertEquals(2,
-            db.recipeDao().insertStep(RecipeStep(0, "test")))
+        Assert.assertEquals(
+            1,
+            db.recipeDao().insertStep(RecipeStep(0, "test"))
+        )
+        Assert.assertEquals(
+            2,
+            db.recipeDao().insertStep(RecipeStep(0, "test"))
+        )
 
-        Assert.assertEquals(1,
-            db.recipeDao().insertRecipe(Recipe(0, "test","description","imageUrl")))
-        Assert.assertEquals(2,
-            db.recipeDao().insertRecipe(Recipe(0, "test","description","imageUrl")))
+        Assert.assertEquals(
+            1,
+            db.recipeDao().insertRecipe(Recipe(0, "test", "description", "imageUrl"))
+        )
+        Assert.assertEquals(
+            2,
+            db.recipeDao().insertRecipe(Recipe(0, "test", "description", "imageUrl"))
+        )
 
-        Assert.assertEquals(1,
-            db.recipeDao().insertIngredient(Ingredient(0, "test")))
-        Assert.assertEquals(2,
-            db.recipeDao().insertIngredient(Ingredient(0, "test")))
+        Assert.assertEquals(
+            1,
+            db.recipeDao().insertIngredient(Ingredient(0, "test"))
+        )
+        Assert.assertEquals(
+            2,
+            db.recipeDao().insertIngredient(Ingredient(0, "test"))
+        )
     }
 
     @Test
     fun testInsertRecipe() {
         // Insert recipe
         db.recipeDao().apply {
-            insertRecipe(Recipe(0, "testRecipe","description","imageUrl")) // ID 1
-            insertRecipe(Recipe(0, "testRecipe2","description","imageUrl")) // ID 2
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
+            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl")) // ID 2
         }
 
         // Test getAll
@@ -65,8 +77,8 @@ class DatabaseTest {
         // Insert recipes and ingredients
         db.recipeDao().apply {
             // Recipes
-            insertRecipe(Recipe(0, "testRecipe","description","imageUrl")) // ID 1
-            insertRecipe(Recipe(0, "testRecipe2","description","imageUrl")) // ID 2
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
+            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl")) // ID 2
 
             // Ingredients
             insertIngredient(Ingredient(0, "Tomato")) // ID 1
@@ -74,10 +86,10 @@ class DatabaseTest {
             insertIngredient(Ingredient(0, "Butter")) // ID 3
 
             // Relations
-            assignIngredientToRecipe(1, 1,"X L")
-            assignIngredientToRecipe(2, 1,"X L")
-            assignIngredientToRecipe(1, 2,"X L")
-            assignIngredientToRecipe(3, 2,"X L")
+            assignIngredientToRecipe(1, 1, "X L")
+            assignIngredientToRecipe(2, 1, "X L")
+            assignIngredientToRecipe(1, 2, "X L")
+            assignIngredientToRecipe(3, 2, "X L")
 
             // Remove Tomato from recipe 2
             removeIngredientFromRecipe(1, 2)
@@ -99,7 +111,7 @@ class DatabaseTest {
         // Insert recipes and ingredients
         db.recipeDao().apply {
             // Recipes
-            insertRecipe(Recipe(0, "testRecipe","description","imageUrl")) // ID 1
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
 
             // Steps
             insertStep(RecipeStep(0, "Peal the banana")) // ID 1
@@ -124,10 +136,10 @@ class DatabaseTest {
     fun testDeleteRecipe() {
         // Insert recipe
         db.recipeDao().apply {
-            insertRecipe(Recipe(0, "testRecipe","description","imageUrl")) // ID 1
-            insertRecipe(Recipe(0, "testRecipe2","description","imageUrl")) // ID 2
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
+            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl")) // ID 2
 
-            deleteRecipe(Recipe(1, "testRecipe","description","imageUrl"))
+            deleteRecipe(Recipe(1, "testRecipe", "description", "imageUrl"))
         }
 
         // Test getAll
@@ -155,8 +167,8 @@ class DatabaseTest {
     fun testCookbookManagement() {
         // Insert recipes
         db.recipeDao().apply {
-            insertRecipe(Recipe(0, "testRecipe","description","imageUrl")) // ID 1
-            insertRecipe(Recipe(0, "testRecipe2","description","imageUrl")) // ID 2
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
+            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl")) // ID 2
         }
         // Insert cookbooks
         db.cookbookDao().apply {
@@ -169,7 +181,7 @@ class DatabaseTest {
             addRecipeToCookbook(2, 1)
             addRecipeToCookbook(2, 2)
 
-            removeRecipeFromCookbook(2,2)
+            removeRecipeFromCookbook(2, 2)
         }
 
         // Test ingredients of recipe 1
