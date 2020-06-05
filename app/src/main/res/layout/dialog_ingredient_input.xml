@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:tag="setTimerFragment"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/buttonAddIngediant"
+        android:layout_height="wrap_content"
+        android:tag="@string/text_ingredientName"
+        android:text="@string/text_addIngredient"
+        android:layout_marginEnd="@dimen/fragment_margin"
+        android:layout_marginStart="@dimen/fragment_margin"
+        android:layout_width="match_parent" />
+
+    <EditText
+        android:id="@+id/amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="5 tbs"
+        android:hint="@string/amount"
+        android:inputType="text"
+        android:layout_marginEnd="@dimen/fragment_margin"
+        android:layout_marginStart="@dimen/fragment_margin"/>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginEnd="@dimen/fragment_margin"
+        android:layout_marginStart="@dimen/fragment_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </RadioGroup>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
