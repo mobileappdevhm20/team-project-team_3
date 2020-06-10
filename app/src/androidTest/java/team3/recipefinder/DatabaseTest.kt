@@ -233,4 +233,27 @@ class DatabaseTest {
         val expected = listOf("testCookbook2")
         Assert.assertEquals(expected, db.cookbookDao().getAll().map { it.name })
     }
+
+    @Test
+    fun testGetUsedIngredients() {
+        db.recipeDao().apply {
+            // Recipes
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
+
+            // Ingredients
+            insertIngredient(Ingredient(0, "Tomato")) // ID 1
+            insertIngredient(Ingredient(0, "Milk")) // ID 2
+            insertIngredient(Ingredient(0, "Butter")) // ID 3
+
+            // Relations
+            assignIngredientToRecipe(1, 1, "X L")
+            assignIngredientToRecipe(2, 1, "X L")
+
+            // Remove Tomato from recipe 2
+            removeIngredientFromRecipe(1, 2)
+        }
+
+        val ingredients = db.recipeSearchDao().getAllUsedIngredients().map { it.id }
+        Assert.assertArrayEquals(arrayOf(1L, 2L), ingredients.toTypedArray())
+    }
 }
