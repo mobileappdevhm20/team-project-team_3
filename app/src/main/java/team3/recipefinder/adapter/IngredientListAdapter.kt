@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import team3.recipefinder.R
 import team3.recipefinder.activity.RecipeDetailActivity
+import team3.recipefinder.util.calculateAmount
 import java.util.regex.Pattern
 
 /**
@@ -20,7 +21,8 @@ class IngredientListAdapter(
     private val ingredientNames: List<String>,
     private val ingredientAmounts: List<String>,
     private val relationIds: List<Long>,
-    private val editMode: Boolean
+    private val editMode: Boolean,
+    private val portion:Int
 ) : ArrayAdapter<String>(inputContext, R.layout.ingredient_list_item, ingredientNames) {
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
         val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -34,7 +36,7 @@ class IngredientListAdapter(
         val currentIngredient = ingredientNames[position]
         val currentAmount = ingredientAmounts[position]
 
-        amount.text = calculateAmount(currentAmount)
+        amount.text = calculateAmount(currentAmount,portion)
         name.text = currentIngredient
 
         if (editMode) {
@@ -57,20 +59,6 @@ class IngredientListAdapter(
         return rowView
     }
 
-    fun calculateAmount(value: String): String {
-        val returnValue: String
-        val factor = 2
-        val regex = "(\\d*\\.\\d+)|(\\d+\\.?)"
-        val m = Pattern.compile(regex).matcher(value)
-        if (m.find()) {
-            val number = m.group()
-            returnValue =
-                value.replace(number, (java.lang.Float.valueOf(number) * factor).toString())
-        } else {
-            returnValue = value
-        }
-        return returnValue
-    }
 
     override fun getItem(position: Int): String? {
         return ingredientNames[position]

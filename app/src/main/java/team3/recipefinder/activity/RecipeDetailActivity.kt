@@ -37,14 +37,15 @@ import team3.recipefinder.util.startTimer
 class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener,
     AddIngredientFragment.CreateIngredientListener,
     CreateInstructionFragment.CreateInstructionListener,
-    EditIngredientFragment.EditIngredientListener , CreateIngredientFragment.EditRecipeListener,
-    EditInstructionFragment.EditInstructionListener, EditRecipeFragment.EditRecipeListener{
+    EditIngredientFragment.EditIngredientListener, CreateIngredientFragment.EditRecipeListener,
+    EditInstructionFragment.EditInstructionListener, EditRecipeFragment.EditRecipeListener {
     private lateinit var viewModel: RecipeDetailViewModel
     private var editModeActive = false
     private var ingredientListNameHolder: List<String> = emptyList()
     private var ingredientListAmountHolder: List<String> = emptyList()
     private var ingredientListIdHolder: List<Long> = emptyList()
     private val checkedSteps = hashSetOf<Long>()
+    private var portion: Int = 2
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("RestrictedApi")
@@ -53,7 +54,8 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         setContentView(R.layout.recipe_detail_activity)
 
         val binding: RecipeDetailActivityBinding =
-            DataBindingUtil.setContentView(this,
+            DataBindingUtil.setContentView(
+                this,
                 R.layout.recipe_detail_activity
             )
 
@@ -107,7 +109,12 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
                 if (timerValue == 0) {
                     layout.removeView(timerButton)
                 } else {
-                    timerButton.setOnClickListener { timerValue.startTimer(this, instruction.description) }
+                    timerButton.setOnClickListener {
+                        timerValue.startTimer(
+                            this,
+                            instruction.description
+                        )
+                    }
                 }
 
                 if (checkedSteps.contains(instruction.id)) {
@@ -137,14 +144,26 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
             ingredientListNameHolder = it.map { i -> i.name }.toList()
             ingredientListIdHolder = it.map { i -> i.relId }.toList()
             ingredientListAmountHolder = it.map { i -> i.amount }.toList()
-            createAndSetListViewAdapter(ingredientListNameHolder, ingredientListAmountHolder, ingredientListIdHolder,  editModeActive)
+            createAndSetListViewAdapter(
+                ingredientListNameHolder,
+                ingredientListAmountHolder,
+                ingredientListIdHolder,
+                editModeActive,
+                portion
+            )
         })
 
         viewModel.editMode.observe(this, Observer {
             // Save editmode fot ingredient observer
             editModeActive = it
             // Update ingredient list view adapter
-            createAndSetListViewAdapter(ingredientListNameHolder, ingredientListAmountHolder, ingredientListIdHolder, editModeActive)
+            createAndSetListViewAdapter(
+                ingredientListNameHolder,
+                ingredientListAmountHolder,
+                ingredientListIdHolder,
+                editModeActive,
+                portion
+            )
             changeListItemBehaviour(it)
 
             if (it) {
@@ -167,6 +186,18 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         toolbar.setOnClickListener {
 
         }
+    }
+
+    fun clickPortionButton(view: View) {
+
+        portion = portionInput.text.toString().toInt()
+        createAndSetListViewAdapter(
+            ingredientListNameHolder,
+            ingredientListAmountHolder,
+            ingredientListIdHolder,
+            editModeActive,
+            portion
+        )
     }
 
     /**
@@ -311,7 +342,8 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
     }
 
     override fun openCreateIngredientDialog() {
-        showCreateIngredientDialog(getString(R.string.text_ingredientName))}
+        showCreateIngredientDialog(getString(R.string.text_ingredientName))
+    }
 
 
     /**
@@ -370,9 +402,22 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
      * @property ingredientIds a list of all ingredient ids to later delete the ingredient if needed
      * @property editMode the editmode to decide rather the edit icon should be shown
      */
-    private fun createAndSetListViewAdapter(ingredientNames: List<String>, ingredientAmounts: List<String>, ingredientIds: List<Long>, editMode: Boolean) {
+    private fun createAndSetListViewAdapter(
+        ingredientNames: List<String>,
+        ingredientAmounts: List<String>,
+        ingredientIds: List<Long>,
+        editMode: Boolean,
+        portion: Int
+    ) {
         val listView = findViewById<ListView>(R.id.ingredientList)
-        val ingredientListAdapter = IngredientListAdapter(this, ingredientNames, ingredientAmounts, ingredientIds, editMode)
+        val ingredientListAdapter = IngredientListAdapter(
+            this,
+            ingredientNames,
+            ingredientAmounts,
+            ingredientIds,
+            editMode,
+            portion
+        )
 
         listView.adapter = ingredientListAdapter
 
