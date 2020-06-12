@@ -28,11 +28,11 @@ class CookbookActivityTest {
 
 
     @Test
-   fun launchCookbookActivity() {
+    fun launchCookbookActivity() {
         // Create recipes
         val recipes = listOf(
-            db.recipeDao().insertRecipe(Recipe(0, "test 1")),
-            db.recipeDao().insertRecipe(Recipe(0, "test 2"))
+            db.recipeDao().insertRecipe(Recipe(0, "test 1", "description", "imageUrl")),
+            db.recipeDao().insertRecipe(Recipe(0, "test 2", "description", "imagerUrl"))
         )
 
         // Create cookbook
@@ -44,12 +44,14 @@ class CookbookActivityTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val intent = Intent(context, CookbookActivity::class.java)
 
+
         // Pass cookbook-id to activity
         intent.putExtra("cookbook", cookbook)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
         // Start activity
         context.startActivity(intent)
 
-        Thread.sleep(20_000)
-   }
+        Thread.sleep(200_000)
+    }
 }

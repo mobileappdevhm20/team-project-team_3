@@ -1,6 +1,5 @@
-package team3.recipefinder
+package team3.recipefinder.activity
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
@@ -9,7 +8,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import team3.recipefinder.activity.RecipeDetailActivity
 import team3.recipefinder.database.AppDatabase
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Recipe

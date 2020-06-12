@@ -1,4 +1,4 @@
-package team3.recipefinder
+package team3.recipefinder.database
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
@@ -9,8 +9,6 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import team3.recipefinder.database.AppDatabase
-import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Cookbook
 import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
