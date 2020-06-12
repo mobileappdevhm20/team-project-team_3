@@ -131,7 +131,11 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
             }
         })
 
-        viewModel.ingredients.observe(this, Observer { })
+        viewModel.ingredients.observe(this, Observer {
+            if(viewModel.editMode.value!!){
+                showAddIngrediantDialog()
+            }})
+
         viewModel.ingredientRecipe.observe(this, Observer { it ->
             // Save ingredientNameList and ingredientIdList to update the list view inside the editMode observer
             ingredientListNameHolder = it.map { i -> i.name }.toList()
@@ -185,13 +189,20 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
      * OnClick method to show add ingredient to recipe dialog.
      */
     fun showAddIngredientDialog(@Suppress("UNUSED_PARAMETER") view: View) {
+      showAddIngrediantDialog()
+           }
+    fun          showAddIngrediantDialog(){
         val args = Bundle()
         args.putParcelableArrayList("name", viewModel.ingredients.value?.let { ArrayList(it) })
 
         val createIngredientFragment = AddIngredientFragment()
         createIngredientFragment.arguments = args
         createIngredientFragment.show(supportFragmentManager, "Create Ingredient")
+
     }
+
+
+
 
     /**
      * OnClick method to show add edit ingredient dialog.
