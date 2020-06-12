@@ -10,6 +10,13 @@ object IngredientSearch {
 
     private const val SCORE_THRESHOLD = 0.62f
 
+    /**
+     * Search recipes in the database based on ingredients.
+     * @param context Context
+     * @param ingredients List of ingredients
+     *
+     * @return List of all recipes with the search score (SCORE_THRESHOLD to 1.0)
+     */
     fun search(context: Context, ingredients: List<Ingredient>): List<SearchResult> {
         val db = getAppDatabase(context)
 
@@ -17,6 +24,13 @@ object IngredientSearch {
             .map { SearchResult(it, it.getRecipeScore(db, ingredients)) }
             .filter { it.score >= SCORE_THRESHOLD }
     }
+
+    /**
+     * Sort list of recipes and scores by score
+     *
+     * @return List of recipes
+     */
+    fun Collection<SearchResult>.sortByScore() = sortedByDescending { it.score }
 
     private fun Recipe.getRecipeScore(db: AppDatabase, ingredients: List<Ingredient>): Float {
         val ingredientIdsFromRecipe = db.recipeDao()

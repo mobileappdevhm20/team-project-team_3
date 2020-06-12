@@ -10,6 +10,7 @@ import org.junit.runner.RunWith
 import team3.recipefinder.database.AppDatabase
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.logic.search.IngredientSearch
+import team3.recipefinder.logic.search.IngredientSearch.sortByScore
 import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
 
@@ -100,6 +101,18 @@ class SearchTest {
         ))
 
         Assert.assertEquals(0, recipes.size)
+    }
+
+    @Test
+    fun testSort() {
+        val searchResult = listOf<IngredientSearch.SearchResult>(
+            IngredientSearch.SearchResult(Recipe(1, "", "", ""), 0.7f),
+            IngredientSearch.SearchResult(Recipe(2, "", "", ""), 0.9f),
+            IngredientSearch.SearchResult(Recipe(3, "", "", ""), 0.65f)
+        )
+
+        Assert.assertArrayEquals(arrayOf(2L, 1L, 3L),
+            searchResult.sortByScore().map { it.recipe.id }.toTypedArray())
     }
 
 }
