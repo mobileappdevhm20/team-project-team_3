@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.SET_ALARM" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="false"
@@ -13,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/RecifyTheme.Base">
         <activity android:name=".activity.RecipeDetailActivity"/>
-	<activity android:name=".activity.AndroidTestActivity"/>
+	    <activity android:name=".activity.AndroidTestActivity"/>
+        <activity android:name=".activity.CrawlerActivity"/>
+        <service android:name=".service.CrawlRecipeService" android:exported="false"/>
 
 
         <activity android:name=".MainActivity">
