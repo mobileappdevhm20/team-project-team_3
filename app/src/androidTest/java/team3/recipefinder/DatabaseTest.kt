@@ -1,6 +1,8 @@
 package team3.recipefinder
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.coroutines.GlobalScope
@@ -110,14 +112,18 @@ class DatabaseTest {
         GlobalScope.launch {
             // Test ingredients of recipe 1
             val expected = listOf("Tomato", "Milk")
-            db.recipeDao().getAllIngredientsByRecipe(1).observeForever {
-                Assert.assertEquals(expected, it.map { it.name })
+            Handler(Looper.getMainLooper()).post {
+                db.recipeDao().getAllIngredientsByRecipe(1).observeForever {
+                    Assert.assertEquals(expected, it.map { it.name })
+                }
             }
 
             // Test ingredients of recipe 2
             val expected2 = listOf("Butter")
-            db.recipeDao().getAllIngredientsByRecipe(2).observeForever {
-                Assert.assertEquals(expected2, it.map { it.name })
+            Handler(Looper.getMainLooper()).post {
+                db.recipeDao().getAllIngredientsByRecipe(2).observeForever {
+                    Assert.assertEquals(expected2, it.map { it.name })
+                }
             }
         }
     }
@@ -145,8 +151,11 @@ class DatabaseTest {
         GlobalScope.launch {
             // Test ingredients of recipe 1
             val expected = listOf("Peal the banana", "Pop the corn")
-            db.recipeDao().getAllStepsByRecipe(1).observeForever {
-                Assert.assertEquals(expected, it.map { it.description })
+            Handler(Looper.getMainLooper()).post {
+
+                db.recipeDao().getAllStepsByRecipe(1).observeForever {
+                    Assert.assertEquals(expected, it.map { it.description })
+                }
             }
         }
 
@@ -165,8 +174,10 @@ class DatabaseTest {
         GlobalScope.launch {
             // Test ingredients of recipe 1
             val expected = listOf("testRecipe2")
-            db.recipeDao().getAll().observeForever {
-                Assert.assertEquals(expected, it.map { it.name })
+            Handler(Looper.getMainLooper()).post {
+                db.recipeDao().getAll().observeForever {
+                    Assert.assertEquals(expected, it.map { it.name })
+              }
             }
         }
     }
