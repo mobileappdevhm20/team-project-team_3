@@ -8,6 +8,8 @@ import team3.recipefinder.dao.RecipeDao
 import team3.recipefinder.model.CrawlRecipe
 import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
+import team3.recipefinder.model.RecipeStep
+import team3.recipefinder.util.extractInstructions
 
 class CrawlRecipeViewModel (val database: RecipeDao, application: Application) :
     AndroidViewModel(application) {
@@ -51,7 +53,12 @@ class CrawlRecipeViewModel (val database: RecipeDao, application: Application) :
                     database.assignIngredientToRecipe(recipeId, ingredientId, amountString)
                 }
             }
+            val instructionList = extractInstructions(recipe)
             // Add Instructions
+            for (instruction in instructionList) {
+                val stepId = database.insertStep(RecipeStep(0, instruction))
+                database.assignStepToRecipe(stepId, recipeId)
+            }
         }
     }
 

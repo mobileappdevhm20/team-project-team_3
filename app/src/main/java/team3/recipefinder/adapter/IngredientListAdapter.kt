@@ -28,7 +28,8 @@ class IngredientListAdapter(private val inputContext: Context, private val ingre
 
         val currentId = relationIds[position]
         val currentIngredient = ingredientNames[position]
-        val currentAmount = ingredientAmounts[position]
+        var currentAmount = ingredientAmounts[position]
+        currentAmount = currentAmount.replace("0", "")
 
 
         amount.text = currentAmount

@@ -43,11 +43,11 @@
             <Button
                 android:id="@+id/timerButton"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/timer_button_color"
                 android:text="@string/start_timer"
-                android:textColor="@color/timer_button_text_color"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/timer_button_text_color"
                 app:layout_constraintLeft_toLeftOf="@id/instructionText"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/instructionText" />

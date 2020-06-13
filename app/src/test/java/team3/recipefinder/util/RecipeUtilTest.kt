@@ -13,19 +13,22 @@ import java.io.BufferedReader
 import java.lang.IllegalArgumentException
 import java.lang.RuntimeException
 import java.math.BigDecimal
+import java.util.*
 
 class RecipeUtilTest {
 
     private lateinit var recipeJson: String
+    private lateinit var recipeJsonSmall: String
 
     @Before
     fun setup() {
-        recipeJson = readTestData("recipeSmall.json")
+        recipeJson = readTestData("recipe.json")
+        recipeJsonSmall = readTestData("recipeSmall.json")
     }
 
     @Test
     fun convertJson_Positive() {
-        val input = recipeJson
+        val input = recipeJsonSmall
         val ingredients: List<CrawlIngredient> = listOf(
             CrawlIngredient("Kabeljaufilet(s)", "g", 600F),
             CrawlIngredient("Salz und Pfeffer", "", 0F)
@@ -33,12 +36,12 @@ class RecipeUtilTest {
         val ingredientGroups: List<CrawlIngredientGroup> = listOf(CrawlIngredientGroup(ingredients))
         val expected = CrawlRecipe(
             "Schlemmerfisch Bordelaise",
+            "Low Fat",
             "Den Fisch waschen und trockentupfen, mit Zitronensaft, " +
                     "Salz und Pfeffer würzen und in die mit Margarine leicht gefettete " +
                     "Auflaufform geben.\r\n\r\n" +
                     "Den Backofen auf 200°C vorheizen!\r\n\r\n" +
                     "Die Paprika waschen, entkernen und in wirklich kleine Würfel schneiden.",
-            "Low Fat",
             ingredientGroups
         )
 
@@ -81,15 +84,23 @@ class RecipeUtilTest {
     }
 
     @Test
-    fun idk_Positive() {
-        val amount = 50.5F
-        var amountParsed = amount
-        var amountString = amount.toString()
-        if (amount.rem(1).compareTo(0.0) == 0) {
-            amountString = amount.toInt().toString()
-        }
-        amountString = amountString + " " + "g"
-        println(amountString)
+    fun extractInstructions_Positive() {
+        val input = recipeJson
+        val recipe = convert(input)
+        val expected = LinkedList<String>()
+        expected.add("Den Fisch waschen und trockentupfen, mit Zitronensaft, Salz und Pfeffer würzen und in die mit Margarine leicht gefettete Auflaufform geben.")
+        expected.add("Den Backofen auf 200°C vorheizen!")
+        expected.add("Die Paprika waschen, entkernen und in wirklich kleine Würfel schneiden.")
+        expected.add("Den Zwieback in einen Beutel geben, verschließen und mit dem Nudelholz ganz fein zerkrümeln.")
+        expected.add("Alle trockenen Zutaten, die Kräuter, die Zitronenschale und die Paprikawürfel vermischen.")
+        expected.add("Das Öl und den Senf unterrühren und nach und nach so viel Wasser dazu geben, bis die Masse streichfähig ist.")
+        expected.add("Die Panade auf dem Fisch verteilen und im Backofen ca. 25 Minuten backen, bis es goldgelb ist.")
+        expected.add("Pro Portion: 241,5 kcal 3,8 g Fett 14,2% Fettkalorien")
+
+        val result = extractInstructions(recipe)
+
+        assertEquals(expected.size, result.size)
+        assertEquals(listToString(expected), listToString(result))
     }
 
 
@@ -102,5 +113,13 @@ class RecipeUtilTest {
         reader.use { reader ->
             return reader.readText()
         }
+    }
+
+    private fun listToString(list: List<String>): String {
+        var listString = ""
+        for (item in list) {
+            listString += item
+        }
+        return listString
     }
 }

@@ -3,7 +3,7 @@ package team3.recipefinder.util
 import com.google.gson.Gson
 import team3.recipefinder.model.CrawlRecipe
 import java.lang.IllegalArgumentException
-import java.math.BigDecimal
+import java.util.*
 import java.util.regex.Pattern
 
 fun convert(recipeJson: String): CrawlRecipe {
@@ -23,4 +23,22 @@ fun extractRecipeId(url: String): String {
     val match = Regex(regex).find(url)
         ?: throw IllegalArgumentException("Could not extract recipeId from given url.")
     return match.groups[1]!!.value
+}
+
+fun extractInstructions(recipe: CrawlRecipe): List<String> {
+    val instructionString = recipe.instructions
+    val instructionList: MutableList<String>
+    instructionList = if (instructionString.contains("\r\n\r\n")) {
+        instructionString.split("\r\n\r\n").toMutableList()
+    } else {
+        instructionString.split("\n\n").toMutableList()
+    }
+    return replaceNewLineInList(instructionList)
+}
+
+private fun replaceNewLineInList(list: MutableList<String>): MutableList<String> {
+    for (i in  0 until list.size) {
+        list[i] =  list[i].replace("\r\n", " ")
+    }
+    return list
 }
