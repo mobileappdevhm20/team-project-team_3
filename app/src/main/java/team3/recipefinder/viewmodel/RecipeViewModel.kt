@@ -22,9 +22,9 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
     var recipes = database.getAll()
 
 
-    fun addRecipe(name: String) {
+    fun addRecipe(name: String, url:String) {
         uiScope.launch {
-            val recipe = Recipe(0, name,"Test Description","BeispielUrl")
+            val recipe = Recipe(0, name,"Test Description",url)
             addR(recipe)
         }
     }

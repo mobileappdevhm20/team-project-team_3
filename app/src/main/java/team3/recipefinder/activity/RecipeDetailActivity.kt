@@ -21,6 +21,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.recipe_detail_activity.*
 import team3.recipefinder.MainActivity
 import team3.recipefinder.R
@@ -34,7 +36,7 @@ import team3.recipefinder.util.extractTime
 import team3.recipefinder.util.startTimer
 
 
-class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener,
+class RecipeDetailActivity : AppCompatActivity(),
     AddIngredientFragment.CreateIngredientListener,
     CreateInstructionFragment.CreateInstructionListener,
     EditIngredientFragment.EditIngredientListener, CreateIngredientFragment.EditRecipeListener,
@@ -79,6 +81,14 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
 
         viewModel.recipe.observe(this, Observer {
             Log.i("RecipeDetailActivity", "OBSERVER CALLED FOR ${it.name}")
+            val imageView = findViewById<ImageView>(R.id.imageView);
+            Glide.with(this).load(
+                it.imageUrl
+            ).apply(
+                RequestOptions()
+                    // .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.tomatensuppe115_v_zweispaltig)
+            ).into(imageView);
             val toolBar = findViewById<Toolbar>(R.id.toolbar)
             toolBar.title = it.name
             toolBar.setOnClickListener {

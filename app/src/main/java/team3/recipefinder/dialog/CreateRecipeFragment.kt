@@ -15,10 +15,11 @@ class CreateRecipeFragment() : DialogFragment() {
     private lateinit var listener: CreateRecipeListener
 
     private lateinit var recipeNameField: EditText
+    private lateinit var urlField: EditText
+
 
     interface CreateRecipeListener {
-        fun onDialogPositiveClick(id: String?, name: String?)
-        fun onDialogNegativeClick()
+        fun onDialogPositiveClick(id: String?, name: String?, url: String?)
     }
 
 
@@ -29,6 +30,7 @@ class CreateRecipeFragment() : DialogFragment() {
             val view = inflater.inflate(R.layout.dialog_recipe_input, null)
 
             recipeNameField = view.findViewById(R.id.recipe_value)
+            urlField = view.findViewById(R.id.url_input)
             var textValue = ""
             if (arguments != null) {
                 textValue = requireArguments().getString("name").toString()
@@ -41,12 +43,11 @@ class CreateRecipeFragment() : DialogFragment() {
                 .setPositiveButton(
                     R.string.text_edit
                 ) { _, _ ->
-                    listener.onDialogPositiveClick(textValue, recipeNameField.text.toString())
+                    listener.onDialogPositiveClick(textValue, recipeNameField.text.toString(),urlField.text.toString())
                 }
                 .setNegativeButton(
                     R.string.text_cancel
                 ) { _, _ ->
-                    listener.onDialogNegativeClick()
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
