@@ -12,10 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/RecifyTheme.Base">
-        <activity android:name=".activity.RecipeDetailActivity"/>
-	<activity android:name=".activity.AndroidTestActivity"/>
-
-
+        <activity android:name=".activity.SearchActivity"
+            android:theme="@style/RecifyTheme.Materialcomponents"/>
+        <activity android:name=".activity.RecipeDetailActivity" />
+        <activity android:name=".activity.AndroidTestActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

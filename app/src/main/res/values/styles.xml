@@ -37,4 +37,11 @@
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
+    <style name="RecifyTheme.Materialcomponents" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+    </style>
+
 </resources>
