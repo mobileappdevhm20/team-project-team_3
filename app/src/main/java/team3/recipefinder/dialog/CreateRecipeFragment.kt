@@ -19,7 +19,7 @@ class CreateRecipeFragment() : DialogFragment() {
 
 
     interface CreateRecipeListener {
-        fun onDialogPositiveClick(id: String?, name: String?, url: String?)
+        fun onDialogPositiveClick( name: String?, url: String?)
     }
 
 
@@ -31,19 +31,13 @@ class CreateRecipeFragment() : DialogFragment() {
 
             recipeNameField = view.findViewById(R.id.recipe_value)
             urlField = view.findViewById(R.id.url_input)
-            var textValue = ""
-            if (arguments != null) {
-                textValue = requireArguments().getString("name").toString()
 
-                var textView = view.findViewById<TextView>(R.id.text_recipe_name)
-                textView.text = textValue
-            }
 
             builder.setView(view)
                 .setPositiveButton(
                     R.string.text_edit
                 ) { _, _ ->
-                    listener.onDialogPositiveClick(textValue, recipeNameField.text.toString(),urlField.text.toString())
+                    listener.onDialogPositiveClick( recipeNameField.text.toString(),urlField.text.toString())
                 }
                 .setNegativeButton(
                     R.string.text_cancel

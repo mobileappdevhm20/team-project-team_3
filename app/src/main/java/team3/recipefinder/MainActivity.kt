@@ -22,7 +22,8 @@ import team3.recipefinder.listener.RecipeListener
 import team3.recipefinder.viewModelFactory.RecipeViewModelFactory
 import team3.recipefinder.viewmodel.RecipeViewModel
 
-class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener,CreateIngredientFragment.EditRecipeListener {
+class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener,
+    CreateIngredientFragment.EditRecipeListener {
     private lateinit var viewModel: RecipeViewModel
 
     private lateinit var auth: FirebaseAuth
@@ -31,13 +32,13 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
 
-        if(auth.currentUser == null){
+        if (auth.currentUser == null) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-	 // Setup DataBinding
+        // Setup DataBinding
         var binding: MainActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.main_activity)
 
@@ -104,17 +105,16 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
     /**
      * Method that handles the positiveClick for the different dialogs.
      */
-    override fun onDialogPositiveClick(id: String?, name: String?, url: String?) {
-        when (id) {
-            getString(R.string.text_recipeFragName) -> viewModel.addRecipe(name!!,url!!)
-        }
+    override fun onDialogPositiveClick(name: String?, url: String?) {
+        viewModel.addRecipe(name!!, url!!)
+
     }
 
     /**
      * Method that habdeles the negativeClick for create Ingredient
      */
     override fun saveItem(id: String?, name: String?) {
-        Toast.makeText(this,  "Needs to be impelemented",Toast.LENGTH_LONG).show();
+        viewModel.addIngredient(name!!)
     }
 
     /**
@@ -155,8 +155,6 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
             super.onOptionsItemSelected(item)
         }
     }
-
-
 
 
 }

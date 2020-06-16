@@ -9,6 +9,7 @@ import kotlinx.coroutines.*
 import team3.recipefinder.dao.RecipeDao
 import team3.recipefinder.model.Recipe
 import team3.recipefinder.activity.RecipeDetailActivity
+import team3.recipefinder.model.Ingredient
 
 
 class RecipeViewModel(val database: RecipeDao, application: Application) :
@@ -35,6 +36,21 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
         }
     }
 
+
+    fun addIngredient(name: String) {
+        uiScope.launch {
+            val recipe = Ingredient(0, name)
+            addI(recipe)
+        }
+    }
+
+    private suspend fun addI(r: Ingredient) {
+        withContext(Dispatchers.IO) {
+            database.insertIngredient(r)
+        }
+    }
+    
+    
 
     fun editPropertyDetails(r: Recipe) {
         showEditActivity(getApplication(), r)
