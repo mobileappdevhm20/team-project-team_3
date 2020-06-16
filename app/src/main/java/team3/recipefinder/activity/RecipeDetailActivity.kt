@@ -26,21 +26,22 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.recipe_detail_activity.*
 import team3.recipefinder.MainActivity
 import team3.recipefinder.R
+import team3.recipefinder.adapter.IngredientListAdapter
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
-import team3.recipefinder.viewModelFactory.EditViewModelFactory
-import team3.recipefinder.viewmodel.RecipeDetailViewModel
-import team3.recipefinder.adapter.IngredientListAdapter
 import team3.recipefinder.dialog.*
 import team3.recipefinder.util.extractTime
 import team3.recipefinder.util.startTimer
+import team3.recipefinder.viewModelFactory.EditViewModelFactory
+import team3.recipefinder.viewmodel.RecipeDetailViewModel
 
 
 class RecipeDetailActivity : AppCompatActivity(),
     AddIngredientFragment.CreateIngredientListener,
     CreateInstructionFragment.CreateInstructionListener,
     EditIngredientFragment.EditIngredientListener, CreateIngredientFragment.EditRecipeListener,
-    EditInstructionFragment.EditInstructionListener, EditRecipeFragment.EditRecipeListener {
+    EditInstructionFragment.EditInstructionListener, EditRecipeFragment.EditRecipeListener,
+    EditRecipePictureFragment.EditRecipePictureListener {
     private lateinit var viewModel: RecipeDetailViewModel
     private var editModeActive = false
     private var ingredientListNameHolder: List<String> = emptyList()
@@ -185,6 +186,15 @@ class RecipeDetailActivity : AppCompatActivity(),
                 doneEditButton.visibility = View.VISIBLE
                 deleteRecipeButton.visibility = View.VISIBLE
                 addIngredientButton.visibility = View.VISIBLE
+                imageView.setOnClickListener{
+                    val args = Bundle()
+                    args.putString("oldName"," toolBar.title.toString()")
+
+                    val dialog = EditRecipePictureFragment()
+                    dialog.arguments = args
+                    dialog.show(supportFragmentManager, "Edit Recipe URL")
+
+                }
             } else {
                 editButton.visibility = View.VISIBLE
                 shareButton.visibility = View.VISIBLE
@@ -192,12 +202,11 @@ class RecipeDetailActivity : AppCompatActivity(),
                 doneEditButton.visibility = View.GONE
                 deleteRecipeButton.visibility = View.GONE
                 addIngredientButton.visibility = View.GONE
+                imageView.setOnClickListener{}
             }
         })
 
-        toolbar.setOnClickListener {
-
-        }
+        toolbar.setOnClickListener {}
     }
 
     /**
@@ -219,7 +228,7 @@ class RecipeDetailActivity : AppCompatActivity(),
         showAddIngrediantDialog()
     }
 
-    fun showAddIngrediantDialog() {
+    private fun showAddIngrediantDialog() {
         val args = Bundle()
         args.putParcelableArrayList("name", viewModel.ingredients.value?.let { ArrayList(it) })
 
@@ -345,6 +354,10 @@ class RecipeDetailActivity : AppCompatActivity(),
     override fun openCreateIngredientDialog() {
         showCreateIngredientDialog(getString(R.string.text_ingredientName))
     }
+    override fun onDialogPositiveEditRecipePicture(url: String?) {
+        viewModel.updateRecipePicture(url!!)
+
+    }
 
 
     /**
@@ -466,4 +479,8 @@ class RecipeDetailActivity : AppCompatActivity(),
         viewModel.editMode.removeObservers(this)
         viewModel.stepsRecipe.removeObservers(this)
     }
+
+
+
+
 }
