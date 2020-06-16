@@ -18,7 +18,6 @@ class CreateInstructionFragment: DialogFragment() {
 
     interface CreateInstructionListener {
         fun onDialogPositiveClick(id: String?, name: String?)
-        fun onDialogNegativeClick()
     }
 
 
@@ -46,7 +45,6 @@ class CreateInstructionFragment: DialogFragment() {
                 .setNegativeButton(
                     R.string.text_cancel
                 ) { _, _ ->
-                    listener.onDialogNegativeClick()
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")

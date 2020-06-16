@@ -337,11 +337,6 @@ class RecipeDetailActivity : AppCompatActivity(),
         viewModel.updateRecipeName(name!!)
     }
 
-    /**
-     * Method that handles the negativeClick for the different dialogs.
-     */
-    override fun onDialogNegativeClick() {}
-
     override fun onDialogNeutralEditInstruction(id: Long?) {
         Toast.makeText(this, "Deleting....", Toast.LENGTH_LONG).show()
         viewModel.removeStepFromRecipe(id!!)

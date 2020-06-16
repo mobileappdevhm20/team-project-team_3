@@ -22,7 +22,6 @@ class AddIngredientFragment() : DialogFragment() {
 
     interface CreateIngredientListener {
         fun onDialogPositiveClickIngredient(amount: String?, name: String?)
-        fun onDialogNegativeClick()
         fun openCreateIngredientDialog()
     }
     private lateinit var viewModel: RecipeDetailViewModel
@@ -83,7 +82,6 @@ class AddIngredientFragment() : DialogFragment() {
                 .setNegativeButton(
                     R.string.text_cancel
                 ) { _, _ ->
-                    listener.onDialogNegativeClick()
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")

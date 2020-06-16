@@ -18,7 +18,6 @@ class EditInstructionFragment: DialogFragment() {
 
     interface EditInstructionListener {
         fun onDialogPositiveEditInstruction(id: Long?, instruction: String?)
-        fun onDialogNegativeClick()
         fun onDialogNeutralEditInstruction(id: Long?)
     }
 
@@ -53,7 +52,6 @@ class EditInstructionFragment: DialogFragment() {
                 .setNegativeButton(
                     R.string.text_cancel
                 ) { _, _ ->
-                    listener.onDialogNegativeClick()
                 }
                 .setNeutralButton(
                     R.string.text_delete

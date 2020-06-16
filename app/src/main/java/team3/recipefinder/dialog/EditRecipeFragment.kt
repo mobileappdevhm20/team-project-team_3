@@ -18,7 +18,6 @@ class EditRecipeFragment() : DialogFragment() {
 
     interface EditRecipeListener {
         fun onDialogPositiveEditRecipe(name: String?)
-        fun onDialogNegativeClick()
     }
 
 
@@ -50,7 +49,6 @@ class EditRecipeFragment() : DialogFragment() {
                 .setNegativeButton(
                     R.string.text_cancel
                 ) { _, _ ->
-                    listener.onDialogNegativeClick()
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
