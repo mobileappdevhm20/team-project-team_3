@@ -1,18 +1,14 @@
 package team3.recipefinder.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_cookbook.*
-import kotlinx.android.synthetic.main.main_activity.view.*
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import team3.recipefinder.R
 import team3.recipefinder.adapter.RecipeListAdapter
 import team3.recipefinder.database.getAppDatabase
-import team3.recipefinder.model.Recipe
 
 class CookbookActivity : AppCompatActivity() {
 
@@ -49,6 +45,5 @@ class CookbookActivity : AppCompatActivity() {
                 it.notifyDataSetChanged()
             }
         }
-
     }
 }

@@ -26,9 +26,8 @@ class CookbookActivityTest {
         db = getAppDatabase(context)
     }
 
-
     @Test
-   fun launchCookbookActivity() {
+    fun launchCookbookActivity() {
         // Create recipes
         val recipes = listOf(
             db.recipeDao().insertRecipe(Recipe(0, "test 1")),
@@ -51,5 +50,5 @@ class CookbookActivityTest {
         context.startActivity(intent)
 
         Thread.sleep(20_000)
-   }
+    }
 }

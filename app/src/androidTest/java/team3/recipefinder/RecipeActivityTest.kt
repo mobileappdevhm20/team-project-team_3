@@ -1,6 +1,5 @@
 package team3.recipefinder
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
