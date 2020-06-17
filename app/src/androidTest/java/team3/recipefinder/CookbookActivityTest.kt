@@ -7,6 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import team3.recipefinder.activity.CookbookActivity
@@ -15,6 +16,7 @@ import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Cookbook
 import team3.recipefinder.model.Recipe
 
+@Ignore
 @RunWith(AndroidJUnit4::class)
 class CookbookActivityTest {
     lateinit var db: AppDatabase
