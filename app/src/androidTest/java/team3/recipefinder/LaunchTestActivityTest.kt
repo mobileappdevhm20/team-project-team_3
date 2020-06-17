@@ -3,6 +3,7 @@ package team3.recipefinder
 import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import team3.recipefinder.activity.AndroidTestActivity
@@ -27,7 +28,7 @@ class LaunchTestActivityTest {
             }
         )
 
-        // Wait for 20 seconds
-        Thread.sleep(20_000)
+        // Wait for 10 seconds
+        Thread.sleep(10_000)
     }
 }

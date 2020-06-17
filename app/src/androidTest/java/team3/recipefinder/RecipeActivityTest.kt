@@ -45,6 +45,6 @@ class RecipeActivityTest {
 
         appContext.startActivity(recipeAcitivityIntent)
 
-        Thread.sleep(30_000)
+        Thread.sleep(10_000)
     }
 }
