@@ -4,6 +4,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.hiya.jacoco-android'
 
 def room_version = "2.2.5"
 
@@ -25,15 +26,27 @@ android {
         multiDexEnabled true
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            testCoverageEnabled true
+        }
     }
-    dataBinding {
-        enabled = true
+
+    lintOptions {
+        abortOnError false
     }
+}
+
+configurations {
+    ktlint
 }
 
 dependencies {
@@ -65,4 +78,21 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
     implementation 'com.google.android.material:material:1.1.0'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
+}
+
+// Add task for linting
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    main = "com.pinterest.ktlint.Main"
+    classpath = configurations.ktlint
+    args "src/**/*.kt"
+}
+check.dependsOn ktlint
+
+// Add task for formatting
+task ktlintFormat(type: JavaExec, group: "formatting") {
+    description = "Fix Kotlin code style deviations."
+    main = "com.pinterest.ktlint.Main"
+    classpath = configurations.ktlint
+    args "-F", "src/**/*.kt"
 }
