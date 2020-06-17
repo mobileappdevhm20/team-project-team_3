@@ -62,11 +62,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        EMULATOR_API: [28, 29]
+        EMULATOR_API: [26, 27, 28, 29]
         include:
           - EMULATOR_API: 29
             EMULATOR_ARCH: x86_64
           - EMULATOR_API: 28
+            EMULATOR_ARCH: x86_64
+          - EMULATOR_API: 27
+            EMULATOR_ARCH: x86_64
+          - EMULATOR_API: 26
             EMULATOR_ARCH: x86_64
     steps:
       - uses: actions/checkout@v2
