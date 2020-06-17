@@ -234,6 +234,10 @@ class RecipeDetailActivity :
      * OnClick method to show add ingredient to recipe dialog.
      */
     fun showAddIngredientDialog(@Suppress("UNUSED_PARAMETER") view: View) {
+        showAddIngrediantDialog()
+    }
+
+    fun showAddIngrediantDialog() {
         val args = Bundle()
         args.putParcelableArrayList("name", viewModel.ingredients.value?.let { ArrayList(it) })
 
