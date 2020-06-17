@@ -9,7 +9,6 @@ on:
       - master
       - develop
       - feature/**
-  pull_request:
 
 jobs:
   BUILD_DEBUG:
