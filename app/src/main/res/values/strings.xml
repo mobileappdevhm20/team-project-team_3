@@ -36,4 +36,6 @@
     <string name="text_recipeName">Recipe:</string>
     <string name="amount">amount</string>
     <string name="button_delete_recipe">Delete</string>
+    <string name="portionButton">calc Portion</string>
+    <string name="incr_hint">1</string>
 </resources>
