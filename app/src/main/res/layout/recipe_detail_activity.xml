@@ -63,7 +63,7 @@
             android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/text_margin"
+            android:layout_marginTop="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -74,25 +74,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <EditText
+                    android:id="@+id/portionInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:inputType="number"
+                    android:backgroundTint="@color/primaryColor"
+                    android:hint="@string/incr_hint"
+                    app:layout_constraintEnd_toStartOf="@+id/portionButton"
+                    app:layout_constraintBottom_toBottomOf="@+id/ingrediant_name"
+                    app:layout_constraintStart_toEndOf="@+id/ingrediant_name"
+                    app:layout_constraintTop_toTopOf="@+id/ingrediant_name" />
+
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/portionButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:background="@color/primaryColor"
+                    android:backgroundTint="@color/primaryColor"
+                    android:textColor="@color/secondaryTextColor"
                     android:onClick="clickPortionButton"
                     android:text="@string/portionButton"
+                    app:layout_constraintBottom_toBottomOf="@+id/ingrediant_name"
                     app:layout_constraintStart_toEndOf="@+id/portionInput"
-                    app:layout_constraintTop_toTopOf="@+id/portionInput" />
-                <EditText
-                    android:id="@+id/portionInput"
-                    android:layout_width="97dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:ems="10"
-                    android:inputType="number"
-                    app:layout_constraintStart_toEndOf="@+id/ingrediant_name"
-                    app:layout_constraintTop_toTopOf="@+id/ingrediant_name" />
+                    app:layout_constraintTop_toTopOf="@+id/ingrediant_name"
+                    app:layout_constraintEnd_toStartOf="@id/end_guideline"/>
 
                 <TextView
                     android:id="@+id/ingrediant_name"
@@ -100,11 +107,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_ingredientName"
+                    android:layout_marginTop="10dp"
                     app:layout_constraintBottom_toTopOf="@+id/ingredientList"
-                    app:layout_constraintEnd_toStartOf="@id/end_guideline"
+                    app:layout_constraintEnd_toStartOf="@id/portionInput"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toEndOf="@id/start_guideline"
-                    app:layout_constraintTop_toBottomOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ListView
                     android:id="@+id/ingredientList"
