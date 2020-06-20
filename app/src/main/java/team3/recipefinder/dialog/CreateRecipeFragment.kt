@@ -17,7 +17,6 @@ class CreateRecipeFragment() : DialogFragment() {
     private lateinit var recipeNameField: EditText
     private lateinit var urlField: EditText
 
-
     interface CreateRecipeListener {
         fun onDialogPositiveClick(name: String?, url: String?)
     }

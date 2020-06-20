@@ -22,7 +22,9 @@ import team3.recipefinder.listener.RecipeListener
 import team3.recipefinder.viewModelFactory.RecipeViewModelFactory
 import team3.recipefinder.viewmodel.RecipeViewModel
 
-class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener,
+class MainActivity :
+    AppCompatActivity(),
+    CreateRecipeFragment.CreateRecipeListener,
     CreateIngredientFragment.EditRecipeListener {
     private lateinit var viewModel: RecipeViewModel
 
@@ -109,7 +111,6 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
      */
     override fun onDialogPositiveClick(name: String?, url: String?) {
         viewModel.addRecipe(name!!, url!!)
-
     }
 
     /**
