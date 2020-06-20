@@ -22,7 +22,7 @@ class IngredientListAdapter(
     private val ingredientAmounts: List<String>,
     private val relationIds: List<Long>,
     private val editMode: Boolean,
-    private val portion:Int
+    private val portion: Int
 ) : ArrayAdapter<String>(inputContext, R.layout.ingredient_list_item, ingredientNames) {
 
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
@@ -37,7 +37,7 @@ class IngredientListAdapter(
         val currentIngredient = ingredientNames[position]
         val currentAmount = ingredientAmounts[position]
 
-        amount.text = calculateAmount(currentAmount,portion)
+        amount.text = calculateAmount(currentAmount, portion)
 
         name.text = currentIngredient
 

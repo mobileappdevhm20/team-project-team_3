@@ -2,7 +2,7 @@ package team3.recipefinder.util
 
 import java.util.regex.Pattern
 
-  fun calculateAmount(value: String, portion: Int): String {
+fun calculateAmount(value: String, portion: Int): String {
     val returnValue: String
     val regex = "(\\d*\\.\\d+)|(\\d+\\.?)"
     val m = Pattern.compile(regex).matcher(value)
