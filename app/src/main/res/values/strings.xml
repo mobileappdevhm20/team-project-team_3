@@ -37,4 +37,6 @@
     <string name="amount">amount</string>
     <string name="button_delete_recipe">Delete</string>
     <string name="text_recipe_url">Image Url:</string>
+    <string name="portionButton">calc Portion</string>
+    <string name="incr_hint">1</string>
 </resources>

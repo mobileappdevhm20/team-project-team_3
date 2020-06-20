@@ -48,6 +48,7 @@ class RecipeDetailActivity : AppCompatActivity(),
     private var ingredientListAmountHolder: List<String> = emptyList()
     private var ingredientListIdHolder: List<Long> = emptyList()
     private val checkedSteps = hashSetOf<Long>()
+    private var portion: Int = 2
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("RestrictedApi")
@@ -163,7 +164,8 @@ class RecipeDetailActivity : AppCompatActivity(),
                 ingredientListNameHolder,
                 ingredientListAmountHolder,
                 ingredientListIdHolder,
-                editModeActive
+                editModeActive,
+                portion
             )
         })
 
@@ -175,7 +177,8 @@ class RecipeDetailActivity : AppCompatActivity(),
                 ingredientListNameHolder,
                 ingredientListAmountHolder,
                 ingredientListIdHolder,
-                editModeActive
+                editModeActive,
+                portion
             )
             changeListItemBehaviour(it)
 
@@ -207,6 +210,18 @@ class RecipeDetailActivity : AppCompatActivity(),
         })
 
         toolbar.setOnClickListener {}
+    }
+
+    fun clickPortionButton(view: View) {
+
+        portion = portionInput.text.toString().toInt()
+        createAndSetListViewAdapter(
+            ingredientListNameHolder,
+            ingredientListAmountHolder,
+            ingredientListIdHolder,
+            editModeActive,
+            portion
+        )
     }
 
     /**
@@ -420,11 +435,18 @@ class RecipeDetailActivity : AppCompatActivity(),
         ingredientNames: List<String>,
         ingredientAmounts: List<String>,
         ingredientIds: List<Long>,
-        editMode: Boolean
+        editMode: Boolean,
+        portion: Int
     ) {
         val listView = findViewById<ListView>(R.id.ingredientList)
-        val ingredientListAdapter =
-            IngredientListAdapter(this, ingredientNames, ingredientAmounts, ingredientIds, editMode)
+        val ingredientListAdapter = IngredientListAdapter(
+            this,
+            ingredientNames,
+            ingredientAmounts,
+            ingredientIds,
+            editMode,
+            portion
+        )
 
         listView.adapter = ingredientListAdapter
 
