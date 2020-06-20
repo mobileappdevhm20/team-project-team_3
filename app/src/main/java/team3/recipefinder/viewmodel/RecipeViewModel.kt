@@ -12,7 +12,6 @@ import kotlinx.coroutines.withContext
 import team3.recipefinder.activity.RecipeDetailActivity
 import team3.recipefinder.dao.RecipeDao
 import team3.recipefinder.model.Recipe
-import team3.recipefinder.activity.RecipeDetailActivity
 import team3.recipefinder.model.Ingredient
 
 
