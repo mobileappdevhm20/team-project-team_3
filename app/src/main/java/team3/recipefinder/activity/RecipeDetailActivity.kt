@@ -182,7 +182,7 @@ class RecipeDetailActivity :
                     ingredientListIdHolder,
                     editModeActive,
                     portion
-                ) 
+                )
             }
         )
 

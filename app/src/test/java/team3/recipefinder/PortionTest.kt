@@ -3,7 +3,6 @@ package team3.recipefinder
 import org.junit.Assert
 import org.junit.Test
 import team3.recipefinder.util.calculateAmount
-import team3.recipefinder.util.extractTime
 
 class PortionTest {
     @Test

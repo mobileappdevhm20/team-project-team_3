@@ -11,7 +11,6 @@ import android.widget.TextView
 import team3.recipefinder.R
 import team3.recipefinder.activity.RecipeDetailActivity
 import team3.recipefinder.util.calculateAmount
-import java.util.regex.Pattern
 
 /**
  * Custom adapter to display the ingredients in a custom listview.
@@ -62,7 +61,6 @@ class IngredientListAdapter(
 
         return rowView
     }
-
 
     override fun getItem(position: Int): String? {
         return ingredientNames[position]
