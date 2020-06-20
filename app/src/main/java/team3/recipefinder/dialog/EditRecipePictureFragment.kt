@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
@@ -26,14 +27,14 @@ class EditRecipePictureFragment : DialogFragment() {
             val view = inflater.inflate(R.layout.dialog_edit_recipe_picture, null)
 
             inputField = view.findViewById(R.id.recipe_value_url)
-            /*   var textValue = ""
+              var textValue = ""
                if (arguments != null) {
                    textValue = requireArguments().getString("oldName").toString()
 
-                   var textView = view.findViewById<TextView>(R.id.text_recipe_name)
+                   var textView = view.findViewById<TextView>(R.id.recipe_value_url)
                    textView.hint = textValue
                }
-   */
+
             builder.setView(view)
                 .setPositiveButton(
                     R.string.text_edit
@@ -61,7 +62,8 @@ class EditRecipePictureFragment : DialogFragment() {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
                 (
-                        context.toString() + " must implement EditRecipeListener")
+                    context.toString() + " must implement EditRecipeListener"
+                    )
             )
         }
     }

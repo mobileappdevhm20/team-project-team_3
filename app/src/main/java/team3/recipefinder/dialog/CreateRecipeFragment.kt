@@ -55,8 +55,7 @@ class CreateRecipeFragment() : DialogFragment() {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
                 (
-                        context.toString() +
-                                " must implement CreateRecipeListener"
+                        context.toString() + " must implement CreateRecipeListener"
                         )
             )
         }

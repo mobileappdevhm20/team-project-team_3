@@ -171,7 +171,8 @@ class RecipeDetailActivity :
         )
 
         viewModel.ingredients.observe(
-            this, Observer {
+            this,
+            Observer {
                 if (viewModel.editMode.value!!) {
                     showAddIngrediantDialog()
                 }
@@ -219,7 +220,7 @@ class RecipeDetailActivity :
                     addIngredientButton.visibility = View.VISIBLE
                     imageView.setOnClickListener {
                         val args = Bundle()
-                        args.putString("oldName", " toolBar.title.toString()")
+                        args.putString("oldName", viewModel.getRecipeUrl())
                         val dialog = EditRecipePictureFragment()
                         dialog.arguments = args
                         dialog.show(supportFragmentManager, "Edit Recipe URL")
@@ -523,5 +524,4 @@ class RecipeDetailActivity :
         viewModel.editMode.removeObservers(this)
         viewModel.stepsRecipe.removeObservers(this)
     }
-
 }

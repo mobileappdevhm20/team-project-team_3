@@ -41,6 +41,10 @@ class RecipeDetailViewModel(
         disableEdit()
     }
 
+    fun getRecipeUrl() : String? {
+        return this.recipe.value?.imageUrl
+    }
+
     fun enableEdit() {
         _editMode.value = true
     }
