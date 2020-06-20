@@ -41,7 +41,7 @@ class RecipeDetailViewModel(
         disableEdit()
     }
 
-    fun getRecipeUrl() : String? {
+    fun getRecipeUrl(): String? {
         return this.recipe.value?.imageUrl
     }
 

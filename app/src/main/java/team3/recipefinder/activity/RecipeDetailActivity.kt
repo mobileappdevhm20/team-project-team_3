@@ -33,7 +33,14 @@ import team3.recipefinder.R
 import team3.recipefinder.adapter.IngredientListAdapter
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
-import team3.recipefinder.dialog.*
+import team3.recipefinder.dialog.AddIngredientFragment
+import team3.recipefinder.dialog.CreateIngredientFragment
+import team3.recipefinder.dialog.CreateInstructionFragment
+import team3.recipefinder.dialog.EditRecipePictureFragment
+import team3.recipefinder.dialog.EditIngredientFragment
+import team3.recipefinder.dialog.EditInstructionFragment
+import team3.recipefinder.dialog.EditRecipeFragment
+
 import team3.recipefinder.util.extractTime
 import team3.recipefinder.util.startTimer
 import team3.recipefinder.viewModelFactory.EditViewModelFactory

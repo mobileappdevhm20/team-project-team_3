@@ -27,13 +27,13 @@ class EditRecipePictureFragment : DialogFragment() {
             val view = inflater.inflate(R.layout.dialog_edit_recipe_picture, null)
 
             inputField = view.findViewById(R.id.recipe_value_url)
-              var textValue = ""
-               if (arguments != null) {
-                   textValue = requireArguments().getString("oldName").toString()
+            var textValue = ""
+            if (arguments != null) {
+                textValue = requireArguments().getString("oldName").toString()
 
-                   var textView = view.findViewById<TextView>(R.id.recipe_value_url)
-                   textView.hint = textValue
-               }
+                var textView = view.findViewById<TextView>(R.id.recipe_value_url)
+                textView.hint = textValue
+            }
 
             builder.setView(view)
                 .setPositiveButton(
