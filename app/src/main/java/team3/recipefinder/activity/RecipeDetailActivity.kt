@@ -100,14 +100,14 @@ class RecipeDetailActivity :
                     "RecipeDetailActivity",
                     "OBSERVER CALLED FOR ${it.name}"
                 )
-                val imageView = findViewById<ImageView>(R.id.imageView);
+                val imageView = findViewById<ImageView>(R.id.imageView)
                 Glide.with(this).load(
                     it.imageUrl
                 ).apply(
                     RequestOptions()
                         // .placeholder(R.drawable.loading_animation)
                         .error(R.drawable.tomatensuppe115_v_zweispaltig)
-                ).into(imageView);
+                ).into(imageView)
                 val toolBar = findViewById<Toolbar>(R.id.toolbar)
                 toolBar.title = it.name
                 toolBar.setOnClickListener {
@@ -170,12 +170,13 @@ class RecipeDetailActivity :
             }
         )
 
-
-        viewModel.ingredients.observe(this, Observer {
-            if (viewModel.editMode.value!!) {
-                showAddIngrediantDialog()
+        viewModel.ingredients.observe(
+            this, Observer {
+                if (viewModel.editMode.value!!) {
+                    showAddIngrediantDialog()
+                }
             }
-        })
+        )
 
         viewModel.ingredientRecipe.observe(
             this,
@@ -394,7 +395,6 @@ class RecipeDetailActivity :
 
     override fun onDialogPositiveEditRecipePicture(url: String?) {
         viewModel.updateRecipePicture(url!!)
-
     }
 
     /**
@@ -523,6 +523,5 @@ class RecipeDetailActivity :
         viewModel.editMode.removeObservers(this)
         viewModel.stepsRecipe.removeObservers(this)
     }
-
 
 }
