@@ -20,7 +20,6 @@ class EditRecipePictureFragment : DialogFragment() {
         fun onDialogPositiveEditRecipePicture(name: String?)
     }
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -28,14 +27,14 @@ class EditRecipePictureFragment : DialogFragment() {
             val view = inflater.inflate(R.layout.dialog_edit_recipe_picture, null)
 
             inputField = view.findViewById(R.id.recipe_value_url)
-         /*   var textValue = ""
-            if (arguments != null) {
-                textValue = requireArguments().getString("oldName").toString()
+            /*   var textValue = ""
+               if (arguments != null) {
+                   textValue = requireArguments().getString("oldName").toString()
 
-                var textView = view.findViewById<TextView>(R.id.text_recipe_name)
-                textView.hint = textValue
-            }
-*/
+                   var textView = view.findViewById<TextView>(R.id.text_recipe_name)
+                   textView.hint = textValue
+               }
+   */
             builder.setView(view)
                 .setPositiveButton(
                     R.string.text_edit

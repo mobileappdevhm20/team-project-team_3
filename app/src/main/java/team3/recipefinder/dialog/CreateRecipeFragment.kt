@@ -19,7 +19,7 @@ class CreateRecipeFragment() : DialogFragment() {
 
 
     interface CreateRecipeListener {
-        fun onDialogPositiveClick( name: String?, url: String?)
+        fun onDialogPositiveClick(name: String?, url: String?)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -31,12 +31,14 @@ class CreateRecipeFragment() : DialogFragment() {
             recipeNameField = view.findViewById(R.id.recipe_value)
             urlField = view.findViewById(R.id.url_input)
 
-
             builder.setView(view)
                 .setPositiveButton(
                     R.string.text_edit
                 ) { _, _ ->
-                    listener.onDialogPositiveClick( recipeNameField.text.toString(),urlField.text.toString())
+                    listener.onDialogPositiveClick(
+                        recipeNameField.text.toString(),
+                        urlField.text.toString()
+                    )
                 }
                 .setNegativeButton(
                     R.string.text_cancel
@@ -55,9 +57,9 @@ class CreateRecipeFragment() : DialogFragment() {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
                 (
-                    context.toString() +
-                        " must implement CreateRecipeListener"
-                    )
+                        context.toString() +
+                                " must implement CreateRecipeListener"
+                        )
             )
         }
     }

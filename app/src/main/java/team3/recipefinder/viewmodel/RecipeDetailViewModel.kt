@@ -172,7 +172,6 @@ class RecipeDetailViewModel(
         }
     }
 
-
     private suspend fun updateRecipeNameById(recipeId: Long, name: String) {
         withContext(Dispatchers.IO) {
             database.updateRecipeName(recipeId, name)
