@@ -33,13 +33,7 @@ import team3.recipefinder.R
 import team3.recipefinder.adapter.IngredientListAdapter
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
-import team3.recipefinder.dialog.AddIngredientFragment
-import team3.recipefinder.dialog.CreateIngredientFragment
-import team3.recipefinder.dialog.CreateInstructionFragment
-import team3.recipefinder.dialog.CreateRecipeFragment
-import team3.recipefinder.dialog.EditIngredientFragment
-import team3.recipefinder.dialog.EditInstructionFragment
-import team3.recipefinder.dialog.EditRecipeFragment
+import team3.recipefinder.dialog.*
 import team3.recipefinder.util.extractTime
 import team3.recipefinder.util.startTimer
 import team3.recipefinder.viewModelFactory.EditViewModelFactory
@@ -53,7 +47,7 @@ class RecipeDetailActivity :
     CreateIngredientFragment.EditRecipeListener,
     EditInstructionFragment.EditInstructionListener,
     EditRecipeFragment.EditRecipeListener,
-    EditRecipePictureFragment.EditRecipePictureListener{
+    EditRecipePictureFragment.EditRecipePictureListener {
 
     private lateinit var viewModel: RecipeDetailViewModel
     private var editModeActive = false
@@ -106,14 +100,14 @@ class RecipeDetailActivity :
                     "RecipeDetailActivity",
                     "OBSERVER CALLED FOR ${it.name}"
                 )
-                          val imageView = findViewById<ImageView>(R.id.imageView);
-            Glide.with(this).load(
-                it.imageUrl
-            ).apply(
-                RequestOptions()
-                    // .placeholder(R.drawable.loading_animation)
-                    .error(R.drawable.tomatensuppe115_v_zweispaltig)
-            ).into(imageView);
+                val imageView = findViewById<ImageView>(R.id.imageView);
+                Glide.with(this).load(
+                    it.imageUrl
+                ).apply(
+                    RequestOptions()
+                        // .placeholder(R.drawable.loading_animation)
+                        .error(R.drawable.tomatensuppe115_v_zweispaltig)
+                ).into(imageView);
                 val toolBar = findViewById<Toolbar>(R.id.toolbar)
                 toolBar.title = it.name
                 toolBar.setOnClickListener {
@@ -182,7 +176,7 @@ class RecipeDetailActivity :
                 showAddIngrediantDialog()
             }
         })
-      
+
         viewModel.ingredientRecipe.observe(
             this,
             Observer { it ->
@@ -223,12 +217,12 @@ class RecipeDetailActivity :
                     deleteRecipeButton.visibility = View.VISIBLE
                     addIngredientButton.visibility = View.VISIBLE
                     imageView.setOnClickListener {
-                    val args = Bundle()
-                    args.putString("oldName", " toolBar.title.toString()")
-                    val dialog = EditRecipePictureFragment()
-                    dialog.arguments = args
-                    dialog.show(supportFragmentManager, "Edit Recipe URL")
-                }
+                        val args = Bundle()
+                        args.putString("oldName", " toolBar.title.toString()")
+                        val dialog = EditRecipePictureFragment()
+                        dialog.arguments = args
+                        dialog.show(supportFragmentManager, "Edit Recipe URL")
+                    }
                 } else {
                     editButton.visibility = View.VISIBLE
                     shareButton.visibility = View.VISIBLE
@@ -240,7 +234,7 @@ class RecipeDetailActivity :
                 }
             }
         )
-      
+
         toolbar.setOnClickListener {}
     }
 
