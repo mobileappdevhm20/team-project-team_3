@@ -40,7 +40,6 @@ import team3.recipefinder.dialog.EditRecipePictureFragment
 import team3.recipefinder.dialog.EditIngredientFragment
 import team3.recipefinder.dialog.EditInstructionFragment
 import team3.recipefinder.dialog.EditRecipeFragment
-
 import team3.recipefinder.util.extractTime
 import team3.recipefinder.util.startTimer
 import team3.recipefinder.viewModelFactory.EditViewModelFactory

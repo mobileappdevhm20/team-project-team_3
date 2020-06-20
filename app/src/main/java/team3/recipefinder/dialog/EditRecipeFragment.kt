@@ -64,7 +64,7 @@ class EditRecipeFragment() : DialogFragment() {
             throw ClassCastException(
                 (
                     context.toString() +
-                          " must implement EditRecipeListener"
+                        " must implement EditRecipeListener"
                     )
             )
         }
