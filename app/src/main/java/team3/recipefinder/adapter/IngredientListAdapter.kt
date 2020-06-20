@@ -10,6 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import team3.recipefinder.R
 import team3.recipefinder.activity.RecipeDetailActivity
+import team3.recipefinder.util.calculateAmount
+import java.util.regex.Pattern
 
 /**
  * Custom adapter to display the ingredients in a custom listview.
@@ -19,7 +21,8 @@ class IngredientListAdapter(
     private val ingredientNames: List<String>,
     private val ingredientAmounts: List<String>,
     private val relationIds: List<Long>,
-    private val editMode: Boolean
+    private val editMode: Boolean,
+    private val portion:Int
 ) : ArrayAdapter<String>(inputContext, R.layout.ingredient_list_item, ingredientNames) {
 
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
@@ -33,7 +36,9 @@ class IngredientListAdapter(
         val currentId = relationIds[position]
         val currentIngredient = ingredientNames[position]
         val currentAmount = ingredientAmounts[position]
-        amount.text = currentAmount
+
+        amount.text = calculateAmount(currentAmount,portion)
+
         name.text = currentIngredient
 
         if (editMode) {
@@ -57,6 +62,7 @@ class IngredientListAdapter(
 
         return rowView
     }
+
 
     override fun getItem(position: Int): String? {
         return ingredientNames[position]
