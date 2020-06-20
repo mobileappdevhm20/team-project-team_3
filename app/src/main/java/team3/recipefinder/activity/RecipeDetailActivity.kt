@@ -189,9 +189,9 @@ class RecipeDetailActivity : AppCompatActivity(),
                 doneEditButton.visibility = View.VISIBLE
                 deleteRecipeButton.visibility = View.VISIBLE
                 addIngredientButton.visibility = View.VISIBLE
-                imageView.setOnClickListener{
+                imageView.setOnClickListener {
                     val args = Bundle()
-                    args.putString("oldName"," toolBar.title.toString()")
+                    args.putString("oldName", " toolBar.title.toString()")
 
                     val dialog = EditRecipePictureFragment()
                     dialog.arguments = args
@@ -205,7 +205,7 @@ class RecipeDetailActivity : AppCompatActivity(),
                 doneEditButton.visibility = View.GONE
                 deleteRecipeButton.visibility = View.GONE
                 addIngredientButton.visibility = View.GONE
-                imageView.setOnClickListener{}
+                imageView.setOnClickListener {}
             }
         })
 
@@ -369,6 +369,7 @@ class RecipeDetailActivity : AppCompatActivity(),
     override fun openCreateIngredientDialog() {
         showCreateIngredientDialog(getString(R.string.text_ingredientName))
     }
+
     override fun onDialogPositiveEditRecipePicture(url: String?) {
         viewModel.updateRecipePicture(url!!)
 
@@ -501,8 +502,6 @@ class RecipeDetailActivity : AppCompatActivity(),
         viewModel.editMode.removeObservers(this)
         viewModel.stepsRecipe.removeObservers(this)
     }
-
-
 
 
 }
