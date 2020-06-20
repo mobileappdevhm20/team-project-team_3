@@ -19,18 +19,24 @@ interface CookbookDao {
     @Insert
     fun insertCookbook(recipe: Cookbook): Long
 
-    @Query("""SELECT rc.* FROM recipe rc
+    @Query(
+        """SELECT rc.* FROM recipe rc
             INNER JOIN rel_cookbook_recipes r 
             ON rc.id = r.recipeId 
-            WHERE r.cookbookId = :cookbookId""")
+            WHERE r.cookbookId = :cookbookId"""
+    )
     fun getAllRecipesByCookbook(cookbookId: Int): List<Recipe>
 
-    @Query("""INSERT INTO rel_cookbook_recipes (cookbookId, recipeId)
-        VALUES (:cookbookId, :recipeId)""")
+    @Query(
+        """INSERT INTO rel_cookbook_recipes (cookbookId, recipeId)
+        VALUES (:cookbookId, :recipeId)"""
+    )
     fun addRecipeToCookbook(recipeId: Int, cookbookId: Int)
 
-    @Query("""DELETE FROM rel_cookbook_recipes
-        WHERE recipeId = :recipeId AND cookbookId = :cookbookId""")
+    @Query(
+        """DELETE FROM rel_cookbook_recipes
+        WHERE recipeId = :recipeId AND cookbookId = :cookbookId"""
+    )
     fun removeRecipeFromCookbook(recipeId: Int, cookbookId: Int)
 
     @Delete

@@ -12,8 +12,6 @@ data class Recipe(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "imageUrl") val imageUrl: String
-
-
 )
 
 @Parcelize
@@ -43,7 +41,6 @@ data class IngredientAmount(
     val amount: String,
     val relId: Long
 )
-
 
 @Entity(tableName = "rel_recipe_step")
 data class RelRecipeStep(

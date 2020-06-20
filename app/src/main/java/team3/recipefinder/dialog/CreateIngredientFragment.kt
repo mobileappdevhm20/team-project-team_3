@@ -20,7 +20,6 @@ class CreateIngredientFragment() : DialogFragment() {
         fun saveItem(id: String?, name: String?)
     }
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -46,7 +45,6 @@ class CreateIngredientFragment() : DialogFragment() {
                     R.string.text_cancel
                 ) { _, _ ->
                     listener.saveItem(textValue, null)
-
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
@@ -60,8 +58,10 @@ class CreateIngredientFragment() : DialogFragment() {
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
-                (context.toString() +
-                        " must implement EditRecipeListener")
+                (
+                    context.toString() +
+                        " must implement EditRecipeListener"
+                    )
             )
         }
     }
