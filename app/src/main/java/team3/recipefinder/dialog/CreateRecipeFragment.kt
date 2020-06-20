@@ -22,7 +22,6 @@ class CreateRecipeFragment() : DialogFragment() {
         fun onDialogPositiveClick( name: String?, url: String?)
     }
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -55,8 +54,10 @@ class CreateRecipeFragment() : DialogFragment() {
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
-                (context.toString() +
-                        " must implement CreateRecipeListener")
+                (
+                    context.toString() +
+                        " must implement CreateRecipeListener"
+                    )
             )
         }
     }

@@ -2,7 +2,6 @@ package team3.recipefinder.activity
 
 import android.content.Intent
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -10,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
@@ -56,14 +56,20 @@ class LoginActivity : AppCompatActivity() {
                     .show()
             } else {
                 auth.signInWithEmailAndPassword(email, password)
-                    .addOnSuccessListener(this, OnSuccessListener() {
-                        Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }).addOnFailureListener(this, OnFailureListener() {
-                        Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
-                    })
+                    .addOnSuccessListener(
+                        this,
+                        OnSuccessListener() {
+                            Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    ).addOnFailureListener(
+                        this,
+                        OnFailureListener() {
+                            Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
+                        }
+                    )
             }
         }
 

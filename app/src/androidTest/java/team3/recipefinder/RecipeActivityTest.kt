@@ -1,12 +1,12 @@
 package team3.recipefinder
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import team3.recipefinder.activity.RecipeDetailActivity
@@ -15,6 +15,7 @@ import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Recipe
 import team3.recipefinder.model.RecipeStep
 
+@Ignore
 @RunWith(AndroidJUnit4::class)
 class RecipeActivityTest {
 
@@ -46,6 +47,6 @@ class RecipeActivityTest {
 
         appContext.startActivity(recipeAcitivityIntent)
 
-        Thread.sleep(30_000)
+        Thread.sleep(10_000)
     }
 }

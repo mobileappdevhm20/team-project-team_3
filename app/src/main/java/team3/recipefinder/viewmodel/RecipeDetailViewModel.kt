@@ -1,17 +1,16 @@
 package team3.recipefinder.viewmodel
 
 import android.app.Application
-import android.util.Log
-import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import team3.recipefinder.dao.RecipeDao
-import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Ingredient
-import team3.recipefinder.model.Recipe
 import team3.recipefinder.model.RecipeStep
 
 class RecipeDetailViewModel(
@@ -21,13 +20,11 @@ class RecipeDetailViewModel(
 ) :
     AndroidViewModel(application) {
 
-
     private var viewModelJob = Job()
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     val database = dataSource
-
 
     val recipe = database.get(recipeKey)
     val ingredients = database.getAllIngredients()
@@ -40,11 +37,9 @@ class RecipeDetailViewModel(
     val editMode: LiveData<Boolean>
         get() = _editMode
 
-
     init {
         disableEdit()
     }
-
 
     fun enableEdit() {
         _editMode.value = true
@@ -54,15 +49,15 @@ class RecipeDetailViewModel(
         _editMode.value = false
     }
 
-    fun addIngredient(id: Long,amount: String) {
+    fun addIngredient(id: Long, amount: String) {
         uiScope.launch {
-            addI(id,amount)
+            addI(id, amount)
         }
     }
 
-    private suspend fun addI(i: Long,amount: String) {
+    private suspend fun addI(i: Long, amount: String) {
         withContext(Dispatchers.IO) {
-            database.assignIngredientToRecipe(i, recipe.value!!.id,amount)
+            database.assignIngredientToRecipe(i, recipe.value!!.id, amount)
         }
     }
 
@@ -103,6 +98,7 @@ class RecipeDetailViewModel(
             addS(step)
         }
     }
+
     fun addIngredient(name: String) {
         uiScope.launch {
             val recipe = Ingredient(0, name)
@@ -188,6 +184,7 @@ class RecipeDetailViewModel(
             updateRecipeNameById(recipeKey, name)
         }
     }
+      
     private suspend fun updateRecipePictureById(recipeId: Long, url: String) {
         withContext(Dispatchers.IO) {
             database.updateRecipeImageUrl(recipeId, url)
@@ -201,4 +198,3 @@ class RecipeDetailViewModel(
     }
 
 }
-

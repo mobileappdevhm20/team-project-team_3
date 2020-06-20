@@ -9,7 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
 
-class CreateInstructionFragment: DialogFragment() {
+class CreateInstructionFragment : DialogFragment() {
 
     // Use this instance of the interface to deliver action events
     private lateinit var listener: CreateInstructionListener
@@ -19,7 +19,6 @@ class CreateInstructionFragment: DialogFragment() {
     interface CreateInstructionListener {
         fun onDialogPositiveClick(id: String?, name: String?)
     }
-
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -58,8 +57,10 @@ class CreateInstructionFragment: DialogFragment() {
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
-                (context.toString() +
-                        " must implement CreateInstructionListener")
+                (
+                    context.toString() +
+                        " must implement CreateInstructionListener"
+                    )
             )
         }
     }

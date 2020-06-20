@@ -65,18 +65,20 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         binding.recipeView.adapter = adapter
 
         // Observe LiveData
-        viewModel.recipes.observe(this, Observer {
-            Log.i("MainActivity", "OBSERVER CALLED")
-            it?.let {
-                adapter.submitList(it)
-                adapter.notifyDataSetChanged()
+        viewModel.recipes.observe(
+            this,
+            Observer {
+                Log.i("MainActivity", "OBSERVER CALLED")
+                it?.let {
+                    adapter.submitList(it)
+                    adapter.notifyDataSetChanged()
+                }
             }
-        })
+        )
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
     }
-
 
     /**
      * OnClick method to show create recipe dialog.
@@ -137,10 +139,17 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.user_logout_settings -> {
             FirebaseAuth.getInstance().signOut()
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(
+                this,
+                LoginActivity::class.java
+            )
             startActivity(intent)
             finish()
-            Toast.makeText(this, "Successfully Logged Out", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "Successfully Logged Out",
+                Toast.LENGTH_LONG
+            ).show()
             true
         }
         R.id.user_setting_create_recipe -> {
@@ -155,6 +164,4 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
             super.onOptionsItemSelected(item)
         }
     }
-
-
 }

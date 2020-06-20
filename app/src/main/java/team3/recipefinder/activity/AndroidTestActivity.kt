@@ -1,7 +1,7 @@
 package team3.recipefinder.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import team3.recipefinder.R
 
 class AndroidTestActivity : AppCompatActivity() {

@@ -20,7 +20,6 @@ class EditRecipeFragment() : DialogFragment() {
         fun onDialogPositiveEditRecipe(name: String?)
     }
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -62,8 +61,10 @@ class EditRecipeFragment() : DialogFragment() {
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
-                (context.toString() +
-                        " must implement EditRecipeListener")
+                (
+                    context.toString() +
+                        " must implement EditRecipeListener"
+                    )
             )
         }
     }

@@ -20,5 +20,4 @@ class RecipeViewModelFactory(
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-
 }

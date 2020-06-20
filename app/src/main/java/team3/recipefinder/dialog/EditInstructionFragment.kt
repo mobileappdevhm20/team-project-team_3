@@ -4,13 +4,11 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
 
-class EditInstructionFragment: DialogFragment() {
+class EditInstructionFragment : DialogFragment() {
     // Use this instance of the interface to deliver action events
     private lateinit var listener: EditInstructionListener
 
@@ -20,7 +18,6 @@ class EditInstructionFragment: DialogFragment() {
         fun onDialogPositiveEditInstruction(id: Long?, instruction: String?)
         fun onDialogNeutralEditInstruction(id: Long?)
     }
-
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -70,8 +67,10 @@ class EditInstructionFragment: DialogFragment() {
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
-                (context.toString() +
-                        " must implement EditInstructionListener")
+                (
+                    context.toString() +
+                        " must implement EditInstructionListener"
+                    )
             )
         }
     }

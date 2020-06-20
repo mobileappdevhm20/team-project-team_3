@@ -1,4 +1,4 @@
-package team3.recipefinder
+package team3.recipefinder.database
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
@@ -9,8 +9,6 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import team3.recipefinder.database.AppDatabase
-import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Cookbook
 import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
@@ -149,7 +147,6 @@ class DatabaseTest {
                 Assert.assertEquals(expected, it.map { it.description })
             }
         }
-
     }
 
     @Test
@@ -210,13 +207,17 @@ class DatabaseTest {
 
         // Test ingredients of recipe 1
         val expected = listOf("testRecipe", "testRecipe2")
-        Assert.assertEquals(expected,
-            db.cookbookDao().getAllRecipesByCookbook(1).map { it.name })
+        Assert.assertEquals(
+            expected,
+            db.cookbookDao().getAllRecipesByCookbook(1).map { it.name }
+        )
 
         // Test ingredients of recipe 2
         val expected2 = listOf("testRecipe")
-        Assert.assertEquals(expected2,
-            db.cookbookDao().getAllRecipesByCookbook(2).map { it.name })
+        Assert.assertEquals(
+            expected2,
+            db.cookbookDao().getAllRecipesByCookbook(2).map { it.name }
+        )
     }
 
     @Test
