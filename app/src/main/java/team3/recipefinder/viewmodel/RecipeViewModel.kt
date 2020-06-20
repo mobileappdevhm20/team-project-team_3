@@ -14,7 +14,6 @@ import team3.recipefinder.dao.RecipeDao
 import team3.recipefinder.model.Recipe
 import team3.recipefinder.model.Ingredient
 
-
 class RecipeViewModel(val database: RecipeDao, application: Application) :
     AndroidViewModel(application) {
 
@@ -24,9 +23,9 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
 
     var recipes = database.getAll()
 
-    fun addRecipe(name: String, url:String) {
+    fun addRecipe(name: String, url: String) {
         uiScope.launch {
-            val recipe = Recipe(0, name,"Test Description",url)
+            val recipe = Recipe(0, name, "Test Description", url)
             addR(recipe)
         }
     }
@@ -36,7 +35,6 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
             database.insertRecipe(r)
         }
     }
-
 
     fun addIngredient(name: String) {
         uiScope.launch {
@@ -50,7 +48,6 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
             database.insertIngredient(r)
         }
     }
-    
 
     fun editPropertyDetails(r: Recipe) {
         showEditActivity(getApplication(), r)

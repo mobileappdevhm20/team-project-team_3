@@ -184,7 +184,7 @@ class RecipeDetailViewModel(
             updateRecipeNameById(recipeKey, name)
         }
     }
-      
+
     private suspend fun updateRecipePictureById(recipeId: Long, url: String) {
         withContext(Dispatchers.IO) {
             database.updateRecipeImageUrl(recipeId, url)
@@ -196,5 +196,4 @@ class RecipeDetailViewModel(
             updateRecipePictureById(recipeKey, url)
         }
     }
-
 }
