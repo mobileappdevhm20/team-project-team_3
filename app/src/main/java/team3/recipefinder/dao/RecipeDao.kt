@@ -27,6 +27,12 @@ interface RecipeDao {
 
     @Query("UPDATE recipe SET imageUrl = :url WHERE id = :recipeId")
     fun updateRecipeImageUrl(recipeId: Long, url: String)
+  
+    @Query("UPDATE recipe SET servings = :servings WHERE id = :recipeId")
+    fun updateRecipeServings(recipeId: Long, servings: Int)
+
+    @Query("SELECT id FROM recipe WHERE name = :name AND description = :description")
+    fun getRecipeId(name: String, description: String): Long
 
     @Query(
         """SELECT i.*,r.amount, r.id as relId FROM ingredient i 
@@ -38,6 +44,9 @@ interface RecipeDao {
 
     @Query("SELECT * FROM ingredient")
     fun getAllIngredients(): LiveData<List<Ingredient>>
+
+    @Query("SELECT id FROM ingredient WHERE name = :name")
+    fun getIngredientId(name: String): Long
 
     @Query("UPDATE rel_recipe_ingredient SET amount = :amount WHERE id = :id")
     fun updateAmountForRecipe(id: Long, amount: String)

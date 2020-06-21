@@ -1,4 +1,3 @@
-
 package team3.recipefinder
 
 import android.content.Context
@@ -33,8 +32,8 @@ class CookbookActivityTest {
     fun launchCookbookActivity() {
         // Create recipes
         val recipes = listOf(
-            db.recipeDao().insertRecipe(Recipe(0, "test 1", "description", "imageUrl")),
-            db.recipeDao().insertRecipe(Recipe(0, "test 2", "description", "imagerUrl"))
+            db.recipeDao().insertRecipe(Recipe(0, "test 1", "description", "imageUrl", 1)),
+            db.recipeDao().insertRecipe(Recipe(0, "test 2", "description", "imagerUrl", 1))
         )
 
         // Create cookbook
