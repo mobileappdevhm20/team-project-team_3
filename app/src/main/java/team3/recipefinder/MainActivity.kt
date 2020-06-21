@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
+import team3.recipefinder.activity.CrawlerActivity
 import team3.recipefinder.activity.LoginActivity
 import team3.recipefinder.adapter.RecipeAdapter
 import team3.recipefinder.database.getAppDatabase
@@ -156,6 +157,12 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         }
         R.id.user_setting_create_ingredient -> {
             showCreateIngredientDialog()
+            true
+        }
+        R.id.user_setting_import_recipe -> {
+            val intent = Intent(this, CrawlerActivity::class.java)
+            startActivity(intent)
+            finish()
             true
         }
         else -> {

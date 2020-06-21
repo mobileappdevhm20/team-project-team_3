@@ -11,7 +11,8 @@ data class Recipe(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "description") val description: String,
-    @ColumnInfo(name = "imageUrl") val imageUrl: String
+    @ColumnInfo(name = "imageUrl") val imageUrl: String,
+    @ColumnInfo(name = "servings") val servings: Int
 )
 
 @Parcelize

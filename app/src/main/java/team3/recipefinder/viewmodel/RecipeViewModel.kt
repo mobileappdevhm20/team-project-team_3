@@ -24,7 +24,7 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
 
     fun addRecipe(name: String) {
         uiScope.launch {
-            val recipe = Recipe(0, name, "Test Description", "BeispielUrl")
+            val recipe = Recipe(0, name, "Test Description", "BeispielUrl", 1)
             addR(recipe)
         }
     }

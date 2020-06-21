@@ -1,8 +1,7 @@
-package team3.recipefinder
+package team3.recipefinder.util
 
 import org.junit.Assert
 import org.junit.Test
-import team3.recipefinder.util.extractTime
 
 class ExtractTimeFromStringsTest {
     @Test
