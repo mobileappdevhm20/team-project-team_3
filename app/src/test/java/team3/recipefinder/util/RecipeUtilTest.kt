@@ -37,6 +37,7 @@ class RecipeUtilTest {
         val expected = CrawlRecipe(
             "Schlemmerfisch Bordelaise",
             "Low Fat",
+            4,
             "Den Fisch waschen und trockentupfen, mit Zitronensaft, " +
                     "Salz und Pfeffer würzen und in die mit Margarine leicht gefettete " +
                     "Auflaufform geben.\r\n\r\n" +

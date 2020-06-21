@@ -3,6 +3,7 @@ package team3.recipefinder.model
 data class CrawlRecipe(
     val title: String,
     val subtitle: String,
+    val servings: Int,
     val instructions: String,
     val ingredientGroups: List<CrawlIngredientGroup>
 )
