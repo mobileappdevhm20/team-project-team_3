@@ -58,6 +58,7 @@ class RecipeDetailActivity :
     private var ingredientListAmountHolder: List<String> = emptyList()
     private var ingredientListIdHolder: List<Long> = emptyList()
     private val checkedSteps = hashSetOf<Long>()
+    private var basePortion: Int = 1
     private var portion: Int = 1
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -115,6 +116,9 @@ class RecipeDetailActivity :
                         editRecipeFragment.show(supportFragmentManager, "Edit Recipe")
                     }
                 }
+                basePortion = it.servings
+                portion = basePortion
+                putPortion()
             }
         )
 
@@ -167,7 +171,11 @@ class RecipeDetailActivity :
 
         viewModel.ingredients.observe(
             this,
-            Observer { }
+            Observer {
+                if (viewModel.editMode.value!!) {
+                    showAddIngrediantDialog()
+                }
+            }
         )
         viewModel.ingredientRecipe.observe(
             this,
@@ -181,7 +189,8 @@ class RecipeDetailActivity :
                     ingredientListAmountHolder,
                     ingredientListIdHolder,
                     editModeActive,
-                    portion
+                    portion,
+                    basePortion
                 )
             }
         )
@@ -197,7 +206,8 @@ class RecipeDetailActivity :
                     ingredientListAmountHolder,
                     ingredientListIdHolder,
                     editModeActive,
-                    portion
+                    portion,
+                    basePortion
                 )
                 changeListItemBehaviour(it)
 
@@ -221,18 +231,21 @@ class RecipeDetailActivity :
         toolbar.setOnClickListener {}
     }
 
-    fun clickPortionButton(view: View) {
-
+    fun clickPortionButton(@Suppress("UNUSED_PARAMETER") view: View) {
         portion = portionInput.text.toString().toInt()
+        putPortion()
+    }
 
-        portionInput.hint = portion.toString()
+    private fun putPortion() {
+        portionInput.hint = basePortion.toString()
 
         createAndSetListViewAdapter(
             ingredientListNameHolder,
             ingredientListAmountHolder,
             ingredientListIdHolder,
             editModeActive,
-            portion
+            portion,
+            basePortion
         )
     }
 
@@ -444,7 +457,8 @@ class RecipeDetailActivity :
         ingredientAmounts: List<String>,
         ingredientIds: List<Long>,
         editMode: Boolean,
-        portion: Int
+        portion: Int,
+        basePortion: Int
     ) {
         val listView = findViewById<ListView>(R.id.ingredientList)
         val ingredientListAdapter = IngredientListAdapter(
@@ -453,7 +467,8 @@ class RecipeDetailActivity :
             ingredientAmounts,
             ingredientIds,
             editMode,
-            portion
+            portion,
+            basePortion
         )
 
         listView.adapter = ingredientListAdapter

@@ -28,7 +28,7 @@ class CrawlRecipeViewModel(val database: RecipeDao, application: Application) :
         withContext(Dispatchers.IO) {
             Log.i("CrawlRecipeViewModel", "Creating recipe")
             val recipeId =
-                database.insertRecipe(Recipe(0, recipe.title, recipe.subtitle, "Sampleurl"))
+                database.insertRecipe(Recipe(0, recipe.title, recipe.subtitle, "Sampleurl", recipe.servings))
             // Add Ingredients
             Log.i("CrawlRecipeViewModel", "Iterating throught ingredientGroups")
             for (ingredientGroup in recipe.ingredientGroups) {

@@ -183,4 +183,16 @@ class RecipeDetailViewModel(
             updateRecipeNameById(recipeKey, name)
         }
     }
+
+    private suspend fun updateRecipeServingsById(recipeId: Long, servings: Int) {
+        withContext(Dispatchers.IO) {
+            database.updateRecipeServings(recipeId, servings)
+        }
+    }
+
+    fun updateRecipeServings(servings: Int) {
+        uiScope.launch {
+            updateRecipeServingsById(recipeKey, servings)
+        }
+    }
 }
