@@ -45,7 +45,7 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
     private var ingredientListAmountHolder: List<String> = emptyList()
     private var ingredientListIdHolder: List<Long> = emptyList()
     private val checkedSteps = hashSetOf<Long>()
-    private var portion: Int = 2
+    private var portion: Int = 1
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("RestrictedApi")
@@ -188,14 +188,16 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
             }
         })
 
-        toolbar.setOnClickListener {
-
-        }
+        toolbar.setOnClickListener {}
+        portionInput.hint = portion.toString()
     }
 
     fun clickPortionButton(view: View) {
 
         portion = portionInput.text.toString().toInt()
+
+        portionInput.hint = portion.toString()
+
         createAndSetListViewAdapter(
             ingredientListNameHolder,
             ingredientListAmountHolder,
