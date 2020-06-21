@@ -3,7 +3,6 @@ package team3.recipefinder.dialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -11,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
 
-class EditIngredientFragment: DialogFragment() {
+class EditIngredientFragment : DialogFragment() {
     // Use this instance of the interface to deliver action events
     private lateinit var listener: EditIngredientListener
 
@@ -23,7 +22,6 @@ class EditIngredientFragment: DialogFragment() {
         fun onDialogNegativeClick()
         fun onDialogNeutralClick(id: Long?, name: String?)
     }
-
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -50,7 +48,8 @@ class EditIngredientFragment: DialogFragment() {
                     R.string.text_edit
                 ) { _, _ ->
                     if (amountTextField.text.toString() == "") {
-                        Toast.makeText(activity, "Please enter an amount.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Please enter an amount.", Toast.LENGTH_SHORT)
+                            .show()
                     } else {
                         listener.onDialogPositiveEditIngredient(
                             ingredientId,
@@ -66,8 +65,7 @@ class EditIngredientFragment: DialogFragment() {
                 }
                 .setNeutralButton(
                     R.string.text_delete
-                ) {
-                        _, _ ->
+                ) { _, _ ->
                     listener.onDialogNeutralClick(ingredientId, ingredientName)
                 }
             builder.create()
@@ -82,8 +80,10 @@ class EditIngredientFragment: DialogFragment() {
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
-                (context.toString() +
-                        " must implement EditIngredientListener")
+                (
+                    context.toString() +
+                        " must implement EditIngredientListener"
+                    )
             )
         }
     }

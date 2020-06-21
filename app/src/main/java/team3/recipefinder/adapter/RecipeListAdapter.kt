@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import team3.recipefinder.R
 import team3.recipefinder.model.Recipe
 
-class RecipeListAdapter(context: Context): RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
+class RecipeListAdapter(context: Context) : RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
 
     private val inflater by lazy { LayoutInflater.from(context) }
 
     var recipes = mutableListOf<Recipe>()
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val recipeName = view.findViewById<TextView>(R.id.recipeName)
     }
 
@@ -31,5 +31,4 @@ class RecipeListAdapter(context: Context): RecyclerView.Adapter<RecipeListAdapte
             holder.recipeName.text = it.name
         }
     }
-
 }

@@ -11,7 +11,6 @@ import android.widget.TextView
 import team3.recipefinder.R
 import team3.recipefinder.activity.RecipeDetailActivity
 import team3.recipefinder.util.calculateAmount
-import java.util.regex.Pattern
 
 /**
  * Custom adapter to display the ingredients in a custom listview.
@@ -22,8 +21,9 @@ class IngredientListAdapter(
     private val ingredientAmounts: List<String>,
     private val relationIds: List<Long>,
     private val editMode: Boolean,
-    private val portion:Int
+    private val portion: Int
 ) : ArrayAdapter<String>(inputContext, R.layout.ingredient_list_item, ingredientNames) {
+
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
         val inflater: LayoutInflater = LayoutInflater.from(context)
         val rowView = inflater.inflate(R.layout.ingredient_list_item, null, true)
@@ -37,29 +37,31 @@ class IngredientListAdapter(
         var currentAmount = ingredientAmounts[position]
         currentAmount = currentAmount.replace("0", "")
 
-        amount.text = calculateAmount(currentAmount,portion)
+        amount.text = calculateAmount(currentAmount, portion)
+
         name.text = currentIngredient
 
         if (editMode) {
             editImageView.visibility = View.VISIBLE
-            rowView.setOnClickListener(View.OnClickListener {
-                Log.i(
-                    "IngredientListAdapter",
-                    "Editing with id = $currentId and ingredient = $currentIngredient"
-                )
-                (inputContext as RecipeDetailActivity).showEditIngredients(
-                    currentId,
-                    currentIngredient,
-                    currentAmount
-                )
-            })
+            rowView.setOnClickListener(
+                View.OnClickListener {
+                    Log.i(
+                        "IngredientListAdapter",
+                        "Editing with id = $currentId and ingredient = $currentIngredient"
+                    )
+                    (inputContext as RecipeDetailActivity).showEditIngredients(
+                        currentId,
+                        currentIngredient,
+                        currentAmount
+                    )
+                }
+            )
         } else {
             editImageView.visibility = View.GONE
         }
 
         return rowView
     }
-
 
     override fun getItem(position: Int): String? {
         return ingredientNames[position]

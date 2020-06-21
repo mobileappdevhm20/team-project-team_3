@@ -147,7 +147,6 @@ class DatabaseTest {
                 Assert.assertEquals(expected, it.map { it.description })
             }
         }
-
     }
 
     @Test
@@ -208,13 +207,17 @@ class DatabaseTest {
 
         // Test ingredients of recipe 1
         val expected = listOf("testRecipe", "testRecipe2")
-        Assert.assertEquals(expected,
-            db.cookbookDao().getAllRecipesByCookbook(1).map { it.name })
+        Assert.assertEquals(
+            expected,
+            db.cookbookDao().getAllRecipesByCookbook(1).map { it.name }
+        )
 
         // Test ingredients of recipe 2
         val expected2 = listOf("testRecipe")
-        Assert.assertEquals(expected2,
-            db.cookbookDao().getAllRecipesByCookbook(2).map { it.name })
+        Assert.assertEquals(
+            expected2,
+            db.cookbookDao().getAllRecipesByCookbook(2).map { it.name }
+        )
     }
 
     @Test

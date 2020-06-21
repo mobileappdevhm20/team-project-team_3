@@ -37,6 +37,9 @@ class ExtractTimeFromStringsTest {
 
     @Test
     fun extractHoursMinutesAndSeconds() {
-        Assert.assertEquals(4 * 3600 + 125, "Cook for 4hours, 2 minutes and 5 seconds".extractTime())
+        Assert.assertEquals(
+            4 * 3600 + 125,
+            "Cook for 4hours, 2 minutes and 5 seconds".extractTime()
+        )
     }
 }
