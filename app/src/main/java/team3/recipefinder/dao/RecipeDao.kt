@@ -27,7 +27,7 @@ interface RecipeDao {
 
     @Query("UPDATE recipe SET imageUrl = :url WHERE id = :recipeId")
     fun updateRecipeImageUrl(recipeId: Long, url: String)
-  
+
     @Query("UPDATE recipe SET servings = :servings WHERE id = :recipeId")
     fun updateRecipeServings(recipeId: Long, servings: Int)
 
