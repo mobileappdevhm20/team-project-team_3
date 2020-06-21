@@ -31,7 +31,8 @@ interface RecipeDao {
     @Query("SELECT id FROM recipe WHERE name = :name AND description = :description")
     fun getRecipeId(name: String, description: String): Long
 
-    @Query("""SELECT i.*,r.amount, r.id as relId FROM ingredient i 
+    @Query(
+        """SELECT i.*,r.amount, r.id as relId FROM ingredient i 
             INNER JOIN rel_recipe_ingredient r 
             ON i.id = r.ingredientId 
             WHERE r.recipeId = :recipeId"""

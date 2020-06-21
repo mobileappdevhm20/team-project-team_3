@@ -1,7 +1,8 @@
 package team3.recipefinder.util
 
-import junit.framework.Assert.*
-import org.junit.Assert
+import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertFalse
+import junit.framework.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.internal.Classes
@@ -10,10 +11,7 @@ import team3.recipefinder.model.CrawlIngredient
 import team3.recipefinder.model.CrawlIngredientGroup
 import team3.recipefinder.model.CrawlRecipe
 import java.io.BufferedReader
-import java.lang.IllegalArgumentException
-import java.lang.RuntimeException
-import java.math.BigDecimal
-import java.util.*
+import java.util.LinkedList
 
 class RecipeUtilTest {
 
@@ -39,16 +37,16 @@ class RecipeUtilTest {
             "Low Fat",
             4,
             "Den Fisch waschen und trockentupfen, mit Zitronensaft, " +
-                    "Salz und Pfeffer würzen und in die mit Margarine leicht gefettete " +
-                    "Auflaufform geben.\r\n\r\n" +
-                    "Den Backofen auf 200°C vorheizen!\r\n\r\n" +
-                    "Die Paprika waschen, entkernen und in wirklich kleine Würfel schneiden.",
+                "Salz und Pfeffer würzen und in die mit Margarine leicht gefettete " +
+                "Auflaufform geben.\r\n\r\n" +
+                "Den Backofen auf 200°C vorheizen!\r\n\r\n" +
+                "Die Paprika waschen, entkernen und in wirklich kleine Würfel schneiden.",
             ingredientGroups
         )
 
         val result = convert(input)
 
-        Assert.assertEquals(expected, result)
+        assertEquals(expected, result)
     }
 
     @Test
@@ -61,8 +59,10 @@ class RecipeUtilTest {
 
     @Test
     fun checkUrl_Negative() {
-        val badUrl1 = "http://www.chefkoch.de/rezepte/577851156580529/Schlemmerfisch-Bordelaise.html"
-        val badUrl2 = "https://www.chefkoch.de/rezepte/a577851156580529/Schlemmerfisch-Bordelaise.html"
+        val badUrl1 =
+            "http://www.chefkoch.de/rezepte/577851156580529/Schlemmerfisch-Bordelaise.html"
+        val badUrl2 =
+            "https://www.chefkoch.de/rezepte/a577851156580529/Schlemmerfisch-Bordelaise.html"
         val badUrl3 = "https://www.chefkoch.de/rezepte/577851156580529/14342412.xml"
         assertFalse(checkUrl(badUrl1))
         assertFalse(checkUrl(badUrl2))
@@ -103,7 +103,6 @@ class RecipeUtilTest {
         assertEquals(expected.size, result.size)
         assertEquals(listToString(expected), listToString(result))
     }
-
 
     private fun readTestData(filename: String): String {
         val reader = BufferedReader(

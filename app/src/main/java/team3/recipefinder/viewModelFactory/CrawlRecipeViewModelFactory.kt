@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import team3.recipefinder.dao.RecipeDao
 import team3.recipefinder.viewmodel.CrawlRecipeViewModel
-import team3.recipefinder.viewmodel.RecipeViewModel
 import java.lang.IllegalArgumentException
 
 class CrawlRecipeViewModelFactory(
@@ -21,5 +20,4 @@ class CrawlRecipeViewModelFactory(
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-
 }

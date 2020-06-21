@@ -3,7 +3,6 @@ package team3.recipefinder.util
 import com.google.gson.Gson
 import team3.recipefinder.model.CrawlRecipe
 import java.lang.IllegalArgumentException
-import java.util.*
 import java.util.regex.Pattern
 
 fun convert(recipeJson: String): CrawlRecipe {
@@ -37,8 +36,8 @@ fun extractInstructions(recipe: CrawlRecipe): List<String> {
 }
 
 private fun replaceNewLineInList(list: MutableList<String>): MutableList<String> {
-    for (i in  0 until list.size) {
-        list[i] =  list[i].replace("\r\n", " ")
+    for (i in 0 until list.size) {
+        list[i] = list[i].replace("\r\n", " ")
     }
     return list
 }

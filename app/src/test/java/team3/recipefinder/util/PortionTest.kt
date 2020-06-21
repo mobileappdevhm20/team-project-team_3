@@ -2,12 +2,11 @@ package team3.recipefinder.util
 
 import org.junit.Assert
 import org.junit.Test
-import team3.recipefinder.util.calculateAmount
 
 class PortionTest {
 
-    val basePortion1 = 4
-    val basePortion2 = 2
+    private val basePortion1 = 4
+    private val basePortion2 = 2
 
     @Test
     fun extractAmount() {

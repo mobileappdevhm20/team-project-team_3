@@ -5,7 +5,6 @@ import okhttp3.Request
 import okhttp3.Response
 
 object CrawlRecipe {
-
     private val baseUrl = "https://api.chefkoch.de/v2/recipes/"
     private var client: OkHttpClient = OkHttpClient()
 
@@ -16,5 +15,4 @@ object CrawlRecipe {
         val resp: Response = client.newCall(request).execute()
         return resp.body()!!.string()
     }
-
 }

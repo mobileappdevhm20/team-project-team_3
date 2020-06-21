@@ -6,7 +6,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import team3.recipefinder.activity.AndroidTestActivity
 
 /*
 This test is meant as an example how to open activities in tests.

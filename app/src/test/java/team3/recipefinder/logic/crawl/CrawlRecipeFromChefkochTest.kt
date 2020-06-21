@@ -1,10 +1,9 @@
 package team3.recipefinder.logic.crawl
 
 import com.github.paweladamski.httpclientmock.HttpClientMock
-import org.junit.Test
-
-import org.junit.Assert.*
+import junit.framework.Assert.assertEquals
 import org.junit.Before
+import org.junit.Test
 import org.junit.internal.Classes.getClass
 import team3.recipefinder.logic.crawl.CrawlRecipe.getRecipe
 import java.io.BufferedReader
@@ -28,8 +27,8 @@ class CrawlRecipeFromChefkochTest {
         recipeJson = readTestData("recipe.json")
 
         httpClientMock = HttpClientMock()
-        httpClientMock.onGet(baseUrl+recipeId).doReturnJSON(recipeJson)
-        httpClientMock.onGet(baseUrl+badRecipeId).doThrowException(IOException())
+        httpClientMock.onGet(baseUrl + recipeId).doReturnJSON(recipeJson)
+        httpClientMock.onGet(baseUrl + badRecipeId).doThrowException(IOException())
     }
 
     @Test

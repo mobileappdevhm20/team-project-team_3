@@ -8,7 +8,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.crawler_activity.*
-import kotlinx.coroutines.runBlocking
 import team3.recipefinder.MainActivity
 import team3.recipefinder.R
 import team3.recipefinder.database.getAppDatabase
@@ -20,7 +19,6 @@ import team3.recipefinder.util.convert
 import team3.recipefinder.util.extractRecipeId
 import team3.recipefinder.viewModelFactory.CrawlRecipeViewModelFactory
 import team3.recipefinder.viewmodel.CrawlRecipeViewModel
-
 
 class CrawlerActivity : AppCompatActivity() {
 
@@ -60,9 +58,7 @@ class CrawlerActivity : AppCompatActivity() {
         val toolBar = findViewById<Toolbar>(R.id.toolbar)
         toolBar.title = "Import Recipe"
 
-        thread = Thread{
-
-        }
+        thread = Thread { }
 
         importRecipeButton.setOnClickListener {
             val url = urlInputText.text.toString()
@@ -77,10 +73,9 @@ class CrawlerActivity : AppCompatActivity() {
                 val intent =
                     Intent(applicationContext, CrawlRecipeService::class.java)
                 intent.putExtra(CrawlRecipeService.RECIPE_ID_EXTRA, extractRecipeId(url))
-                intent.putExtra(CrawlRecipeService.PENDING_RESULT_EXTRA, pendingResult);
+                intent.putExtra(CrawlRecipeService.PENDING_RESULT_EXTRA, pendingResult)
                 startService(intent)
             }
-
         }
     }
 

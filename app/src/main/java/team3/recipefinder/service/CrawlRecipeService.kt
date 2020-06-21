@@ -6,8 +6,7 @@ import android.content.Intent
 import android.util.Log
 import team3.recipefinder.logic.crawl.CrawlRecipe.getRecipe
 
-
-class CrawlRecipeService: IntentService(TAG) {
+class CrawlRecipeService : IntentService(TAG) {
 
     companion object {
         val TAG = CrawlRecipeService::class.simpleName
@@ -15,7 +14,7 @@ class CrawlRecipeService: IntentService(TAG) {
         const val ERROR_CODE = 2
         const val RECIPE_ID_EXTRA = "recipeId"
         const val RECIPE_RESULT_EXTRA = "recipe"
-        const val PENDING_RESULT_EXTRA = "pending_result";
+        const val PENDING_RESULT_EXTRA = "pending_result"
     }
 
     override fun onHandleIntent(intent: Intent?) {
@@ -33,11 +32,11 @@ class CrawlRecipeService: IntentService(TAG) {
 
                 reply.send(this, RESULT_CODE, result)
             } catch (ex: Exception) {
-                Log.e(TAG, "Error while trying to get recipe", ex);
-                reply.send(ERROR_CODE);
+                Log.e(TAG, "Error while trying to get recipe", ex)
+                reply.send(ERROR_CODE)
             }
         } catch (ex: PendingIntent.CanceledException) {
-            Log.e(TAG, "reply cancelled", ex);
+            Log.e(TAG, "reply cancelled", ex)
         }
     }
 }
