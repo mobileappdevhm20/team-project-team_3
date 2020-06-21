@@ -11,6 +11,7 @@
         layout="@layout/tool_bar" />
 
     <HorizontalScrollView
+        android:id="@+id/search_tags_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -25,5 +26,14 @@
             android:id="@+id/search_tags" />
 
     </HorizontalScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_result_recipes"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_tags_scroll_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
