@@ -1,9 +1,12 @@
 package team3.recipefinder.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -17,7 +20,12 @@ import team3.recipefinder.ui.ManagedChipsListView
 class SearchActivity : AppCompatActivity() {
 
     private val ingredients = mutableListOf<Ingredient>()
-    private val adapter by lazy { RecipeListAdapter(this) }
+
+    private val adapter by lazy { RecipeListAdapter(this) {
+        val intent = Intent(this, RecipeDetailActivity::class.java)
+        intent.putExtra("recipe_id", it.id)
+        startActivity(intent)
+    }}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
