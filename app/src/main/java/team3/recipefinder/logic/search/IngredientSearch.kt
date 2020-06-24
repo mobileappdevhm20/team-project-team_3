@@ -37,11 +37,10 @@ object IngredientSearch {
             .getAllIngredientsByRecipeSync(this.id).map { it.id }
         val ingredientIds = ingredients.map { it.id }
 
-        val matching = ingredientIdsFromRecipe.sumBy { if (ingredientIds.contains(it)) 1 else 0  }
+        val matching = ingredientIdsFromRecipe.sumBy { if (ingredientIds.contains(it)) 1 else 0 }
 
         return matching.toFloat() / ingredientIdsFromRecipe.count()
     }
 
     data class SearchResult(val recipe: Recipe, val score: Float)
-
 }

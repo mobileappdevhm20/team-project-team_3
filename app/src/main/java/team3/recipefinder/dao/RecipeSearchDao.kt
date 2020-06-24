@@ -7,11 +7,12 @@ import team3.recipefinder.model.Ingredient
 @Dao
 interface RecipeSearchDao {
 
-    @Query("""
+    @Query(
+        """
         SELECT i.* FROM ingredient i
         WHERE EXISTS (
             SELECT * FROM rel_recipe_ingredient WHERE ingredientId = i.id
-        )""")
+        )"""
+    )
     fun getAllUsedIngredients(): List<Ingredient>
-
 }

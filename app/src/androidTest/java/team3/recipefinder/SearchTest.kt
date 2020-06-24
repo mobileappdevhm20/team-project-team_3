@@ -32,7 +32,7 @@ class SearchTest {
     fun testSimpleSearch() {
         db.recipeDao().apply {
             // Recipes
-            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 0)) // ID 1
 
             // Ingredients
             insertIngredient(Ingredient(0, "Tomato")) // ID 1
@@ -44,10 +44,13 @@ class SearchTest {
             assignIngredientToRecipe(2, 1, "X L")
         }
 
-        val recipes = IngredientSearch.search(context, listOf(
-            Ingredient(1, "Tomato"),
-            Ingredient(2, "Milk")
-        ))
+        val recipes = IngredientSearch.search(
+            context,
+            listOf(
+                Ingredient(1, "Tomato"),
+                Ingredient(2, "Milk")
+            )
+        )
 
         Assert.assertArrayEquals(arrayOf(1L), recipes.map { it.recipe.id }.toTypedArray())
         Assert.assertEquals(1.0f, recipes[0].score)
@@ -57,7 +60,7 @@ class SearchTest {
     fun testScore() {
         db.recipeDao().apply {
             // Recipes
-            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 0)) // ID 1
 
             // Ingredients
             insertIngredient(Ingredient(0, "Tomato")) // ID 1
@@ -70,10 +73,13 @@ class SearchTest {
             assignIngredientToRecipe(3, 1, "X L")
         }
 
-        val recipes = IngredientSearch.search(context, listOf(
-            Ingredient(1, "Tomato"),
-            Ingredient(2, "Milk")
-        ))
+        val recipes = IngredientSearch.search(
+            context,
+            listOf(
+                Ingredient(1, "Tomato"),
+                Ingredient(2, "Milk")
+            )
+        )
 
         Assert.assertArrayEquals(arrayOf(1L), recipes.map { it.recipe.id }.toTypedArray())
         Assert.assertTrue(Math.abs(recipes[0].score - 0.66f) < 0.01f)
@@ -83,7 +89,7 @@ class SearchTest {
     fun testFail() {
         db.recipeDao().apply {
             // Recipes
-            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 0)) // ID 1
 
             // Ingredients
             insertIngredient(Ingredient(0, "Tomato")) // ID 1
@@ -96,9 +102,12 @@ class SearchTest {
             assignIngredientToRecipe(3, 1, "X L")
         }
 
-        val recipes = IngredientSearch.search(context, listOf(
-            Ingredient(1, "Tomato")
-        ))
+        val recipes = IngredientSearch.search(
+            context,
+            listOf(
+                Ingredient(1, "Tomato")
+            )
+        )
 
         Assert.assertEquals(0, recipes.size)
     }
@@ -106,13 +115,14 @@ class SearchTest {
     @Test
     fun testSort() {
         val searchResult = listOf<IngredientSearch.SearchResult>(
-            IngredientSearch.SearchResult(Recipe(1, "", "", ""), 0.7f),
-            IngredientSearch.SearchResult(Recipe(2, "", "", ""), 0.9f),
-            IngredientSearch.SearchResult(Recipe(3, "", "", ""), 0.65f)
+            IngredientSearch.SearchResult(Recipe(1, "", "", "", 0), 0.7f),
+            IngredientSearch.SearchResult(Recipe(2, "", "", "", 0), 0.9f),
+            IngredientSearch.SearchResult(Recipe(3, "", "", "", 0), 0.65f)
         )
 
-        Assert.assertArrayEquals(arrayOf(2L, 1L, 3L),
-            searchResult.sortByScore().map { it.recipe.id }.toTypedArray())
+        Assert.assertArrayEquals(
+            arrayOf(2L, 1L, 3L),
+            searchResult.sortByScore().map { it.recipe.id }.toTypedArray()
+        )
     }
-
 }

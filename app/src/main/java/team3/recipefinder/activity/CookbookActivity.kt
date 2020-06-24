@@ -7,7 +7,6 @@ import kotlinx.android.synthetic.main.activity_cookbook.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import team3.recipefinder.R
-import team3.recipefinder.adapter.RecipeListAdapter
 import team3.recipefinder.database.getAppDatabase
 
 class CookbookActivity : AppCompatActivity() {

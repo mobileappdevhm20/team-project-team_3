@@ -147,7 +147,6 @@ class DatabaseTest {
                 Assert.assertEquals(expected, it.map { it.description })
             }
         }
-
     }
 
     @Test

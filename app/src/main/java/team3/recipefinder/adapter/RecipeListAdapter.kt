@@ -6,18 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
 import team3.recipefinder.R
 import team3.recipefinder.model.Recipe
 
-class RecipeListAdapter(context: Context, val onClick: (Recipe)->Unit)
-    : RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
+class RecipeListAdapter(context: Context, val onClick: (Recipe) -> Unit) :
+    RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
 
     private val inflater by lazy { LayoutInflater.from(context) }
 
     var recipes = mutableListOf<Recipe>()
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val recipeName = view.findViewById<TextView>(R.id.recipeName)
         val description = view.findViewById<TextView>(R.id.recipeDescription)
     }

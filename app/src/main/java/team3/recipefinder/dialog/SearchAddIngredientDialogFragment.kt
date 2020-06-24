@@ -17,7 +17,8 @@ import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Ingredient
 import team3.recipefinder.util.replace
 
-class SearchAddIngredientDialogFragment(val onSelect: (Ingredient)->Unit): DialogFragment(),
+class SearchAddIngredientDialogFragment(val onSelect: (Ingredient) -> Unit) :
+    DialogFragment(),
     AdapterView.OnItemClickListener {
 
     val ingredients = arrayListOf<Ingredient>()
@@ -32,9 +33,9 @@ class SearchAddIngredientDialogFragment(val onSelect: (Ingredient)->Unit): Dialo
         view.search_ingredients_list.setOnItemClickListener(this)
 
         // Filter List
-        view.filter_search.addTextChangedListener(object: TextWatcher {
+        view.filter_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
-                editable?.let {eb ->
+                editable?.let { eb ->
                     GlobalScope.launch {
                         ingredients.replace(
                             db.recipeSearchDao()

@@ -42,10 +42,12 @@ interface RecipeDao {
     )
     fun getAllIngredientsByRecipe(recipeId: Long): LiveData<List<IngredientAmount>>
 
-    @Query("""SELECT i.*,r.amount, r.id as relId FROM ingredient i 
+    @Query(
+        """SELECT i.*,r.amount, r.id as relId FROM ingredient i 
             INNER JOIN rel_recipe_ingredient r 
             ON i.id = r.ingredientId 
-            WHERE r.recipeId = :recipeId""")
+            WHERE r.recipeId = :recipeId"""
+    )
     fun getAllIngredientsByRecipeSync(recipeId: Long): List<IngredientAmount>
 
     @Query("SELECT * FROM ingredient")

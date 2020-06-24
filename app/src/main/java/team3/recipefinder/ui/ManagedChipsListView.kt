@@ -9,9 +9,9 @@ import com.google.android.material.chip.ChipGroup
 import team3.recipefinder.R
 import team3.recipefinder.util.getAndRemove
 
-class ManagedChipsListView<T>(context: Context, attributeSet: AttributeSet): ChipGroup(context, attributeSet), View.OnClickListener {
+class ManagedChipsListView<T>(context: Context, attributeSet: AttributeSet) : ChipGroup(context, attributeSet), View.OnClickListener {
 
-    var deleteChipObserver: ((T)->Unit)? = null
+    var deleteChipObserver: ((T) -> Unit)? = null
 
     private val objectMapping = hashMapOf<View, T>()
 
@@ -27,13 +27,13 @@ class ManagedChipsListView<T>(context: Context, attributeSet: AttributeSet): Chi
         objectMapping.put(chip, chipData)
     }
 
-    fun addButton(chipText: String, onClick: ()->Unit) {
+    fun addButton(chipText: String, onClick: () -> Unit) {
         val chip = Chip(context).apply {
             text = chipText
             isCloseIconVisible = false
             chipBackgroundColor = ContextCompat.getColorStateList(context, R.color.search_add_button)
 
-            setOnClickListener{ onClick() }
+            setOnClickListener { onClick() }
         }
 
         addView(chip, 0)
@@ -43,5 +43,4 @@ class ManagedChipsListView<T>(context: Context, attributeSet: AttributeSet): Chi
         deleteChipObserver?.invoke(objectMapping.getAndRemove(v)!!)
         removeView(v)
     }
-
 }
