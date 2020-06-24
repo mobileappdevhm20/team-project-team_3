@@ -9,6 +9,8 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import team3.recipefinder.database.AppDatabase
+import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Cookbook
 import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
@@ -79,6 +81,8 @@ class DatabaseTest {
                     Assert.assertEquals("testRecipe2", it.get(2).name)
                 }
             }
+
+            Thread.sleep(1000)
         }
     }
 
@@ -87,8 +91,8 @@ class DatabaseTest {
         // Insert recipes and ingredients
         db.recipeDao().apply {
             // Recipes
-            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
-            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl")) // ID 2
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 0)) // ID 1
+            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl", 0)) // ID 2
 
             // Ingredients
             insertIngredient(Ingredient(0, "Tomato")) // ID 1
@@ -147,6 +151,8 @@ class DatabaseTest {
                 Assert.assertEquals(expected, it.map { it.description })
             }
         }
+
+        Thread.sleep(1000)
     }
 
     @Test
@@ -166,6 +172,8 @@ class DatabaseTest {
                 Assert.assertEquals(expected, it.map { it.name })
             }
         }
+
+        Thread.sleep(1000)
     }
 
     @Test
@@ -239,7 +247,7 @@ class DatabaseTest {
     fun testGetUsedIngredients() {
         db.recipeDao().apply {
             // Recipes
-            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 0)) // ID 1
 
             // Ingredients
             insertIngredient(Ingredient(0, "Tomato")) // ID 1
