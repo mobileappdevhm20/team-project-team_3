@@ -36,5 +36,4 @@ class RecipeListAdapter(context: Context, val onClick: (Recipe)->Unit)
             holder.itemView.setOnClickListener { _ -> onClick(it) }
         }
     }
-
 }

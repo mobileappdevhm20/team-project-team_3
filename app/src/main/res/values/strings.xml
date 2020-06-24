@@ -37,4 +37,7 @@
     <string name="amount">amount</string>
     <string name="button_delete_recipe">Delete</string>
     <string name="search_add_ingredient">Add Ingredient</string>
+    <string name="import_recipe">Import Recipe</string>
+    <string name="portionButton">calc Portion</string>
+    <string name="incr_hint">1</string>
 </resources>

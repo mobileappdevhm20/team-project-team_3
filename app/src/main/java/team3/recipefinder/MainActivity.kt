@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
+import team3.recipefinder.activity.CrawlerActivity
 import team3.recipefinder.activity.LoginActivity
 import team3.recipefinder.activity.SearchActivity
 import team3.recipefinder.adapter.RecipeAdapter
@@ -31,13 +32,13 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
 
-        if(auth.currentUser == null){
+        if (auth.currentUser == null) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-	 // Setup DataBinding
+        // Setup DataBinding
         var binding: MainActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.main_activity)
 
@@ -64,18 +65,20 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         binding.recipeView.adapter = adapter
 
         // Observe LiveData
-        viewModel.recipes.observe(this, Observer {
-            Log.i("MainActivity", "OBSERVER CALLED")
-            it?.let {
-                adapter.submitList(it)
-                adapter.notifyDataSetChanged()
+        viewModel.recipes.observe(
+            this,
+            Observer {
+                Log.i("MainActivity", "OBSERVER CALLED")
+                it?.let {
+                    adapter.submitList(it)
+                    adapter.notifyDataSetChanged()
+                }
             }
-        })
+        )
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
     }
-
 
     /**
      * OnClick method to show create recipe dialog.
@@ -136,10 +139,17 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.user_logout_settings -> {
             FirebaseAuth.getInstance().signOut()
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(
+                this,
+                LoginActivity::class.java
+            )
             startActivity(intent)
             finish()
-            Toast.makeText(this, "Successfully Logged Out", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "Successfully Logged Out",
+                Toast.LENGTH_LONG
+            ).show()
             true
         }
         R.id.user_setting_create_recipe -> {
@@ -154,10 +164,14 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
             startActivity(Intent(this, SearchActivity::class.java))
             true
         }
+        R.id.user_setting_import_recipe -> {
+            val intent = Intent(this, CrawlerActivity::class.java)
+            startActivity(intent)
+            finish()
+            true
+        }
         else -> {
             super.onOptionsItemSelected(item)
         }
     }
-
-
 }

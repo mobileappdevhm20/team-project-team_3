@@ -1,11 +1,11 @@
 package team3.recipefinder.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
@@ -41,13 +41,19 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please enter email id", Toast.LENGTH_LONG).show()
             } else {
                 auth.sendPasswordResetEmail(email)
-                    .addOnSuccessListener(this, OnSuccessListener() {
-                        Toast.makeText(this, "Reset link sent to your email", Toast.LENGTH_LONG)
-                            .show()
-                    }).addOnFailureListener(this, OnFailureListener() {
-                        Toast.makeText(this, "Unable to send reset mail", Toast.LENGTH_LONG)
-                            .show()
-                    })
+                    .addOnSuccessListener(
+                        this,
+                        OnSuccessListener() {
+                            Toast.makeText(this, "Reset link sent to your email", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                    ).addOnFailureListener(
+                        this,
+                        OnFailureListener() {
+                            Toast.makeText(this, "Unable to send reset mail", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                    )
             }
         }
     }

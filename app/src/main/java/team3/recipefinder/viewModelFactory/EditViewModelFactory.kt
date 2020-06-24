@@ -23,5 +23,4 @@ class EditViewModelFactory(
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-
 }

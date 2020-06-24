@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -37,6 +38,7 @@
             android:onClick="@{() -> model.enableEdit()}"
             android:src="@drawable/ic_edit_white_24dp"
             android:text="@string/edit_text"
+            app:tint="@null"
             app:backgroundTint="@color/primaryColor"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toStartOf="@+id/shareButton"
@@ -52,6 +54,7 @@
             android:layout_marginStart="10dp"
             android:src="@drawable/ic_share_white_24dp"
             android:text="@string/share_recipe"
+            app:tint="@null"
             app:backgroundTint="@color/primaryColor"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,8 +65,9 @@
             android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/text_margin"
+            android:layout_marginTop="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView">
@@ -72,17 +76,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <EditText
+                    android:id="@+id/portionInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:inputType="number"
+                    android:backgroundTint="@color/primaryColor"
+                    android:hint="@string/incr_hint"
+                    app:layout_constraintEnd_toStartOf="@+id/portionButton"
+                    app:layout_constraintBottom_toBottomOf="@+id/ingrediant_name"
+                    app:layout_constraintStart_toEndOf="@+id/ingrediant_name"
+                    app:layout_constraintTop_toTopOf="@+id/ingrediant_name" />
+
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:id="@+id/portionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/primaryColor"
+                    android:textColor="@color/secondaryTextColor"
+                    android:onClick="clickPortionButton"
+                    android:text="@string/portionButton"
+                    app:layout_constraintBottom_toBottomOf="@+id/ingrediant_name"
+                    app:layout_constraintStart_toEndOf="@+id/portionInput"
+                    app:layout_constraintTop_toTopOf="@+id/ingrediant_name"
+                    app:layout_constraintEnd_toStartOf="@id/end_guideline"/>
+
                 <TextView
                     android:id="@+id/ingrediant_name"
                     style="@style/RecifyTheme.Base.SubtitleRecipeDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_ingredientName"
+                    android:layout_marginTop="10dp"
                     app:layout_constraintBottom_toTopOf="@+id/ingredientList"
-                    app:layout_constraintEnd_toStartOf="@id/end_guideline"
+                    app:layout_constraintEnd_toStartOf="@id/portionInput"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toEndOf="@id/start_guideline"
-                    app:layout_constraintTop_toBottomOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ListView
                     android:id="@+id/ingredientList"
@@ -108,6 +140,7 @@
                     android:text="@string/text_addIngredient"
                     app:backgroundTint="#cccccc"
                     app:fabSize="mini"
+                    app:tint="@null"
                     app:layout_constraintBottom_toTopOf="@+id/instruction_name"
                     app:layout_constraintEnd_toStartOf="@id/end_guideline"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -129,11 +162,11 @@
 
                 <LinearLayout
                     android:id="@+id/stepList"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:isScrollContainer="false"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toTopOf="@+id/addStepButton"
                     app:layout_constraintEnd_toStartOf="@id/end_guideline"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -152,6 +185,7 @@
                     android:text="@string/text_addStep"
                     app:backgroundTint="#cccccc"
                     app:fabSize="mini"
+                    app:tint="@null"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/end_guideline"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -181,11 +215,12 @@
             android:onClick="deleteRecipe"
             android:src="@drawable/ic_delete_white_24dp"
             android:text="@string/text_done"
+            app:tint="@null"
             app:backgroundTint="@color/delete_button_color"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.099"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.099"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.953" />
 
@@ -196,6 +231,7 @@
             android:onClick="@{() -> model.disableEdit()}"
             android:src="@drawable/ic_done_black_24dp"
             android:text="@string/text_done"
+            app:tint="@null"
             app:backgroundTint="@color/primaryColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
