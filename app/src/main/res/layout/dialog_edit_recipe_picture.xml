@@ -25,40 +25,22 @@
         android:id="@+id/text_recipe_name_url"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/text_recipe_name"
-        app:layout_constraintEnd_toStartOf="@+id/recipe_value"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/text_recipe_url"
+        app:layout_constraintEnd_toStartOf="@+id/recipe_value_url"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/recipe_value"
+        android:id="@+id/recipe_value_url"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        app:layout_constraintBaseline_toBaselineOf="@+id/text_recipe_name"
+        app:layout_constraintBaseline_toBaselineOf="@+id/text_recipe_name_url"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toEndOf="@+id/text_recipe_name_url" />
-
-    <TextView
-        android:id="@+id/text_url"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/text_recipe_url"
-        app:layout_constraintEnd_toStartOf="@+id/url_input"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/text_recipe_name_url" />
-
-    <EditText
-        android:id="@+id/url_input"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        app:layout_constraintBaseline_toBaselineOf="@+id/text_url"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toEndOf="@+id/text_url" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

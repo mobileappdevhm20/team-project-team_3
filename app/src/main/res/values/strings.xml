@@ -18,7 +18,7 @@
     <string name="edit_text">Edit</string>
     <string name="text_done">Done Edit</string>
     <string name="text_addStep">Add Instruction</string>
-    <string name="text_addIngredient">Add Ingredient</string>
+    <string name="text_addIngredient">Add new Item for Ingredientlist</string>
     <string name="text_ingredientName">Ingredients</string>
     <string name="text_stepName">Instructions</string>
     <string name="text_recipeFragName">Recipe:</string>
@@ -36,6 +36,7 @@
     <string name="text_recipeName">Recipe:</string>
     <string name="amount">amount</string>
     <string name="button_delete_recipe">Delete</string>
+    <string name="text_recipe_url">Image Url:</string>
     <string name="import_recipe">Import Recipe</string>
     <string name="portionButton">calc Portion</string>
     <string name="incr_hint">1</string>

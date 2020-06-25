@@ -19,7 +19,6 @@ class EditIngredientFragment : DialogFragment() {
 
     interface EditIngredientListener {
         fun onDialogPositiveEditIngredient(id: Long?, name: String?, amount: String?)
-        fun onDialogNegativeClick()
         fun onDialogNeutralClick(id: Long?, name: String?)
     }
 
@@ -61,7 +60,6 @@ class EditIngredientFragment : DialogFragment() {
                 .setNegativeButton(
                     R.string.text_cancel
                 ) { _, _ ->
-                    listener.onDialogNegativeClick()
                 }
                 .setNeutralButton(
                     R.string.text_delete

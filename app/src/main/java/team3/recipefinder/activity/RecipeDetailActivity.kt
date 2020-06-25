@@ -25,6 +25,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.recipe_detail_activity.*
 import team3.recipefinder.MainActivity
 import team3.recipefinder.R
@@ -34,10 +36,10 @@ import team3.recipefinder.databinding.RecipeDetailActivityBinding
 import team3.recipefinder.dialog.AddIngredientFragment
 import team3.recipefinder.dialog.CreateIngredientFragment
 import team3.recipefinder.dialog.CreateInstructionFragment
-import team3.recipefinder.dialog.CreateRecipeFragment
 import team3.recipefinder.dialog.EditIngredientFragment
 import team3.recipefinder.dialog.EditInstructionFragment
 import team3.recipefinder.dialog.EditRecipeFragment
+import team3.recipefinder.dialog.EditRecipePictureFragment
 import team3.recipefinder.util.extractTime
 import team3.recipefinder.util.startTimer
 import team3.recipefinder.viewModelFactory.EditViewModelFactory
@@ -45,13 +47,14 @@ import team3.recipefinder.viewmodel.RecipeDetailViewModel
 
 class RecipeDetailActivity :
     AppCompatActivity(),
-    CreateRecipeFragment.CreateRecipeListener,
     AddIngredientFragment.CreateIngredientListener,
     CreateInstructionFragment.CreateInstructionListener,
     EditIngredientFragment.EditIngredientListener,
     CreateIngredientFragment.EditRecipeListener,
     EditInstructionFragment.EditInstructionListener,
-    EditRecipeFragment.EditRecipeListener {
+    EditRecipeFragment.EditRecipeListener,
+    EditRecipePictureFragment.EditRecipePictureListener {
+
     private lateinit var viewModel: RecipeDetailViewModel
     private var editModeActive = false
     private var ingredientListNameHolder: List<String> = emptyList()
@@ -104,6 +107,14 @@ class RecipeDetailActivity :
                     "RecipeDetailActivity",
                     "OBSERVER CALLED FOR ${it.name}"
                 )
+                val imageView = findViewById<ImageView>(R.id.imageView)
+                Glide.with(this).load(
+                    it.imageUrl
+                ).apply(
+                    RequestOptions()
+                        // .placeholder(R.drawable.loading_animation)
+                        .error(R.drawable.tomatensuppe115_v_zweispaltig)
+                ).into(imageView)
                 val toolBar = findViewById<Toolbar>(R.id.toolbar)
                 toolBar.title = it.name
                 toolBar.setOnClickListener {
@@ -177,6 +188,7 @@ class RecipeDetailActivity :
                 }
             }
         )
+
         viewModel.ingredientRecipe.observe(
             this,
             Observer { it ->
@@ -218,6 +230,13 @@ class RecipeDetailActivity :
                     doneEditButton.visibility = View.VISIBLE
                     deleteRecipeButton.visibility = View.VISIBLE
                     addIngredientButton.visibility = View.VISIBLE
+                    imageView.setOnClickListener {
+                        val args = Bundle()
+                        args.putString("oldName", viewModel.getRecipeUrl())
+                        val dialog = EditRecipePictureFragment()
+                        dialog.arguments = args
+                        dialog.show(supportFragmentManager, "Edit Recipe URL")
+                    }
                 } else {
                     editButton.visibility = View.VISIBLE
                     shareButton.visibility = View.VISIBLE
@@ -225,9 +244,11 @@ class RecipeDetailActivity :
                     doneEditButton.visibility = View.GONE
                     deleteRecipeButton.visibility = View.GONE
                     addIngredientButton.visibility = View.GONE
+                    imageView.setOnClickListener {}
                 }
             }
         )
+
         toolbar.setOnClickListener {}
     }
 
@@ -268,7 +289,7 @@ class RecipeDetailActivity :
         showAddIngrediantDialog()
     }
 
-    fun showAddIngrediantDialog() {
+    private fun showAddIngrediantDialog() {
         val args = Bundle()
         args.putParcelableArrayList("name", viewModel.ingredients.value?.let { ArrayList(it) })
 
@@ -382,11 +403,6 @@ class RecipeDetailActivity :
         viewModel.updateRecipeName(name!!)
     }
 
-    /**
-     * Method that handles the negativeClick for the different dialogs.
-     */
-    override fun onDialogNegativeClick() {}
-
     override fun onDialogNeutralEditInstruction(id: Long?) {
         Toast.makeText(this, "Deleting....", Toast.LENGTH_LONG).show()
         viewModel.removeStepFromRecipe(id!!)
@@ -394,6 +410,10 @@ class RecipeDetailActivity :
 
     override fun openCreateIngredientDialog() {
         showCreateIngredientDialog(getString(R.string.text_ingredientName))
+    }
+
+    override fun onDialogPositiveEditRecipePicture(url: String?) {
+        viewModel.updateRecipePicture(url!!)
     }
 
     /**

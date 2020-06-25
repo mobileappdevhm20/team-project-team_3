@@ -9,37 +9,41 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
 
-class CreateInstructionFragment : DialogFragment() {
+class EditRecipePictureFragment : DialogFragment() {
 
     // Use this instance of the interface to deliver action events
-    private lateinit var listener: CreateInstructionListener
+    private lateinit var listener: EditRecipePictureListener
 
-    private lateinit var instructionNameField: EditText
+    private lateinit var inputField: EditText
 
-    interface CreateInstructionListener {
-        fun onDialogPositiveClick(id: String?, name: String?)
+    interface EditRecipePictureListener {
+        fun onDialogPositiveEditRecipePicture(name: String?)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
-            val view = inflater.inflate(R.layout.dialog_instruction_input, null)
+            val view = inflater.inflate(R.layout.dialog_edit_recipe_picture, null)
 
-            instructionNameField = view.findViewById(R.id.instruction_value)
+            inputField = view.findViewById(R.id.recipe_value_url)
             var textValue = ""
             if (arguments != null) {
-                textValue = requireArguments().getString("name").toString()
+                textValue = requireArguments().getString("oldName").toString()
 
-                var textView = view.findViewById<TextView>(R.id.text_instruction_name)
-                textView.text = textValue
+                var textView = view.findViewById<TextView>(R.id.recipe_value_url)
+                textView.hint = textValue
             }
 
             builder.setView(view)
                 .setPositiveButton(
                     R.string.text_edit
                 ) { _, _ ->
-                    listener.onDialogPositiveClick(textValue, instructionNameField.text.toString())
+                    if (inputField.text.toString() != "") {
+                        listener.onDialogPositiveEditRecipePicture(
+                            inputField.text.toString()
+                        )
+                    }
                 }
                 .setNegativeButton(
                     R.string.text_cancel
@@ -53,13 +57,12 @@ class CreateInstructionFragment : DialogFragment() {
         super.onAttach(context)
 
         try {
-            listener = context as CreateInstructionListener
+            listener = context as EditRecipePictureListener
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
                 (
-                    context.toString() +
-                        " must implement CreateInstructionListener"
+                    context.toString() + " must implement EditRecipeListener"
                     )
             )
         }
@@ -67,7 +70,7 @@ class CreateInstructionFragment : DialogFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.run {
-            putString("name", instructionNameField.text.toString())
+            putString("name", inputField.text.toString())
         }
         super.onSaveInstanceState(outState)
     }

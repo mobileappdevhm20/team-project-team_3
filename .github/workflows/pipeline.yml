@@ -3,12 +3,7 @@ name: Pipeline
 env:
   CI: true
 
-on:
-  push:
-    branches:
-      - master
-      - develop
-      - feature/**
+on: push
 
 jobs:
   BUILD_DEBUG:
