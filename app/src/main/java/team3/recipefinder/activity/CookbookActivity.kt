@@ -7,7 +7,6 @@ import kotlinx.android.synthetic.main.activity_cookbook.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import team3.recipefinder.R
-import team3.recipefinder.adapter.RecipeListAdapter
 import team3.recipefinder.database.getAppDatabase
 
 class CookbookActivity : AppCompatActivity() {
@@ -22,9 +21,9 @@ class CookbookActivity : AppCompatActivity() {
 
         recipeList.layoutManager = LinearLayoutManager(this)
 
-        val recipeListAdapter = RecipeListAdapter(this)
-        recipeList.adapter = recipeListAdapter
-        recipeListAdapter.notifyDataSetChanged()
+        // val recipeListAdapter = RecipeListAdapter(this)
+        // recipeList.adapter = recipeListAdapter
+        // recipeListAdapter.notifyDataSetChanged()
 
         setSupportActionBar(findViewById(R.id.toolbar))
 
@@ -39,11 +38,11 @@ class CookbookActivity : AppCompatActivity() {
             // Recipe list
             val recipes = db.cookbookDao().getAllRecipesByCookbook(cookbookId.toInt())
 
-            recipeListAdapter.let {
+            /*recipeListAdapter.let {
                 it.recipes.clear()
                 it.recipes.addAll(recipes)
                 it.notifyDataSetChanged()
-            }
+            }*/
         }
     }
 }

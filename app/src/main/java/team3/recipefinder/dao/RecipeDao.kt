@@ -16,6 +16,9 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe")
     fun getAll(): LiveData<List<Recipe>>
 
+    @Query("SELECT * FROM recipe")
+    fun getAllSync(): List<Recipe>
+
     @Query("SELECT * FROM recipe WHERE id = :id")
     fun get(id: Long): LiveData<Recipe>
 
@@ -42,6 +45,14 @@ interface RecipeDao {
     )
     fun getAllIngredientsByRecipe(recipeId: Long): LiveData<List<IngredientAmount>>
 
+    @Query(
+        """SELECT i.*,r.amount, r.id as relId FROM ingredient i 
+            INNER JOIN rel_recipe_ingredient r 
+            ON i.id = r.ingredientId 
+            WHERE r.recipeId = :recipeId"""
+    )
+    fun getAllIngredientsByRecipeSync(recipeId: Long): List<IngredientAmount>
+
     @Query("SELECT * FROM ingredient")
     fun getAllIngredients(): LiveData<List<Ingredient>>
 
@@ -53,6 +64,9 @@ interface RecipeDao {
 
     @Query("DELETE FROM rel_recipe_ingredient WHERE id = :id")
     fun deleteIngredientFromRelationById(id: Long)
+
+    @Query("SELECT * FROM ingredient WHERE id = :id")
+    fun getIngredientById(id: Long): Ingredient
 
     @Insert
     fun insertIngredient(ingredient: Ingredient): Long

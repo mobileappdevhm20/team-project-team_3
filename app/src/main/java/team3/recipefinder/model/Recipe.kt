@@ -20,7 +20,9 @@ data class Recipe(
 data class Ingredient(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "name") val name: String
-) : Parcelable
+) : Parcelable {
+    override fun toString() = name
+}
 
 @Entity(tableName = "step")
 data class RecipeStep(

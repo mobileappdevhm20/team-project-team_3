@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import team3.recipefinder.dao.CookbookDao
 import team3.recipefinder.dao.RecipeDao
+import team3.recipefinder.dao.RecipeSearchDao
 import team3.recipefinder.model.Cookbook
 import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
@@ -29,6 +30,7 @@ import team3.recipefinder.model.RelRecipeStep
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
     abstract fun cookbookDao(): CookbookDao
+    abstract fun recipeSearchDao(): RecipeSearchDao
 }
 
 fun getAppDatabase(context: Context): AppDatabase {

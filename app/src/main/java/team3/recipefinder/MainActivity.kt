@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import team3.recipefinder.activity.CrawlerActivity
 import team3.recipefinder.activity.LoginActivity
+import team3.recipefinder.activity.SearchActivity
 import team3.recipefinder.adapter.RecipeAdapter
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.MainActivityBinding
@@ -160,6 +161,10 @@ class MainActivity :
         }
         R.id.user_setting_create_ingredient -> {
             showCreateIngredientDialog()
+            true
+        }
+        R.id.action_search -> {
+            startActivity(Intent(this, SearchActivity::class.java))
             true
         }
         R.id.user_setting_import_recipe -> {
