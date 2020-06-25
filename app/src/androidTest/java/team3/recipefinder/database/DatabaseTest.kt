@@ -3,6 +3,7 @@ package team3.recipefinder
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.junit.Assert
@@ -71,7 +72,7 @@ class DatabaseTest {
             // Test getAll
             val expected = listOf("testRecipe", "testRecipe2")
 
-            GlobalScope.launch {
+            GlobalScope.launch(Dispatchers.Main) {
                 db.recipeDao().getAll().observeForever {
                     Assert.assertEquals(expected, it.map { it.name })
                 }
@@ -109,7 +110,7 @@ class DatabaseTest {
             removeIngredientFromRecipe(1, 2)
         }
 
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.Main) {
             // Test ingredients of recipe 1
             val expected = listOf("Tomato", "Milk")
             db.recipeDao().getAllIngredientsByRecipe(1).observeForever {
@@ -144,7 +145,7 @@ class DatabaseTest {
             removeStepFromRecipe(2, 1)
         }
 
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.Main) {
             // Test ingredients of recipe 1
             val expected = listOf("Peal the banana", "Pop the corn")
             db.recipeDao().getAllStepsByRecipe(1).observeForever {
@@ -157,6 +158,7 @@ class DatabaseTest {
 
     @Test
     fun testDeleteRecipe() {
+
         // Insert recipe
         db.recipeDao().apply {
             insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 1)) // ID 1
@@ -165,7 +167,7 @@ class DatabaseTest {
             deleteRecipe(Recipe(1, "testRecipe", "description", "imageUrl", 1))
         }
 
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.Main) {
             // Test ingredients of recipe 1
             val expected = listOf("testRecipe2")
             db.recipeDao().getAll().observeForever {
@@ -240,6 +242,7 @@ class DatabaseTest {
 
         // Test getAll
         val expected = listOf("testCookbook2")
+
         Assert.assertEquals(expected, db.cookbookDao().getAll().map { it.name })
     }
 
