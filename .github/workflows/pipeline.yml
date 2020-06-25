@@ -3,12 +3,7 @@ name: Pipeline
 env:
   CI: true
 
-on:
-  push:
-    branches:
-      - master
-      - develop
-      - feature/**
+on: push
 
 jobs:
   BUILD_DEBUG:
@@ -79,7 +74,6 @@ jobs:
       - name: Execute emulator tests
         timeout-minutes: 30
         uses: reactivecircus/android-emulator-runner@v2.2.0
-        continue-on-error: true
         with:
           api-level: ${{ matrix.EMULATOR_API }}
           arch: ${{ matrix.EMULATOR_ARCH }}
@@ -90,13 +84,11 @@ jobs:
           script: ./gradlew app:connectedCheck
       - name: Upload emulator tests artifact
         uses: actions/upload-artifact@v1
-        continue-on-error: true
         with:
           name: emulator_tests_${{ matrix.EMULATOR_API }}
           path: ./app/build/reports/coverage/debug/
       - name: Upload coverage report (Codecov)
         uses: codecov/codecov-action@v1
-        continue-on-error: true
         with:
           name: emulator_tests_${{ matrix.EMULATOR_API }}
           file: ./app/build/reports/coverage/debug/report.xml

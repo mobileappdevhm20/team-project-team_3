@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import team3.recipefinder.activity.RecipeDetailActivity
 import team3.recipefinder.dao.RecipeDao
+import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
 
 class RecipeViewModel(val database: RecipeDao, application: Application) :
@@ -22,9 +23,9 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
 
     var recipes = database.getAll()
 
-    fun addRecipe(name: String) {
+    fun addRecipe(name: String, url: String) {
         uiScope.launch {
-            val recipe = Recipe(0, name, "Test Description", "BeispielUrl", 1)
+            val recipe = Recipe(0, name, "Test Description", url, 1)
             addR(recipe)
         }
     }
@@ -32,6 +33,19 @@ class RecipeViewModel(val database: RecipeDao, application: Application) :
     private suspend fun addR(r: Recipe) {
         withContext(Dispatchers.IO) {
             database.insertRecipe(r)
+        }
+    }
+
+    fun addIngredient(name: String) {
+        uiScope.launch {
+            val recipe = Ingredient(0, name)
+            addI(recipe)
+        }
+    }
+
+    private suspend fun addI(r: Ingredient) {
+        withContext(Dispatchers.IO) {
+            database.insertIngredient(r)
         }
     }
 

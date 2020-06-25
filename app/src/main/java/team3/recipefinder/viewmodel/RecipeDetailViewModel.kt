@@ -41,6 +41,10 @@ class RecipeDetailViewModel(
         disableEdit()
     }
 
+    fun getRecipeUrl(): String? {
+        return this.recipe.value?.imageUrl
+    }
+
     fun enableEdit() {
         _editMode.value = true
     }
@@ -181,6 +185,18 @@ class RecipeDetailViewModel(
     fun updateRecipeName(name: String) {
         uiScope.launch {
             updateRecipeNameById(recipeKey, name)
+        }
+    }
+
+    private suspend fun updateRecipePictureById(recipeId: Long, url: String) {
+        withContext(Dispatchers.IO) {
+            database.updateRecipeImageUrl(recipeId, url)
+        }
+    }
+
+    fun updateRecipePicture(url: String) {
+        uiScope.launch {
+            updateRecipePictureById(recipeKey, url)
         }
     }
 

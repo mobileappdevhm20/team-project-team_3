@@ -18,12 +18,16 @@ import team3.recipefinder.activity.SearchActivity
 import team3.recipefinder.adapter.RecipeAdapter
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.MainActivityBinding
+import team3.recipefinder.dialog.CreateIngredientFragment
 import team3.recipefinder.dialog.CreateRecipeFragment
 import team3.recipefinder.listener.RecipeListener
 import team3.recipefinder.viewModelFactory.RecipeViewModelFactory
 import team3.recipefinder.viewmodel.RecipeViewModel
 
-class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener {
+class MainActivity :
+    AppCompatActivity(),
+    CreateRecipeFragment.CreateRecipeListener,
+    CreateIngredientFragment.EditRecipeListener {
     private lateinit var viewModel: RecipeViewModel
 
     private lateinit var auth: FirebaseAuth
@@ -99,24 +103,23 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         val args = Bundle()
         args.putString("name", resources.getString(R.string.text_ingredientFragName))
 
-        val createRecipeFragment = CreateRecipeFragment()
-        createRecipeFragment.arguments = args
-        createRecipeFragment.show(supportFragmentManager, "Create Ingredient")
+        val createIngredientFragment = CreateIngredientFragment()
+        createIngredientFragment.arguments = args
+        createIngredientFragment.show(supportFragmentManager, "Create Ingredient")
     }
 
     /**
      * Method that handles the positiveClick for the different dialogs.
      */
-    override fun onDialogPositiveClick(id: String?, name: String?) {
-        when (id) {
-            getString(R.string.text_recipeFragName) -> viewModel.addRecipe(name!!)
-        }
+    override fun onDialogPositiveClick(name: String?, url: String?) {
+        viewModel.addRecipe(name!!, url!!)
     }
 
     /**
-     * Method that handles the negativeClick for the different dialogs.
+     * Method that habdeles the negativeClick for create Ingredient
      */
-    override fun onDialogNegativeClick() {
+    override fun saveItem(id: String?, name: String?) {
+        viewModel.addIngredient(name!!)
     }
 
     /**
