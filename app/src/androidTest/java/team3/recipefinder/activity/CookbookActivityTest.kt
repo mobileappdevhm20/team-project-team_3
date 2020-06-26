@@ -1,4 +1,4 @@
-package team3.recipefinder
+package team3.recipefinder.activity
 
 import android.content.Context
 import android.content.Intent
@@ -9,7 +9,6 @@ import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import team3.recipefinder.activity.CookbookActivity
 import team3.recipefinder.database.AppDatabase
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Cookbook

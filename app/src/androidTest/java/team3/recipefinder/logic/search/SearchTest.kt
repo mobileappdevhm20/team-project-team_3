@@ -1,4 +1,4 @@
-package team3.recipefinder
+package team3.recipefinder.logic.search
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
@@ -9,7 +9,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import team3.recipefinder.database.AppDatabase
 import team3.recipefinder.database.getAppDatabase
-import team3.recipefinder.logic.search.IngredientSearch
 import team3.recipefinder.logic.search.IngredientSearch.sortByScore
 import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
