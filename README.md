@@ -88,7 +88,7 @@ team3.recipefinder/
 
 ## Demo
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/6IMdTPjsvWQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="315" height="560" src="https://www.youtube.com/embed/6IMdTPjsvWQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <a name="links"/>
 
