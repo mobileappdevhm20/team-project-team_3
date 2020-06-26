@@ -88,7 +88,7 @@ team3.recipefinder/
 
 ## Demo
 
-![Demo](docs/demo.gif)
+![Demo](docs/device-2020-06-26-091950.gif)
 
 <a name="links"/>
 
