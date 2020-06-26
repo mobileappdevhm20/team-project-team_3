@@ -31,8 +31,12 @@ class CrawlRecipeViewModel(val database: RecipeDao, application: Application) :
     private suspend fun importR(recipe: CrawlRecipe) {
         withContext(Dispatchers.IO) {
             Log.i("CrawlRecipeViewModel", "Creating recipe")
+            var imageUrl = "SampleUrl"
+            if (recipe.hasImage) {
+                imageUrl = "https://img.chefkoch-cdn.de/rezepte/" + recipe.id + "/bilder/" + recipe.previewImageId + "/crop-600x400/"
+            }
             val recipeId =
-                database.insertRecipe(Recipe(0, recipe.title, recipe.subtitle, "Sampleurl", recipe.servings))
+                database.insertRecipe(Recipe(0, recipe.title, recipe.subtitle, imageUrl, recipe.servings))
             // Add Ingredients
             Log.i("CrawlRecipeViewModel", "Iterating throught ingredientGroups")
             for (ingredientGroup in recipe.ingredientGroups) {

@@ -11,6 +11,7 @@ import team3.recipefinder.model.CrawlIngredient
 import team3.recipefinder.model.CrawlIngredientGroup
 import team3.recipefinder.model.CrawlRecipe
 import java.io.BufferedReader
+import java.math.BigInteger
 import java.util.LinkedList
 
 class RecipeUtilTest {
@@ -33,9 +34,12 @@ class RecipeUtilTest {
         )
         val ingredientGroups: List<CrawlIngredientGroup> = listOf(CrawlIngredientGroup(ingredients))
         val expected = CrawlRecipe(
+            BigInteger.valueOf(577851156580529),
             "Schlemmerfisch Bordelaise",
             "Low Fat",
             4,
+            true,
+            896556,
             "Den Fisch waschen und trockentupfen, mit Zitronensaft, " +
                 "Salz und Pfeffer würzen und in die mit Margarine leicht gefettete " +
                 "Auflaufform geben.\r\n\r\n" +
