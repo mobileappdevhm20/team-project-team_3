@@ -63,6 +63,12 @@ team3.recipefinder/
 ## Devevelopment Process
 ![Timeline](https://raw.githubusercontent.com/mobileappdevhm20/team-project-team_3/gh-pages/docs/timeline.png "Timeline")
 ### Feature States
+<style>
+.tablelines table, .tablelines td, .tablelines th {
+        border: 1px solid black;
+        }
+</style>
+
 | Features | Sprint 1 | Sprint 2 | Final State |
 | ------ | ------ | ------ | ------ |
 | User Management | Done | Done | Done |
