@@ -88,11 +88,14 @@ team3.recipefinder/
 
 ## Demo
 
+![Demo](docs/demo.gif)
+
 <a name="links"/>
 
 ## Links
 ### Sprint 2 - Presentation
 * [Presentation](https://docs.google.com/presentation/d/1J1FMQb8dLY3UUmCycBY6zfTF4ZKT6R_gjU5TsndktBA/edit?usp=sharing)
+### Privacy Policy and Terms of Condition
 * [Privacy Policy](privacy.html)
 * [Terms & Conditions](termsOfService.html)
 
