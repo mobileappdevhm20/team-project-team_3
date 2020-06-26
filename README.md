@@ -86,6 +86,12 @@ team3.recipefinder/
 
 <a name="demo"/>
 
+* **Login-Screen:** The first page what you see, is the Login-Page. Here you can register for an account. If you had registered, you can login to our app-system.
+
+* **Main-Page:** On the main-page you have an overview of your recipe. On the left-top corner there is our app menu. Here you can `Create Recipe`, `Create Ingredient` or `Import Recipe` from [chefkoch](https://www.chefkoch.de/). In the `search`-bar you have the option to look for recipes by ingredients. On the list you can select a recipe.
+
+* **Recipe-Detail-View:** You can see an overview of a single recipe. The ingredient can calculate by portions. If you scroll down, you will see the instructions. The instructions can be marked as done or start a timer. Of course if you find a mistake or want to add something, you can switch to the edit-mode. 
+
 ## Demo
 
 <iframe width="315" height="560" src="https://www.youtube.com/embed/6IMdTPjsvWQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
