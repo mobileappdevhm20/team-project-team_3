@@ -73,7 +73,7 @@ team3.recipefinder/
 | Scale Recipe | Planned | Done | Done |
 | Cookbook Management | In Progress | In Progress | Done |
 | Share Recipe | Planned | Additional Feature | Additional Feature |
-
+{: .tablelines}
 <a name="learnings"/>
 
 ## Learnings
