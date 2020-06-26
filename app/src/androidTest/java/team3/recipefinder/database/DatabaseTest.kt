@@ -55,34 +55,32 @@ class DatabaseTest {
             2,
             db.recipeDao().insertIngredient(Ingredient(0, "test"))
         )
+        Thread.sleep(2000)
     }
 
     @Test
     fun testInsertRecipe() {
-        @Test
-        fun testInsertRecipe() {
-            // Insert recipe
-            db.recipeDao().apply {
-                insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 1)) // ID 1
-                insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl", 1)) // ID 2
-            }
-
-            // Test getAll
-            val expected = listOf("testRecipe", "testRecipe2")
-
-            GlobalScope.launch(Dispatchers.Main) {
-                db.recipeDao().getAll().observeForever {
-                    Assert.assertEquals(expected, it.map { it.name })
-                }
-
-                // Test get
-                db.recipeDao().getAll().observeForever {
-                    Assert.assertEquals("testRecipe2", it.get(2).name)
-                }
-            }
-
-            Thread.sleep(1000)
+        // Insert recipe
+        db.recipeDao().apply {
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 1)) // ID 1
+            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl", 1)) // ID 2
         }
+
+        // Test getAll
+        val expected = listOf("testRecipe", "testRecipe2")
+
+        GlobalScope.launch(Dispatchers.Main) {
+            db.recipeDao().getAll().observeForever {
+                Assert.assertEquals(expected, it.map { it.name })
+            }
+
+            // Test get
+            db.recipeDao().getAll().observeForever {
+                Assert.assertEquals("testRecipe2", it[1].name)
+            }
+        }
+
+        Thread.sleep(2000)
     }
 
     @Test
@@ -121,6 +119,8 @@ class DatabaseTest {
                 Assert.assertEquals(expected2, it.map { it.name })
             }
         }
+
+        Thread.sleep(2000)
     }
 
     @Test
@@ -151,7 +151,7 @@ class DatabaseTest {
             }
         }
 
-        Thread.sleep(1000)
+        Thread.sleep(2000)
     }
 
     @Test
@@ -173,7 +173,7 @@ class DatabaseTest {
             }
         }
 
-        Thread.sleep(1000)
+        Thread.sleep(2000)
     }
 
     @Test
@@ -190,6 +190,8 @@ class DatabaseTest {
 
         // Test get
         Assert.assertEquals("testCookbook2", db.cookbookDao().get(2).name)
+
+        Thread.sleep(2000)
     }
 
     @Test
@@ -226,6 +228,8 @@ class DatabaseTest {
             expected2,
             db.cookbookDao().getAllRecipesByCookbook(2).map { it.name }
         )
+
+        Thread.sleep(2000)
     }
 
     @Test
@@ -242,6 +246,8 @@ class DatabaseTest {
         val expected = listOf("testCookbook2")
 
         Assert.assertEquals(expected, db.cookbookDao().getAll().map { it.name })
+
+        Thread.sleep(2000)
     }
 
     @Test
@@ -265,5 +271,7 @@ class DatabaseTest {
 
         val ingredients = db.recipeSearchDao().getAllUsedIngredients().map { it.id }
         Assert.assertArrayEquals(arrayOf(1L, 2L), ingredients.toTypedArray())
+
+        Thread.sleep(2000)
     }
 }

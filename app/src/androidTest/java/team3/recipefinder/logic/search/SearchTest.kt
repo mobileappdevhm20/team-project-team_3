@@ -53,6 +53,8 @@ class SearchTest {
 
         Assert.assertArrayEquals(arrayOf(1L), recipes.map { it.recipe.id }.toTypedArray())
         Assert.assertEquals(1.0f, recipes[0].score)
+
+        Thread.sleep(2000)
     }
 
     @Test
@@ -82,6 +84,8 @@ class SearchTest {
 
         Assert.assertArrayEquals(arrayOf(1L), recipes.map { it.recipe.id }.toTypedArray())
         Assert.assertTrue(Math.abs(recipes[0].score - 0.66f) < 0.01f)
+
+        Thread.sleep(2000)
     }
 
     @Test
@@ -109,6 +113,8 @@ class SearchTest {
         )
 
         Assert.assertEquals(0, recipes.size)
+
+        Thread.sleep(2000)
     }
 
     @Test
@@ -123,5 +129,6 @@ class SearchTest {
             arrayOf(2L, 1L, 3L),
             searchResult.sortByScore().map { it.recipe.id }.toTypedArray()
         )
+        Thread.sleep(2000)
     }
 }
