@@ -1,6 +1,6 @@
 # Recify
 You don't know what to cook and have no time? Recify provides YOU with the best suggestion for your ingredients from all over the internet.
-## Contents
+## Table of Content
 * [Concept](#concept)  
 * [Architecture](#architecture)  
 * [Devevelopment Process](#devprocess) 
