@@ -13,6 +13,6 @@ data class Cookbook (
 @Entity(tableName = "rel_cookbook_recipes")
 data class RelCookbookRecipes(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo(name = "cookbookId") val cookbookId: Int,
+    @ColumnInfo(name = "cookbookId") val cookbookId: Long,
     @ColumnInfo(name = "recipeId") val recipeId: Int
 )
