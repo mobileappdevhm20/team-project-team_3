@@ -93,3 +93,6 @@ team3.recipefinder/
 ## Links
 ### Sprint 2 - Presentation
 * [Presentation](https://docs.google.com/presentation/d/1J1FMQb8dLY3UUmCycBY6zfTF4ZKT6R_gjU5TsndktBA/edit?usp=sharing)
+* [Privacy Policy](privacy.html)
+* [Terms & Conditions](termsOfService.html)
+
