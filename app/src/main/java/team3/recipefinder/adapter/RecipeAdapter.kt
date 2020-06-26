@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import team3.recipefinder.listener.RecipeListener
 import team3.recipefinder.databinding.RecipeViewHolderBinding
+import team3.recipefinder.listener.RecipeListener
 import team3.recipefinder.model.Recipe
 
 class RecipeAdapter(val listener: RecipeListener) :
@@ -54,5 +54,4 @@ class RecipeDiffCallback : DiffUtil.ItemCallback<Recipe>() {
     override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
         return oldItem.name == newItem.name
     }
-
 }

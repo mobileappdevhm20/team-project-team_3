@@ -10,12 +10,12 @@
 
     <Button
         android:id="@+id/buttonAddIngediant"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:tag="@string/text_ingredientName"
-        android:text="@string/text_addIngredient"
-        android:layout_marginEnd="@dimen/fragment_margin"
         android:layout_marginStart="@dimen/fragment_margin"
-        android:layout_width="match_parent" />
+        android:layout_marginEnd="@dimen/fragment_margin"
+        android:tag="@string/text_ingredientName"
+        android:text="@string/text_addIngredient" />
 
     <EditText
         android:id="@+id/amount"

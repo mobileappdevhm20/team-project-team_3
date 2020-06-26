@@ -1,8 +1,7 @@
-package team3.recipefinder
+package team3.recipefinder.util
 
 import org.junit.Assert
 import org.junit.Test
-import team3.recipefinder.util.extractTime
 
 class ExtractTimeFromStringsTest {
     @Test
@@ -37,6 +36,9 @@ class ExtractTimeFromStringsTest {
 
     @Test
     fun extractHoursMinutesAndSeconds() {
-        Assert.assertEquals(4 * 3600 + 125, "Cook for 4hours, 2 minutes and 5 seconds".extractTime())
+        Assert.assertEquals(
+            4 * 3600 + 125,
+            "Cook for 4hours, 2 minutes and 5 seconds".extractTime()
+        )
     }
 }

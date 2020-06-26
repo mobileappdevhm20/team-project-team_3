@@ -3,6 +3,7 @@ package team3.recipefinder.dialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -18,9 +19,7 @@ class EditRecipeFragment() : DialogFragment() {
 
     interface EditRecipeListener {
         fun onDialogPositiveEditRecipe(name: String?)
-        fun onDialogNegativeClick()
     }
-
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -32,8 +31,8 @@ class EditRecipeFragment() : DialogFragment() {
             var textValue = ""
             if (arguments != null) {
                 textValue = requireArguments().getString("oldName").toString()
-
-                var textView = view.findViewById<TextView>(R.id.text_recipe_name)
+                Log.i("onCreate", textValue)
+                var textView = view.findViewById<TextView>(R.id.recipe_value)
                 textView.hint = textValue
             }
 
@@ -50,7 +49,6 @@ class EditRecipeFragment() : DialogFragment() {
                 .setNegativeButton(
                     R.string.text_cancel
                 ) { _, _ ->
-                    listener.onDialogNegativeClick()
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
@@ -64,8 +62,10 @@ class EditRecipeFragment() : DialogFragment() {
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
-                (context.toString() +
-                        " must implement EditRecipeListener")
+                (
+                    context.toString() +
+                        " must implement EditRecipeListener"
+                    )
             )
         }
     }

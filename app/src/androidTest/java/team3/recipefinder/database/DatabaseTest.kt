@@ -1,16 +1,15 @@
-package team3.recipefinder
+package team3.recipefinder.database
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import team3.recipefinder.database.AppDatabase
-import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.model.Cookbook
 import team3.recipefinder.model.Ingredient
 import team3.recipefinder.model.Recipe
@@ -41,11 +40,11 @@ class DatabaseTest {
 
         Assert.assertEquals(
             1,
-            db.recipeDao().insertRecipe(Recipe(0, "test", "description", "imageUrl"))
+            db.recipeDao().insertRecipe(Recipe(0, "test", "description", "imageUrl", 1))
         )
         Assert.assertEquals(
             2,
-            db.recipeDao().insertRecipe(Recipe(0, "test", "description", "imageUrl"))
+            db.recipeDao().insertRecipe(Recipe(0, "test", "description", "imageUrl", 1))
         )
 
         Assert.assertEquals(
@@ -56,32 +55,32 @@ class DatabaseTest {
             2,
             db.recipeDao().insertIngredient(Ingredient(0, "test"))
         )
+        Thread.sleep(2000)
     }
 
     @Test
     fun testInsertRecipe() {
-        @Test
-        fun testInsertRecipe() {
-            // Insert recipe
-            db.recipeDao().apply {
-                insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
-                insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl")) // ID 2
+        // Insert recipe
+        db.recipeDao().apply {
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 1)) // ID 1
+            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl", 1)) // ID 2
+        }
+
+        // Test getAll
+        val expected = listOf("testRecipe", "testRecipe2")
+
+        GlobalScope.launch(Dispatchers.Main) {
+            db.recipeDao().getAll().observeForever {
+                Assert.assertEquals(expected, it.map { it.name })
             }
 
-            // Test getAll
-            val expected = listOf("testRecipe", "testRecipe2")
-
-            GlobalScope.launch {
-                db.recipeDao().getAll().observeForever {
-                    Assert.assertEquals(expected, it.map { it.name })
-                }
-
-                // Test get
-                db.recipeDao().getAll().observeForever {
-                    Assert.assertEquals("testRecipe2", it.get(2).name)
-                }
+            // Test get
+            db.recipeDao().getAll().observeForever {
+                Assert.assertEquals("testRecipe2", it[1].name)
             }
         }
+
+        Thread.sleep(2000)
     }
 
     @Test
@@ -89,8 +88,8 @@ class DatabaseTest {
         // Insert recipes and ingredients
         db.recipeDao().apply {
             // Recipes
-            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
-            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl")) // ID 2
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 0)) // ID 1
+            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl", 0)) // ID 2
 
             // Ingredients
             insertIngredient(Ingredient(0, "Tomato")) // ID 1
@@ -107,7 +106,7 @@ class DatabaseTest {
             removeIngredientFromRecipe(1, 2)
         }
 
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.Main) {
             // Test ingredients of recipe 1
             val expected = listOf("Tomato", "Milk")
             db.recipeDao().getAllIngredientsByRecipe(1).observeForever {
@@ -120,6 +119,8 @@ class DatabaseTest {
                 Assert.assertEquals(expected2, it.map { it.name })
             }
         }
+
+        Thread.sleep(2000)
     }
 
     @Test
@@ -127,7 +128,7 @@ class DatabaseTest {
         // Insert recipes and ingredients
         db.recipeDao().apply {
             // Recipes
-            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 1)) // ID 1
 
             // Steps
             insertStep(RecipeStep(0, "Peal the banana")) // ID 1
@@ -142,7 +143,7 @@ class DatabaseTest {
             removeStepFromRecipe(2, 1)
         }
 
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.Main) {
             // Test ingredients of recipe 1
             val expected = listOf("Peal the banana", "Pop the corn")
             db.recipeDao().getAllStepsByRecipe(1).observeForever {
@@ -150,25 +151,29 @@ class DatabaseTest {
             }
         }
 
+        Thread.sleep(2000)
     }
 
     @Test
     fun testDeleteRecipe() {
+
         // Insert recipe
         db.recipeDao().apply {
-            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
-            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl")) // ID 2
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 1)) // ID 1
+            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl", 1)) // ID 2
 
-            deleteRecipe(Recipe(1, "testRecipe", "description", "imageUrl"))
+            deleteRecipe(Recipe(1, "testRecipe", "description", "imageUrl", 1))
         }
 
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.Main) {
             // Test ingredients of recipe 1
             val expected = listOf("testRecipe2")
             db.recipeDao().getAll().observeForever {
                 Assert.assertEquals(expected, it.map { it.name })
             }
         }
+
+        Thread.sleep(2000)
     }
 
     @Test
@@ -185,14 +190,16 @@ class DatabaseTest {
 
         // Test get
         Assert.assertEquals("testCookbook2", db.cookbookDao().get(2).name)
+
+        Thread.sleep(2000)
     }
 
     @Test
     fun testCookbookManagement() {
         // Insert recipes
         db.recipeDao().apply {
-            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl")) // ID 1
-            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl")) // ID 2
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 1)) // ID 1
+            insertRecipe(Recipe(0, "testRecipe2", "description", "imageUrl", 1)) // ID 2
         }
         // Insert cookbooks
         db.cookbookDao().apply {
@@ -210,13 +217,19 @@ class DatabaseTest {
 
         // Test ingredients of recipe 1
         val expected = listOf("testRecipe", "testRecipe2")
-        Assert.assertEquals(expected,
-            db.cookbookDao().getAllRecipesByCookbook(1).map { it.name })
+        Assert.assertEquals(
+            expected,
+            db.cookbookDao().getAllRecipesByCookbook(1).map { it.name }
+        )
 
         // Test ingredients of recipe 2
         val expected2 = listOf("testRecipe")
-        Assert.assertEquals(expected2,
-            db.cookbookDao().getAllRecipesByCookbook(2).map { it.name })
+        Assert.assertEquals(
+            expected2,
+            db.cookbookDao().getAllRecipesByCookbook(2).map { it.name }
+        )
+
+        Thread.sleep(2000)
     }
 
     @Test
@@ -231,6 +244,34 @@ class DatabaseTest {
 
         // Test getAll
         val expected = listOf("testCookbook2")
+
         Assert.assertEquals(expected, db.cookbookDao().getAll().map { it.name })
+
+        Thread.sleep(2000)
+    }
+
+    @Test
+    fun testGetUsedIngredients() {
+        db.recipeDao().apply {
+            // Recipes
+            insertRecipe(Recipe(0, "testRecipe", "description", "imageUrl", 0)) // ID 1
+
+            // Ingredients
+            insertIngredient(Ingredient(0, "Tomato")) // ID 1
+            insertIngredient(Ingredient(0, "Milk")) // ID 2
+            insertIngredient(Ingredient(0, "Butter")) // ID 3
+
+            // Relations
+            assignIngredientToRecipe(1, 1, "X L")
+            assignIngredientToRecipe(2, 1, "X L")
+
+            // Remove Tomato from recipe 2
+            removeIngredientFromRecipe(1, 2)
+        }
+
+        val ingredients = db.recipeSearchDao().getAllUsedIngredients().map { it.id }
+        Assert.assertArrayEquals(arrayOf(1L, 2L), ingredients.toTypedArray())
+
+        Thread.sleep(2000)
     }
 }

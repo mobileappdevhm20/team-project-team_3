@@ -12,16 +12,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
+import team3.recipefinder.activity.CrawlerActivity
 import team3.recipefinder.activity.LoginActivity
+import team3.recipefinder.activity.SearchActivity
 import team3.recipefinder.adapter.RecipeAdapter
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.MainActivityBinding
+import team3.recipefinder.dialog.CreateIngredientFragment
 import team3.recipefinder.dialog.CreateRecipeFragment
 import team3.recipefinder.listener.RecipeListener
 import team3.recipefinder.viewModelFactory.RecipeViewModelFactory
 import team3.recipefinder.viewmodel.RecipeViewModel
 
-class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener {
+class MainActivity :
+    AppCompatActivity(),
+    CreateRecipeFragment.CreateRecipeListener,
+    CreateIngredientFragment.EditRecipeListener {
     private lateinit var viewModel: RecipeViewModel
 
     private lateinit var auth: FirebaseAuth
@@ -30,13 +36,13 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
 
-        if(auth.currentUser == null){
+        if (auth.currentUser == null) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-	 // Setup DataBinding
+        // Setup DataBinding
         var binding: MainActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.main_activity)
 
@@ -63,18 +69,20 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         binding.recipeView.adapter = adapter
 
         // Observe LiveData
-        viewModel.recipes.observe(this, Observer {
-            Log.i("MainActivity", "OBSERVER CALLED")
-            it?.let {
-                adapter.submitList(it)
-                adapter.notifyDataSetChanged()
+        viewModel.recipes.observe(
+            this,
+            Observer {
+                Log.i("MainActivity", "OBSERVER CALLED")
+                it?.let {
+                    adapter.submitList(it)
+                    adapter.notifyDataSetChanged()
+                }
             }
-        })
+        )
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
     }
-
 
     /**
      * OnClick method to show create recipe dialog.
@@ -95,24 +103,23 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
         val args = Bundle()
         args.putString("name", resources.getString(R.string.text_ingredientFragName))
 
-        val createRecipeFragment = CreateRecipeFragment()
-        createRecipeFragment.arguments = args
-        createRecipeFragment.show(supportFragmentManager, "Create Ingredient")
+        val createIngredientFragment = CreateIngredientFragment()
+        createIngredientFragment.arguments = args
+        createIngredientFragment.show(supportFragmentManager, "Create Ingredient")
     }
 
     /**
      * Method that handles the positiveClick for the different dialogs.
      */
-    override fun onDialogPositiveClick(id: String?, name: String?) {
-        when (id) {
-            getString(R.string.text_recipeFragName) -> viewModel.addRecipe(name!!)
-        }
+    override fun onDialogPositiveClick(name: String?, url: String?) {
+        viewModel.addRecipe(name!!, url!!)
     }
 
     /**
-     * Method that handles the negativeClick for the different dialogs.
+     * Method that habdeles the negativeClick for create Ingredient
      */
-    override fun onDialogNegativeClick() {
+    override fun saveItem(id: String?, name: String?) {
+        viewModel.addIngredient(name!!)
     }
 
     /**
@@ -135,10 +142,17 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.user_logout_settings -> {
             FirebaseAuth.getInstance().signOut()
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(
+                this,
+                LoginActivity::class.java
+            )
             startActivity(intent)
             finish()
-            Toast.makeText(this, "Successfully Logged Out", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "Successfully Logged Out",
+                Toast.LENGTH_LONG
+            ).show()
             true
         }
         R.id.user_setting_create_recipe -> {
@@ -149,10 +163,18 @@ class MainActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListe
             showCreateIngredientDialog()
             true
         }
+        R.id.action_search -> {
+            startActivity(Intent(this, SearchActivity::class.java))
+            true
+        }
+        R.id.user_setting_import_recipe -> {
+            val intent = Intent(this, CrawlerActivity::class.java)
+            startActivity(intent)
+            finish()
+            true
+        }
         else -> {
             super.onOptionsItemSelected(item)
         }
     }
-
-
 }

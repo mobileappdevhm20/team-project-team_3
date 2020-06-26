@@ -1,7 +1,6 @@
 package team3.recipefinder.adapter
 
 import android.content.Context
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +10,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import team3.recipefinder.R
 import team3.recipefinder.activity.RecipeDetailActivity
-import team3.recipefinder.dialog.EditIngredientFragment
+import team3.recipefinder.util.calculateAmount
 
 /**
  * Custom adapter to display the ingredients in a custom listview.
  */
-class IngredientListAdapter(private val inputContext: Context, private val ingredientNames: List<String>, private val ingredientAmounts: List<String>, private val relationIds: List<Long>, private val editMode: Boolean) : ArrayAdapter<String>(inputContext, R.layout.ingredient_list_item,  ingredientNames){
+class IngredientListAdapter(
+    private val inputContext: Context,
+    private val ingredientNames: List<String>,
+    private val ingredientAmounts: List<String>,
+    private val relationIds: List<Long>,
+    private val editMode: Boolean,
+    private val portion: Int,
+    private val basePortion: Int
+) : ArrayAdapter<String>(inputContext, R.layout.ingredient_list_item, ingredientNames) {
 
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
         val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -29,17 +36,27 @@ class IngredientListAdapter(private val inputContext: Context, private val ingre
         val currentId = relationIds[position]
         val currentIngredient = ingredientNames[position]
         val currentAmount = ingredientAmounts[position]
+        Log.i("ADAPTER", currentAmount)
 
+        amount.text = calculateAmount(currentAmount, basePortion, portion)
 
-        amount.text = currentAmount
         name.text = currentIngredient
 
-        if(editMode) {
+        if (editMode) {
             editImageView.visibility = View.VISIBLE
-            rowView.setOnClickListener(View.OnClickListener {
-                Log.i("IngredientListAdapter", "Editing with id = $currentId and ingredient = $currentIngredient")
-                (inputContext as RecipeDetailActivity).showEditIngredients(currentId, currentIngredient, currentAmount)
-            })
+            rowView.setOnClickListener(
+                View.OnClickListener {
+                    Log.i(
+                        "IngredientListAdapter",
+                        "Editing with id = $currentId and ingredient = $currentIngredient"
+                    )
+                    (inputContext as RecipeDetailActivity).showEditIngredients(
+                        currentId,
+                        currentIngredient,
+                        currentAmount
+                    )
+                }
+            )
         } else {
             editImageView.visibility = View.GONE
         }

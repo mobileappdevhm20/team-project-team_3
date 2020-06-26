@@ -11,7 +11,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.ListView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -21,30 +25,44 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.recipe_detail_activity.*
 import team3.recipefinder.MainActivity
 import team3.recipefinder.R
+import team3.recipefinder.adapter.IngredientListAdapter
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.RecipeDetailActivityBinding
-import team3.recipefinder.viewModelFactory.EditViewModelFactory
-import team3.recipefinder.viewmodel.RecipeDetailViewModel
-import team3.recipefinder.adapter.IngredientListAdapter
-import team3.recipefinder.dialog.*
+import team3.recipefinder.dialog.AddIngredientFragment
+import team3.recipefinder.dialog.CreateIngredientFragment
+import team3.recipefinder.dialog.CreateInstructionFragment
+import team3.recipefinder.dialog.EditIngredientFragment
+import team3.recipefinder.dialog.EditInstructionFragment
+import team3.recipefinder.dialog.EditRecipeFragment
+import team3.recipefinder.dialog.EditRecipePictureFragment
 import team3.recipefinder.util.extractTime
 import team3.recipefinder.util.startTimer
+import team3.recipefinder.viewModelFactory.EditViewModelFactory
+import team3.recipefinder.viewmodel.RecipeDetailViewModel
 
-
-class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRecipeListener,
+class RecipeDetailActivity :
+    AppCompatActivity(),
     AddIngredientFragment.CreateIngredientListener,
     CreateInstructionFragment.CreateInstructionListener,
-    EditIngredientFragment.EditIngredientListener , CreateIngredientFragment.EditRecipeListener,
-    EditInstructionFragment.EditInstructionListener, EditRecipeFragment.EditRecipeListener{
+    EditIngredientFragment.EditIngredientListener,
+    CreateIngredientFragment.EditRecipeListener,
+    EditInstructionFragment.EditInstructionListener,
+    EditRecipeFragment.EditRecipeListener,
+    EditRecipePictureFragment.EditRecipePictureListener {
+
     private lateinit var viewModel: RecipeDetailViewModel
     private var editModeActive = false
     private var ingredientListNameHolder: List<String> = emptyList()
     private var ingredientListAmountHolder: List<String> = emptyList()
     private var ingredientListIdHolder: List<Long> = emptyList()
     private val checkedSteps = hashSetOf<Long>()
+    private var basePortion: Int = 1
+    private var portion: Int = 1
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("RestrictedApi")
@@ -53,7 +71,8 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         setContentView(R.layout.recipe_detail_activity)
 
         val binding: RecipeDetailActivityBinding =
-            DataBindingUtil.setContentView(this,
+            DataBindingUtil.setContentView(
+                this,
                 R.layout.recipe_detail_activity
             )
 
@@ -72,101 +91,183 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
                 application
             )
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(RecipeDetailViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            viewModelFactory
+        ).get(
+            RecipeDetailViewModel::class.java
+        )
 
         binding.model = viewModel
 
-        viewModel.recipe.observe(this, Observer {
-            Log.i("RecipeDetailActivity", "OBSERVER CALLED FOR ${it.name}")
-            val toolBar = findViewById<Toolbar>(R.id.toolbar)
-            toolBar.title = it.name
-            toolBar.setOnClickListener {
-                if (editModeActive) {
-                    val args = Bundle()
-                    args.putString("oldName", toolBar.title.toString())
-
-                    val editRecipeFragment = EditRecipeFragment()
-                    editRecipeFragment.arguments = args
-                    editRecipeFragment.show(supportFragmentManager, "Edit Recipe")
-                }
-            }
-        })
-
-        viewModel.stepsRecipe.observe(this, Observer { instructions ->
-            stepList.removeAllViews()
-            instructions.forEach { instruction ->
-                val view = layoutInflater.inflate(R.layout.recipe_instruction_card, null)
-                view.findViewById<TextView>(R.id.instructionText).text = instruction.description
-
-                val timerValue = instruction.description.extractTime()
-
-                val timerButton = view.findViewById<Button>(R.id.timerButton)
-                val layout = view.findViewById<ConstraintLayout>(R.id.instructionCardLayout)
-                val checkMark = view.findViewById<ImageView>(R.id.checkMark)
-
-                if (timerValue == 0) {
-                    layout.removeView(timerButton)
-                } else {
-                    timerButton.setOnClickListener { timerValue.startTimer(this, instruction.description) }
-                }
-
-                if (checkedSteps.contains(instruction.id)) {
-                    checkMark.setImageResource(R.drawable.green_check)
-                } else {
-                    checkMark.setImageResource(R.drawable.gray_check)
-                }
-
-                checkMark.setOnClickListener {
-                    checkedSteps.plusElement(instruction.id)
-                    checkMark.setImageResource(R.drawable.green_check)
-                }
-
-                view.setOnLongClickListener {
+        viewModel.recipe.observe(
+            this,
+            Observer {
+                Log.i(
+                    "RecipeDetailActivity",
+                    "OBSERVER CALLED FOR ${it.name}"
+                )
+                val imageView = findViewById<ImageView>(R.id.imageView)
+                Glide.with(this).load(
+                    it.imageUrl
+                ).apply(
+                    RequestOptions()
+                        // .placeholder(R.drawable.loading_animation)
+                        .error(R.drawable.tomatensuppe115_v_zweispaltig)
+                ).into(imageView)
+                val toolBar = findViewById<Toolbar>(R.id.toolbar)
+                toolBar.title = it.name
+                toolBar.setOnClickListener {
                     if (editModeActive) {
-                        showEditInstructions(instruction.id, instruction.description)
+                        val args = Bundle()
+                        args.putString("oldName", toolBar.title.toString())
+
+                        val editRecipeFragment = EditRecipeFragment()
+                        editRecipeFragment.arguments = args
+                        editRecipeFragment.show(supportFragmentManager, "Edit Recipe")
                     }
-                    true
                 }
-                stepList.addView(view)
+                basePortion = it.servings
+                portion = basePortion
+                putPortion()
             }
-        })
+        )
 
-        viewModel.ingredients.observe(this, Observer { })
-        viewModel.ingredientRecipe.observe(this, Observer { it ->
-            // Save ingredientNameList and ingredientIdList to update the list view inside the editMode observer
-            ingredientListNameHolder = it.map { i -> i.name }.toList()
-            ingredientListIdHolder = it.map { i -> i.relId }.toList()
-            ingredientListAmountHolder = it.map { i -> i.amount }.toList()
-            createAndSetListViewAdapter(ingredientListNameHolder, ingredientListAmountHolder, ingredientListIdHolder,  editModeActive)
-        })
+        viewModel.stepsRecipe.observe(
+            this,
+            Observer { instructions ->
+                stepList.removeAllViews()
+                instructions.forEach { instruction ->
+                    val view = layoutInflater.inflate(R.layout.recipe_instruction_card, null)
+                    view.findViewById<TextView>(R.id.instructionText).text = instruction.description
 
-        viewModel.editMode.observe(this, Observer {
-            // Save editmode fot ingredient observer
-            editModeActive = it
-            // Update ingredient list view adapter
-            createAndSetListViewAdapter(ingredientListNameHolder, ingredientListAmountHolder, ingredientListIdHolder, editModeActive)
-            changeListItemBehaviour(it)
+                    val timerValue = instruction.description.extractTime()
 
-            if (it) {
-                editButton.visibility = View.GONE
-                shareButton.visibility = View.GONE
-                addStepButton.visibility = View.VISIBLE
-                doneEditButton.visibility = View.VISIBLE
-                deleteRecipeButton.visibility = View.VISIBLE
-                addIngredientButton.visibility = View.VISIBLE
-            } else {
-                editButton.visibility = View.VISIBLE
-                shareButton.visibility = View.VISIBLE
-                addStepButton.visibility = View.GONE
-                doneEditButton.visibility = View.GONE
-                deleteRecipeButton.visibility = View.GONE
-                addIngredientButton.visibility = View.GONE
+                    val timerButton = view.findViewById<Button>(R.id.timerButton)
+                    val layout = view.findViewById<ConstraintLayout>(R.id.instructionCardLayout)
+                    val checkMark = view.findViewById<ImageView>(R.id.checkMark)
+
+                    if (timerValue == 0) {
+                        layout.removeView(timerButton)
+                    } else {
+                        timerButton.setOnClickListener {
+                            timerValue.startTimer(
+                                this,
+                                instruction.description
+                            )
+                        }
+                    }
+
+                    if (checkedSteps.contains(instruction.id)) {
+                        checkMark.setImageResource(R.drawable.green_check)
+                    } else {
+                        checkMark.setImageResource(R.drawable.gray_check)
+                    }
+
+                    checkMark.setOnClickListener {
+                        checkedSteps.plusElement(instruction.id)
+                        checkMark.setImageResource(R.drawable.green_check)
+                    }
+
+                    view.setOnLongClickListener {
+                        if (editModeActive) {
+                            showEditInstructions(instruction.id, instruction.description)
+                        }
+                        true
+                    }
+                    stepList.addView(view)
+                }
             }
-        })
+        )
 
-        toolbar.setOnClickListener {
+        viewModel.ingredients.observe(
+            this,
+            Observer {
+                if (viewModel.editMode.value!!) {
+                    showAddIngrediantDialog()
+                }
+            }
+        )
 
-        }
+        viewModel.ingredientRecipe.observe(
+            this,
+            Observer { it ->
+                // Save ingredientNameList and ingredientIdList to update the list view inside the editMode observer
+                ingredientListNameHolder = it.map { i -> i.name }.toList()
+                ingredientListIdHolder = it.map { i -> i.relId }.toList()
+                ingredientListAmountHolder = it.map { i -> i.amount }.toList()
+                createAndSetListViewAdapter(
+                    ingredientListNameHolder,
+                    ingredientListAmountHolder,
+                    ingredientListIdHolder,
+                    editModeActive,
+                    portion,
+                    basePortion
+                )
+            }
+        )
+
+        viewModel.editMode.observe(
+            this,
+            Observer {
+                // Save editmode fot ingredient observer
+                editModeActive = it
+                // Update ingredient list view adapter
+                createAndSetListViewAdapter(
+                    ingredientListNameHolder,
+                    ingredientListAmountHolder,
+                    ingredientListIdHolder,
+                    editModeActive,
+                    portion,
+                    basePortion
+                )
+                changeListItemBehaviour(it)
+
+                if (it) {
+                    editButton.visibility = View.GONE
+                    shareButton.visibility = View.GONE
+                    addStepButton.visibility = View.VISIBLE
+                    doneEditButton.visibility = View.VISIBLE
+                    deleteRecipeButton.visibility = View.VISIBLE
+                    addIngredientButton.visibility = View.VISIBLE
+                    imageView.setOnClickListener {
+                        val args = Bundle()
+                        args.putString("oldName", viewModel.getRecipeUrl())
+                        val dialog = EditRecipePictureFragment()
+                        dialog.arguments = args
+                        dialog.show(supportFragmentManager, "Edit Recipe URL")
+                    }
+                } else {
+                    editButton.visibility = View.VISIBLE
+                    shareButton.visibility = View.VISIBLE
+                    addStepButton.visibility = View.GONE
+                    doneEditButton.visibility = View.GONE
+                    deleteRecipeButton.visibility = View.GONE
+                    addIngredientButton.visibility = View.GONE
+                    imageView.setOnClickListener {}
+                }
+            }
+        )
+
+        toolbar.setOnClickListener {}
+    }
+
+    fun clickPortionButton(@Suppress("UNUSED_PARAMETER") view: View) {
+        portion = portionInput.text.toString().toInt()
+        putPortion()
+    }
+
+    private fun putPortion() {
+        portionInput.hint = basePortion.toString()
+
+        createAndSetListViewAdapter(
+            ingredientListNameHolder,
+            ingredientListAmountHolder,
+            ingredientListIdHolder,
+            editModeActive,
+            portion,
+            basePortion
+        )
     }
 
     /**
@@ -185,6 +286,10 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
      * OnClick method to show add ingredient to recipe dialog.
      */
     fun showAddIngredientDialog(@Suppress("UNUSED_PARAMETER") view: View) {
+        showAddIngrediantDialog()
+    }
+
+    private fun showAddIngrediantDialog() {
         val args = Bundle()
         args.putParcelableArrayList("name", viewModel.ingredients.value?.let { ArrayList(it) })
 
@@ -241,7 +346,6 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         val editTimerFragment = CreateIngredientFragment()
         editTimerFragment.arguments = args
         editTimerFragment.show(supportFragmentManager, "Create Ingredient")
-
     }
 
     /**
@@ -258,7 +362,6 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         startActivity(intent)
         finish()
     }
-
 
     /**
      * Method that handles the positiveClick for the different dialogs.
@@ -300,19 +403,18 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
         viewModel.updateRecipeName(name!!)
     }
 
-    /**
-     * Method that handles the negativeClick for the different dialogs.
-     */
-    override fun onDialogNegativeClick() {}
-
     override fun onDialogNeutralEditInstruction(id: Long?) {
         Toast.makeText(this, "Deleting....", Toast.LENGTH_LONG).show()
         viewModel.removeStepFromRecipe(id!!)
     }
 
     override fun openCreateIngredientDialog() {
-        showCreateIngredientDialog(getString(R.string.text_ingredientName))}
+        showCreateIngredientDialog(getString(R.string.text_ingredientName))
+    }
 
+    override fun onDialogPositiveEditRecipePicture(url: String?) {
+        viewModel.updateRecipePicture(url!!)
+    }
 
     /**
      * Method that handles the neutralClick specificly for the EditIngredient dialog.
@@ -370,9 +472,24 @@ class RecipeDetailActivity : AppCompatActivity(), CreateRecipeFragment.CreateRec
      * @property ingredientIds a list of all ingredient ids to later delete the ingredient if needed
      * @property editMode the editmode to decide rather the edit icon should be shown
      */
-    private fun createAndSetListViewAdapter(ingredientNames: List<String>, ingredientAmounts: List<String>, ingredientIds: List<Long>, editMode: Boolean) {
+    private fun createAndSetListViewAdapter(
+        ingredientNames: List<String>,
+        ingredientAmounts: List<String>,
+        ingredientIds: List<Long>,
+        editMode: Boolean,
+        portion: Int,
+        basePortion: Int
+    ) {
         val listView = findViewById<ListView>(R.id.ingredientList)
-        val ingredientListAdapter = IngredientListAdapter(this, ingredientNames, ingredientAmounts, ingredientIds, editMode)
+        val ingredientListAdapter = IngredientListAdapter(
+            this,
+            ingredientNames,
+            ingredientAmounts,
+            ingredientIds,
+            editMode,
+            portion,
+            basePortion
+        )
 
         listView.adapter = ingredientListAdapter
 

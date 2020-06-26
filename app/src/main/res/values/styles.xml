@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="RecifyTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="RecifyTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
@@ -35,6 +35,13 @@
     <style name="RecifyTheme.Base.IngredientDetails">
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="RecifyTheme.Materialcomponents" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
     </style>
 
 </resources>

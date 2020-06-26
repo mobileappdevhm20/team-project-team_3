@@ -1,0 +1,95 @@
+name: Pipeline
+
+env:
+  CI: true
+
+on: push
+
+jobs:
+  BUILD_DEBUG:
+    name: Build debug apk
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Gradle build debug APK
+        run: ./gradlew app:assembleDebug
+
+  LINTER_CHECKS:
+    name: Kotlin Linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Run linter checks
+        run: ./gradlew app:ktlint
+
+  ANDROID_UNIT_TESTS:
+    name: Android unit test execution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Calculate test coverage
+        run: ./gradlew app:jacocoTestReport
+      - name: Upload unit tests artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: unit_tests
+          path: ./app/build/jacoco/
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v1
+        with:
+          name: unit_tests
+          file: ./app/build/jacoco/jacoco.xml
+          fail_ci_if_error: true
+
+  ANDROID_EMULATOR_TESTS:
+    name: Emulator Tests
+    runs-on: macOS-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        EMULATOR_API: [26, 27, 28, 29]
+        include:
+          - EMULATOR_API: 29
+            EMULATOR_ARCH: x86_64
+          - EMULATOR_API: 28
+            EMULATOR_ARCH: x86_64
+          - EMULATOR_API: 27
+            EMULATOR_ARCH: x86_64
+          - EMULATOR_API: 26
+            EMULATOR_ARCH: x86_64
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Execute emulator tests
+        timeout-minutes: 30
+        uses: reactivecircus/android-emulator-runner@v2.2.0
+        with:
+          api-level: ${{ matrix.EMULATOR_API }}
+          arch: ${{ matrix.EMULATOR_ARCH }}
+          disable-animations: true
+          profile: Nexus 5X
+          emulator-options: -no-snapshot -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect
+          emulator-build: 6110076
+          script: ./gradlew app:connectedCheck
+      - name: Upload emulator tests artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: emulator_tests_${{ matrix.EMULATOR_API }}
+          path: ./app/build/reports/coverage/debug/
+      - name: Upload coverage report (Codecov)
+        uses: codecov/codecov-action@v1
+        with:
+          name: emulator_tests_${{ matrix.EMULATOR_API }}
+          file: ./app/build/reports/coverage/debug/report.xml
+          fail_ci_if_error: true

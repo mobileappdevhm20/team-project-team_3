@@ -43,14 +43,24 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_LONG).show()
             } else {
                 auth.createUserWithEmailAndPassword(email, password)
-                    .addOnSuccessListener(this, OnSuccessListener() {
-                        Toast.makeText(this, "Successfully Registered", Toast.LENGTH_LONG).show()
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }).addOnFailureListener(this, OnFailureListener() {
-                        Toast.makeText(this, "Registration Failed", Toast.LENGTH_LONG).show()
-                    })
+                    .addOnSuccessListener(
+                        this,
+                        OnSuccessListener() {
+                            Toast.makeText(
+                                this,
+                                "Successfully Registered", Toast.LENGTH_LONG
+                            ).show()
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    )
+                    .addOnFailureListener(
+                        this,
+                        OnFailureListener() {
+                            Toast.makeText(this, "Registration Failed", Toast.LENGTH_LONG).show()
+                        }
+                    )
             }
         }
 

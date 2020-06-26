@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import team3.recipefinder.R
@@ -15,12 +14,11 @@ class CreateRecipeFragment() : DialogFragment() {
     private lateinit var listener: CreateRecipeListener
 
     private lateinit var recipeNameField: EditText
+    private lateinit var urlField: EditText
 
     interface CreateRecipeListener {
-        fun onDialogPositiveClick(id: String?, name: String?)
-        fun onDialogNegativeClick()
+        fun onDialogPositiveClick(name: String?, url: String?)
     }
-
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -29,24 +27,20 @@ class CreateRecipeFragment() : DialogFragment() {
             val view = inflater.inflate(R.layout.dialog_recipe_input, null)
 
             recipeNameField = view.findViewById(R.id.recipe_value)
-            var textValue = ""
-            if (arguments != null) {
-                textValue = requireArguments().getString("name").toString()
-
-                var textView = view.findViewById<TextView>(R.id.text_recipe_name)
-                textView.text = textValue
-            }
+            urlField = view.findViewById(R.id.url_input)
 
             builder.setView(view)
                 .setPositiveButton(
                     R.string.text_edit
                 ) { _, _ ->
-                    listener.onDialogPositiveClick(textValue, recipeNameField.text.toString())
+                    listener.onDialogPositiveClick(
+                        recipeNameField.text.toString(),
+                        urlField.text.toString()
+                    )
                 }
                 .setNegativeButton(
                     R.string.text_cancel
                 ) { _, _ ->
-                    listener.onDialogNegativeClick()
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
@@ -60,8 +54,9 @@ class CreateRecipeFragment() : DialogFragment() {
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
             throw ClassCastException(
-                (context.toString() +
-                        " must implement CreateRecipeListener")
+                (
+                    context.toString() + " must implement CreateRecipeListener"
+                    )
             )
         }
     }
