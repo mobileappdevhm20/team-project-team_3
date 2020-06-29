@@ -32,7 +32,7 @@ class SearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar.title = "Search"
+        toolbar.title = "Search a Recipe"
 
         val tagView = findViewById<ManagedChipsListView<Ingredient>>(R.id.search_tags)
 
