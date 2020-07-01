@@ -41,4 +41,5 @@
     <string name="import_recipe">Import Recipe</string>
     <string name="portionButton">calc Portion</string>
     <string name="incr_hint">1</string>
+    <string name="defaultTextView">TextView</string>
 </resources>
