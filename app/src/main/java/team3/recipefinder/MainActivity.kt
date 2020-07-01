@@ -15,12 +15,11 @@ import com.google.firebase.auth.FirebaseAuth
 import team3.recipefinder.activity.CrawlerActivity
 import team3.recipefinder.activity.LoginActivity
 import team3.recipefinder.activity.SearchActivity
-import team3.recipefinder.adapter.RecipeAdapter
+import team3.recipefinder.adapter.RecipeListAdapter
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.MainActivityBinding
 import team3.recipefinder.dialog.CreateIngredientFragment
 import team3.recipefinder.dialog.CreateRecipeFragment
-import team3.recipefinder.listener.RecipeListener
 import team3.recipefinder.viewModelFactory.RecipeViewModelFactory
 import team3.recipefinder.viewmodel.RecipeViewModel
 
@@ -64,8 +63,11 @@ class MainActivity :
         binding.recipeViewModel = viewModel
 
         // Register Adapter for the RecyclerView
-        val adapter =
-            RecipeAdapter(RecipeListener(viewModel))
+        val adapter = RecipeListAdapter(this) {
+            viewModel.editPropertyDetails(it)
+        }
+
+        adapter.recipes = mutableListOf()
         binding.recipeView.adapter = adapter
 
         // Observe LiveData
@@ -74,7 +76,8 @@ class MainActivity :
             Observer {
                 Log.i("MainActivity", "OBSERVER CALLED")
                 it?.let {
-                    adapter.submitList(it)
+                    adapter.recipes.clear()
+                    adapter.recipes.addAll(it)
                     adapter.notifyDataSetChanged()
                 }
             }
