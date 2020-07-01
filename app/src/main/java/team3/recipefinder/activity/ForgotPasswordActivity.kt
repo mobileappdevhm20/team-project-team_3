@@ -1,5 +1,6 @@
 package team3.recipefinder.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
@@ -32,7 +33,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         back = findViewById(R.id.button_cancel)
 
         back.setOnClickListener {
-            finish()
+            switchToLogin()
         }
 
         resetPasswordBtn.setOnClickListener {
@@ -56,5 +57,15 @@ class ForgotPasswordActivity : AppCompatActivity() {
                     )
             }
         }
+    }
+
+    override fun onBackPressed() {
+        switchToLogin()
+    }
+
+    private fun switchToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

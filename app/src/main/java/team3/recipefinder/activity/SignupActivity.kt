@@ -65,9 +65,17 @@ class SignupActivity : AppCompatActivity() {
         }
 
         loginBtn.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+            switchToLogin()
         }
+    }
+
+    override fun onBackPressed() {
+        switchToLogin()
+    }
+
+    private fun switchToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
