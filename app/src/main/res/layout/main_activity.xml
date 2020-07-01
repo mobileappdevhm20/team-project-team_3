@@ -19,10 +19,26 @@
             android:id="@+id/toolbar"
             layout="@layout/tool_bar" />
 
+        <TextView
+            android:id="@+id/text_recipes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/main_activity_recipes"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="24sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize">
+            android:id="@+id/recipeListFrame"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/text_recipes"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recipeView"
@@ -31,10 +47,23 @@
                 android:clipToPadding="false"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+                android:scrollbarSize="2dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
         </FrameLayout>
+
+        <TextView
+            android:id="@+id/text_cookbooks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Cookbooks"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="24sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recipeListFrame" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

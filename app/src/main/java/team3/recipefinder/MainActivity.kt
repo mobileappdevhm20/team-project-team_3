@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import team3.recipefinder.activity.CrawlerActivity
 import team3.recipefinder.activity.LoginActivity
@@ -69,6 +70,10 @@ class MainActivity :
 
         adapter.recipes = mutableListOf()
         binding.recipeView.adapter = adapter
+        binding.recipeView.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL, false
+        )
 
         // Observe LiveData
         viewModel.recipes.observe(
