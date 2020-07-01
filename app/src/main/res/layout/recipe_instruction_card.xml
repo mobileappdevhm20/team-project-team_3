@@ -22,22 +22,24 @@
 
             <TextView
                 android:id="@+id/instructionText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="TextView"
+                android:text="@string/defaultTextView"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="@+id/instructionCardLayout"
+                app:layout_constraintTop_toTopOf="@+id/instructionCardLayout"
+                app:layout_constraintEnd_toStartOf="@+id/checkMark"/>
 
             <ImageView
                 android:id="@+id/checkMark"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:src="@drawable/gray_check"
+                android:layout_marginStart="5dp"
                 app:layout_constraintBottom_toBottomOf="@id/instructionText"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/instructionCardLayout"
+                app:layout_constraintStart_toEndOf="@+id/instructionText"
                 app:layout_constraintTop_toTopOf="@id/instructionText" />
 
             <Button
@@ -48,8 +50,8 @@
                 android:text="@string/start_timer"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 app:strokeColor="@color/timer_button_text_color"
-                app:layout_constraintLeft_toLeftOf="@id/instructionText"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/instructionCardLayout"
+                app:layout_constraintEnd_toEndOf="@+id/instructionCardLayout"
                 app:layout_constraintTop_toBottomOf="@id/instructionText" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
