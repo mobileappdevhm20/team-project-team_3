@@ -21,7 +21,7 @@ class RecipeListAdapter(context: Context, val onClick: (Recipe) -> Unit) :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val view = view
-        val recipeName = view.findViewById<TextView>(R.id.recipeName)
+        val recipeName =git view.findViewById<TextView>(R.id.recipeName)
         val description = view.findViewById<TextView>(R.id.recipeDescription)
         val image = view.findViewById<ImageView>(R.id.imageView)
     }
