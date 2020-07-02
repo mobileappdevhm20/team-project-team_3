@@ -20,10 +20,10 @@ class RecipeListAdapter(context: Context, val onClick: (Recipe) -> Unit) :
     var recipes = mutableListOf<Recipe>()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val view= view
+        val view = view
         val recipeName = view.findViewById<TextView>(R.id.recipeName)
         val description = view.findViewById<TextView>(R.id.recipeDescription)
-        val image= view.findViewById<ImageView>(R.id.imageView)
+        val image = view.findViewById<ImageView>(R.id.imageView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
