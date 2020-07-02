@@ -222,7 +222,6 @@ class RecipeDetailActivity :
                     basePortion
                 )
                 changeListItemBehaviour(it)
-
                 if (it) {
                     editButton.visibility = View.GONE
                     shareButton.visibility = View.GONE
@@ -230,6 +229,7 @@ class RecipeDetailActivity :
                     doneEditButton.visibility = View.VISIBLE
                     deleteRecipeButton.visibility = View.VISIBLE
                     addIngredientButton.visibility = View.VISIBLE
+                    imageView.layoutParams.height = 250
                     imageView.setOnClickListener {
                         val args = Bundle()
                         args.putString("oldName", viewModel.getRecipeUrl())
@@ -237,6 +237,7 @@ class RecipeDetailActivity :
                         dialog.arguments = args
                         dialog.show(supportFragmentManager, "Edit Recipe URL")
                     }
+                    imageView.requestLayout()
                 } else {
                     editButton.visibility = View.VISIBLE
                     shareButton.visibility = View.VISIBLE
@@ -244,7 +245,9 @@ class RecipeDetailActivity :
                     doneEditButton.visibility = View.GONE
                     deleteRecipeButton.visibility = View.GONE
                     addIngredientButton.visibility = View.GONE
+                    imageView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
                     imageView.setOnClickListener {}
+                    imageView.requestLayout()
                 }
             }
         )
