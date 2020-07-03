@@ -6,7 +6,7 @@ You don't know what to cook and have no time? Recify provides YOU with the best 
 * [Concept](#concept)  
 * [Architecture](#architecture)  
 * [Devevelopment Process](#devprocess) 
-* [Learnings](#learnings) 
+* [Functionality](#functionality) 
 * [Demo](#demo) 
 * [Links](#links) 
  
@@ -26,6 +26,8 @@ The base concept of our app is that you dont need to break your head over findin
 ![Base](https://raw.githubusercontent.com/mobileappdevhm20/team-project-team_3/gh-pages/docs/base.png "Base")
 ### Components
 ![Components](https://raw.githubusercontent.com/mobileappdevhm20/team-project-team_3/gh-pages/docs/architecture.png "Components")
+### Database
+![Database](https://raw.githubusercontent.com/mobileappdevhm20/team-project-team_3/gh-pages/docs/database.png "Database")
 ### Project Structure
 ```
 team3.recipefinder/
@@ -84,17 +86,15 @@ team3.recipefinder/
 | Cookbook Management | In Progress | In Progress | Done |
 | Share Recipe | Planned | Additional Feature | Additional Feature |
 {: .tablelines}
-<a name="learnings"/>
+<a name="functionality"/>
 
-## Learnings
-
-<a name="demo"/>
-
+## Functionality
 * **Login-Screen:** The first page what you see, is the Login-Page. Here you can register for an account. If you had registered, you can login to our app-system.
 
-* **Main-Page:** On the main-page you have an overview of your recipe. On the left-top corner there is our app menu. Here you can `Create Recipe`, `Create Ingredient` or `Import Recipe` from [chefkoch](https://www.chefkoch.de/). In the `search`-bar you have the option to look for recipes by ingredients. On the list you can select a recipe.
+* **Main-Page:** On the main-page you have an overview of your recipes and your cookbooks. On the top-right corner there is our app menu. Here you can `Create Recipe`, `Create Ingredient`, `Import Recipe` from [chefkoch](https://www.chefkoch.de/), or just logout. In the `search`-bar you have the option to look for recipes by ingredients. On the list you can select a recipe.
 
 * **Recipe-Detail-View:** You can see an overview of a single recipe. The ingredient can calculate by portions. If you scroll down, you will see the instructions. The instructions can be marked as done or start a timer. Of course if you find a mistake or want to add something, you can switch to the edit-mode. 
+<a name="demo"/>
 
 ## Demo
 
