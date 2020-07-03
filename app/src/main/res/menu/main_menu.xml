@@ -10,30 +10,30 @@
 
     <item
         android:id="@+id/action_user_settings"
-        android:icon="@drawable/ic_person_white_24dp"
+        android:icon="@drawable/ic_baseline_menu_24"
         android:title=""
         app:showAsAction="always">
         <menu>
             <item
                 android:id="@+id/user_name_settings"
-                android:title="@string/user_mail"
                 android:enabled="false"
+                android:title="@string/user_mail"
                 app:showAsAction="ifRoom" />
             <item
                 android:id="@+id/user_setting_create_recipe"
                 android:icon="@drawable/ic_fastfood_black_24dp"
                 android:title="@string/create_recipe"
-                app:showAsAction="ifRoom"/>
+                app:showAsAction="ifRoom" />
             <item
                 android:id="@+id/user_setting_create_ingredient"
                 android:icon="@drawable/ic_restaurant_menu_black_24dp"
                 android:title="@string/create_ingredient"
-                app:showAsAction="ifRoom"/>
+                app:showAsAction="ifRoom" />
             <item
                 android:id="@+id/user_setting_import_recipe"
                 android:icon="@drawable/ic_import_export_black_24dp"
                 android:title="@string/import_recipe"
-                app:showAsAction="ifRoom"/>
+                app:showAsAction="ifRoom" />
             <item
                 android:id="@+id/user_setting_settings"
                 android:icon="@drawable/ic_settings_black_24dp"
