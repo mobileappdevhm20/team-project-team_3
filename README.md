@@ -22,8 +22,10 @@ The base concept of our app is that you dont need to break your head over findin
 <a name="architecture"/>
 
 ## Architecture
+### Base
+![Base](https://raw.githubusercontent.com/mobileappdevhm20/team-project-team_3/gh-pages/docs/base.png "Base")
 ### Components
-![Components](https://raw.githubusercontent.com/mobileappdevhm20/team-project-team_3/gh-pages/docs/components.png "Components")
+![Components](https://raw.githubusercontent.com/mobileappdevhm20/team-project-team_3/gh-pages/docs/architecture.png "Components")
 ### Project Structure
 ```
 team3.recipefinder/
