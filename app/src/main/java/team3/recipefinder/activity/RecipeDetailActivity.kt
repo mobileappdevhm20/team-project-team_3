@@ -245,7 +245,7 @@ class RecipeDetailActivity :
                     doneEditButton.visibility = View.GONE
                     deleteRecipeButton.visibility = View.GONE
                     addIngredientButton.visibility = View.GONE
-                    imageView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                    imageView.layoutParams.height = 500
                     imageView.setOnClickListener {}
                     imageView.requestLayout()
                 }
