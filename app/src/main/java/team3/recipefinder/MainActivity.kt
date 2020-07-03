@@ -11,16 +11,20 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import team3.recipefinder.activity.CookbookActivity
 import team3.recipefinder.activity.CrawlerActivity
 import team3.recipefinder.activity.LoginActivity
 import team3.recipefinder.activity.SearchActivity
-import team3.recipefinder.adapter.RecipeAdapter
+import team3.recipefinder.adapter.CookbookListAdapter
+import team3.recipefinder.adapter.RecipeListAdapter
 import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.databinding.MainActivityBinding
 import team3.recipefinder.dialog.CreateIngredientFragment
 import team3.recipefinder.dialog.CreateRecipeFragment
-import team3.recipefinder.listener.RecipeListener
 import team3.recipefinder.viewModelFactory.RecipeViewModelFactory
 import team3.recipefinder.viewmodel.RecipeViewModel
 
@@ -31,6 +35,8 @@ class MainActivity :
     private lateinit var viewModel: RecipeViewModel
 
     private lateinit var auth: FirebaseAuth
+
+    private val database by lazy { getAppDatabase(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,9 +70,35 @@ class MainActivity :
         binding.recipeViewModel = viewModel
 
         // Register Adapter for the RecyclerView
-        val adapter =
-            RecipeAdapter(RecipeListener(viewModel))
+        val adapter = RecipeListAdapter(this) {
+            viewModel.editPropertyDetails(it)
+        }
+
+        adapter.recipes = mutableListOf()
         binding.recipeView.adapter = adapter
+        binding.recipeView.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL, false
+        )
+
+        val cookbookAdapter = CookbookListAdapter(this) {
+            val intent = Intent(this, CookbookActivity::class.java)
+            intent.putExtra("cookbook", it.id)
+            // TODO: Un-comment this when CookbookActivity is finished
+            // startActivity(intent)
+        }
+
+        // Add all known cookbooks
+        GlobalScope.launch {
+            cookbookAdapter.cookbooks.addAll(database.cookbookDao().getAll())
+            runOnUiThread { cookbookAdapter.notifyDataSetChanged() }
+        }
+
+        binding.cookbookView.adapter = cookbookAdapter
+        binding.cookbookView.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL, false
+        )
 
         // Observe LiveData
         viewModel.recipes.observe(
@@ -74,7 +106,8 @@ class MainActivity :
             Observer {
                 Log.i("MainActivity", "OBSERVER CALLED")
                 it?.let {
-                    adapter.submitList(it)
+                    adapter.recipes.clear()
+                    adapter.recipes.addAll(it)
                     adapter.notifyDataSetChanged()
                 }
             }
