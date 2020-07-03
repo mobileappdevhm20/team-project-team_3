@@ -32,7 +32,7 @@ class CrawlRecipeFromChefkochTest {
     }
 
     @Test
-    fun getRecipe_Positive() {
+    fun getRecipePositive() {
         val expected = recipeJson
         val result = getRecipe(recipeId)
 
@@ -40,7 +40,7 @@ class CrawlRecipeFromChefkochTest {
     }
 
     @Test
-    fun getRecipe_Negative() {
+    fun getRecipeNegative() {
         var expected = "{\"notification\":{\"hasErrors\":true,\"messages\":[{\"type\":\"error\",\"identifier\":\"entity_not_found\"}]}}"
         val result = getRecipe(badRecipeId)
         assertEquals(expected, result)

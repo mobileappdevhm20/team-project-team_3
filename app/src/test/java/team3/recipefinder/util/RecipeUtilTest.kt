@@ -26,7 +26,7 @@ class RecipeUtilTest {
     }
 
     @Test
-    fun convertJson_Positive() {
+    fun convertJsonPositive() {
         val input = recipeJsonSmall
         val ingredients: List<CrawlIngredient> = listOf(
             CrawlIngredient("Kabeljaufilet(s)", "g", 600F),
@@ -54,7 +54,7 @@ class RecipeUtilTest {
     }
 
     @Test
-    fun checkUrl_Positive() {
+    fun checkUrlPositive() {
         val url = "https://www.chefkoch.de/rezepte/577851156580529/Schlemmerfisch-Bordelaise.html"
         val url2 = "https://www.chefkoch.de/rezepte/577851156580529"
         assertTrue(checkUrl(url))
@@ -62,7 +62,7 @@ class RecipeUtilTest {
     }
 
     @Test
-    fun checkUrl_Negative() {
+    fun checkUrlNegative() {
         val badUrl1 =
             "http://www.chefkoch.de/rezepte/577851156580529/Schlemmerfisch-Bordelaise.html"
         val badUrl2 =
@@ -74,7 +74,7 @@ class RecipeUtilTest {
     }
 
     @Test
-    fun extractRecipeId_Positive() {
+    fun extractRecipeIdPositive() {
         val url = "https://www.chefkoch.de/rezepte/577851156580529/Schlemmerfisch-Bordelaise.html"
         val url2 = "https://www.chefkoch.de/rezepte/577851156580529"
         val expected = "577851156580529"
@@ -83,13 +83,13 @@ class RecipeUtilTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun extractRecipeId_Negative() {
+    fun extractRecipeIdNegative() {
         val badUrl = "http://www.chefkoch.de/rezepte/avvv/Schlemmerfisch-Bordelaise.html"
         extractRecipeId(badUrl)
     }
 
     @Test
-    fun extractInstructions_Positive() {
+    fun extractInstructionsPositive() {
         val input = recipeJson
         val recipe = convert(input)
         val expected = LinkedList<String>()
