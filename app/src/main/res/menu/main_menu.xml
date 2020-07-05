@@ -35,11 +35,6 @@
                 android:title="@string/import_recipe"
                 app:showAsAction="ifRoom" />
             <item
-                android:id="@+id/user_setting_settings"
-                android:icon="@drawable/ic_settings_black_24dp"
-                android:title="@string/user_settings"
-                app:showAsAction="ifRoom" />
-            <item
                 android:id="@+id/user_logout_settings"
                 android:icon="@drawable/ic_exit_to_app_24px"
                 android:title="@string/logout"
