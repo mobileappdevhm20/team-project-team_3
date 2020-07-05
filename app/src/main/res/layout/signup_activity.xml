@@ -26,7 +26,8 @@
                 android:id="@+id/edit_email_reset"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/email_hint"/>
+                android:hint="@string/email_hint"
+                android:inputType="textEmailAddress"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,5 +97,6 @@
             android:text="@string/button_login" />
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
