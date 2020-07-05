@@ -255,8 +255,16 @@ class RecipeDetailActivity :
         toolbar.setOnClickListener {}
     }
 
+    fun shareButton(view: View) {
+        Toast.makeText(this, "Function not implemented", Toast.LENGTH_LONG).show()
+    }
+
     fun clickPortionButton(@Suppress("UNUSED_PARAMETER") view: View) {
-        portion = portionInput.text.toString().toInt()
+        if (portionInput.text.toString().isEmpty() || portionInput.text.toString() == "") {
+            portion = 3
+        } else {
+            portion = portionInput.text.toString().toInt()
+        }
         putPortion()
     }
 
