@@ -10,6 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import team3.recipefinder.R
 import team3.recipefinder.adapter.RecipeListAdapter
+import team3.recipefinder.database.getAppDatabase
 import team3.recipefinder.dialog.SearchAddIngredientDialogFragment
 import team3.recipefinder.logic.search.IngredientSearch
 import team3.recipefinder.model.Ingredient
@@ -18,6 +19,10 @@ import team3.recipefinder.ui.ManagedChipsListView
 class SearchActivity : AppCompatActivity() {
 
     private val ingredients = mutableListOf<Ingredient>()
+
+    private val tagView by lazy {
+        findViewById<ManagedChipsListView<Ingredient>>(R.id.search_tags)
+    }
 
     private val adapter by lazy {
         RecipeListAdapter(this) {
@@ -33,8 +38,6 @@ class SearchActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.title = "Search a Recipe"
-
-        val tagView = findViewById<ManagedChipsListView<Ingredient>>(R.id.search_tags)
 
         tagView.addButton(getString(R.string.search_add_ingredient)) {
             val dialog = SearchAddIngredientDialogFragment {
@@ -54,6 +57,26 @@ class SearchActivity : AppCompatActivity() {
 
         search_result_recipes.adapter = adapter
         search_result_recipes.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putLongArray("ingredients", ingredients.map { it.id }.toLongArray())
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        val ingredientsLong = savedInstanceState.getLongArray("ingredients")
+
+        if (ingredientsLong != null) {
+            GlobalScope.launch {
+                val dao = getAppDatabase(this@SearchActivity).recipeDao()
+                ingredients.addAll(ingredientsLong.map { dao.getIngredientById(it) })
+                runOnUiThread { ingredients.forEach(tagView::addChip) }
+                performSearch()
+            }
+        }
+
+        super.onRestoreInstanceState(savedInstanceState)
     }
 
     private fun performSearchInBackground() = GlobalScope.launch { performSearch() }
