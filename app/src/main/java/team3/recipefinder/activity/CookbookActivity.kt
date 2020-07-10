@@ -21,10 +21,6 @@ class CookbookActivity : AppCompatActivity() {
 
         recipeList.layoutManager = LinearLayoutManager(this)
 
-        // val recipeListAdapter = RecipeListAdapter(this)
-        // recipeList.adapter = recipeListAdapter
-        // recipeListAdapter.notifyDataSetChanged()
-
         setSupportActionBar(findViewById(R.id.toolbar))
 
         // Get cookbook
@@ -37,12 +33,6 @@ class CookbookActivity : AppCompatActivity() {
 
             // Recipe list
             val recipes = db.cookbookDao().getAllRecipesByCookbook(cookbookId.toInt())
-
-            /*recipeListAdapter.let {
-                it.recipes.clear()
-                it.recipes.addAll(recipes)
-                it.notifyDataSetChanged()
-            }*/
         }
     }
 }

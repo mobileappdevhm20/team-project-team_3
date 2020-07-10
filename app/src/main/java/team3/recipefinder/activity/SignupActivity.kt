@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import team3.recipefinder.MainActivity
 import team3.recipefinder.R
@@ -18,7 +19,9 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     private lateinit var emailEt: EditText
+    private lateinit var mailMat: TextInputLayout
     private lateinit var passwordEt: EditText
+    private lateinit var passwordMat: TextInputLayout
 
     private lateinit var signUpBtn: Button
     private lateinit var loginBtn: Button
@@ -29,8 +32,10 @@ class SignupActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        emailEt = findViewById(R.id.edit_email)
-        passwordEt = findViewById(R.id.edit_pass)
+        emailEt = findViewById(R.id.edit_email_reset)
+        mailMat = findViewById(R.id.edit_mail_material_reset)
+        passwordEt = findViewById(R.id.edit_pass_reset)
+        passwordMat = findViewById(R.id.edit_pass_material_reset)
 
         loginBtn = findViewById(R.id.button_login)
         signUpBtn = findViewById(R.id.button_signup)
@@ -39,7 +44,14 @@ class SignupActivity : AppCompatActivity() {
             val email: String = emailEt.text.toString()
             val password: String = passwordEt.text.toString()
 
-            if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                mailMat.isErrorEnabled = true
+                mailMat.error = "Please enter a valid email"
+            }
+            if (password.length < 6) {
+                passwordMat.isErrorEnabled = true
+                passwordMat.error = "Must contain at least 6 characters"
+            } else if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                 Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_LONG).show()
             } else {
                 auth.createUserWithEmailAndPassword(email, password)
@@ -58,6 +70,8 @@ class SignupActivity : AppCompatActivity() {
                     .addOnFailureListener(
                         this,
                         OnFailureListener() {
+                            mailMat.isErrorEnabled = true
+                            passwordMat.isErrorEnabled = true
                             Toast.makeText(this, "Registration Failed", Toast.LENGTH_LONG).show()
                         }
                     )
@@ -65,9 +79,17 @@ class SignupActivity : AppCompatActivity() {
         }
 
         loginBtn.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+            switchToLogin()
         }
+    }
+
+    override fun onBackPressed() {
+        switchToLogin()
+    }
+
+    private fun switchToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

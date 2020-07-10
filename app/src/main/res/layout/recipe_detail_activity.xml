@@ -19,192 +19,196 @@
             android:id="@+id/toolbar"
             layout="@layout/tool_bar" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toTopOf="@+id/scrollView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0"
-            app:srcCompat="@drawable/tomatensuppe115_v_zweispaltig" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/editButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> model.enableEdit()}"
-            android:src="@drawable/ic_edit_white_24dp"
-            android:text="@string/edit_text"
-            app:tint="@null"
-            app:backgroundTint="@color/primaryColor"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toStartOf="@+id/shareButton"
-            app:layout_constraintHorizontal_bias="0.96"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/shareButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/ic_share_white_24dp"
-            android:text="@string/share_recipe"
-            app:tint="@null"
-            app:backgroundTint="@color/primaryColor"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/editButton"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/portionInput"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:inputType="number"
-                    android:backgroundTint="@color/primaryColor"
-                    android:hint="@string/incr_hint"
-                    app:layout_constraintEnd_toStartOf="@+id/portionButton"
-                    app:layout_constraintBottom_toBottomOf="@+id/ingrediant_name"
-                    app:layout_constraintStart_toEndOf="@+id/ingrediant_name"
-                    app:layout_constraintTop_toTopOf="@+id/ingrediant_name" />
-
-                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:id="@+id/portionButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:backgroundTint="@color/primaryColor"
-                    android:textColor="@color/secondaryTextColor"
-                    android:onClick="clickPortionButton"
-                    android:text="@string/portionButton"
-                    app:layout_constraintBottom_toBottomOf="@+id/ingrediant_name"
-                    app:layout_constraintStart_toEndOf="@+id/portionInput"
-                    app:layout_constraintTop_toTopOf="@+id/ingrediant_name"
-                    app:layout_constraintEnd_toStartOf="@id/end_guideline"/>
-
-                <TextView
-                    android:id="@+id/ingrediant_name"
-                    style="@style/RecifyTheme.Base.SubtitleRecipeDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_ingredientName"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintBottom_toTopOf="@+id/ingredientList"
-                    app:layout_constraintEnd_toStartOf="@id/portionInput"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toEndOf="@id/start_guideline"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ListView
-                    android:id="@+id/ingredientList"
+                <ImageView
+                    android:id="@+id/imageView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:dividerHeight="-15dp"
-                    app:layout_constraintBottom_toTopOf="@+id/addIngredientButton"
-                    app:layout_constraintEnd_toStartOf="@id/end_guideline"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@id/start_guideline"
-                    app:layout_constraintTop_toBottomOf="@+id/ingrediant_name" />
+                    android:layout_height="500px"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/tomatensuppe115_v_zweispaltig" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/addIngredientButton"
+                    android:id="@+id/editButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/buttom_margin"
-                    android:clickable="false"
-                    android:onClick="showAddIngredientDialog"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_add_black_24dp"
-                    android:text="@string/text_addIngredient"
-                    app:backgroundTint="#cccccc"
-                    app:fabSize="mini"
-                    app:tint="@null"
-                    app:layout_constraintBottom_toTopOf="@+id/instruction_name"
-                    app:layout_constraintEnd_toStartOf="@id/end_guideline"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@id/start_guideline"
-                    app:layout_constraintTop_toBottomOf="@+id/ingredientList" />
-
-                <TextView
-                    android:id="@+id/instruction_name"
-                    style="@style/RecifyTheme.Base.SubtitleRecipeDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/text_margin"
-                    android:text="@string/text_stepName"
-                    app:layout_constraintBottom_toTopOf="@+id/stepList"
-                    app:layout_constraintEnd_toStartOf="@id/end_guideline"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toEndOf="@id/start_guideline"
-                    app:layout_constraintTop_toBottomOf="@+id/addIngredientButton" />
-
-                <LinearLayout
-                    android:id="@+id/stepList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:isScrollContainer="false"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toTopOf="@+id/addStepButton"
-                    app:layout_constraintEnd_toStartOf="@id/end_guideline"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@id/start_guideline"
-                    app:layout_constraintTop_toBottomOf="@+id/instruction_name" />
+                    android:onClick="@{() -> model.enableEdit()}"
+                    android:src="@drawable/ic_edit_white_24dp"
+                    android:text="@string/edit_text"
+                    app:backgroundTint="@color/primaryColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                    app:layout_constraintEnd_toStartOf="@+id/shareButton"
+                    app:layout_constraintHorizontal_bias="0.96"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    app:tint="@null" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/addStepButton"
+                    android:id="@+id/shareButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/buttom_margin"
-                    android:layout_marginBottom="@dimen/buttom_margin"
-                    android:onClick="showCreateInstructionDialog"
-                    android:src="@drawable/ic_add_black_24dp"
-                    android:tag="@string/text_stepName"
-                    android:text="@string/text_addStep"
-                    app:backgroundTint="#cccccc"
-                    app:fabSize="mini"
-                    app:tint="@null"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/end_guideline"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@id/start_guideline"
-                    app:layout_constraintTop_toBottomOf="@+id/stepList" />
+                    android:layout_marginStart="10dp"
+                    android:onClick="shareButton"
+                    android:src="@drawable/ic_share_white_24dp"
+                    android:text="@string/share_recipe"
+                    app:backgroundTint="@color/primaryColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/editButton"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    app:tint="@null" />
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/start_guideline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_begin="@dimen/spacing_normal" />
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/end_guideline"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_end="@dimen/spacing_normal" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+                    <EditText
+                        android:id="@+id/portionInput"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:backgroundTint="@color/primaryColor"
+                        android:hint="@string/incr_hint"
+                        android:inputType="number"
+                        app:layout_constraintBottom_toBottomOf="@+id/ingrediant_name"
+                        app:layout_constraintEnd_toStartOf="@+id/portionButton"
+                        app:layout_constraintStart_toEndOf="@+id/ingrediant_name"
+                        app:layout_constraintTop_toTopOf="@+id/ingrediant_name" />
+
+                    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                        android:id="@+id/portionButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:backgroundTint="@color/primaryColor"
+                        android:onClick="clickPortionButton"
+                        android:text="@string/portionButton"
+                        android:textColor="@color/secondaryTextColor"
+                        app:layout_constraintBottom_toBottomOf="@+id/ingrediant_name"
+                        app:layout_constraintEnd_toStartOf="@id/end_guideline"
+                        app:layout_constraintStart_toEndOf="@+id/portionInput"
+                        app:layout_constraintTop_toTopOf="@+id/ingrediant_name" />
+
+                    <TextView
+                        android:id="@+id/ingrediant_name"
+                        style="@style/RecifyTheme.Base.SubtitleRecipeDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="45dp"
+                        android:text="@string/text_ingredientName"
+                        app:layout_constraintBottom_toTopOf="@+id/ingredientList"
+                        app:layout_constraintEnd_toStartOf="@id/portionInput"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toEndOf="@id/start_guideline"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ListView
+                        android:id="@+id/ingredientList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:dividerHeight="-15dp"
+                        app:layout_constraintBottom_toTopOf="@+id/addIngredientButton"
+                        app:layout_constraintEnd_toStartOf="@id/end_guideline"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@id/start_guideline"
+                        app:layout_constraintTop_toBottomOf="@+id/ingrediant_name" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/addIngredientButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/buttom_margin"
+                        android:clickable="false"
+                        android:onClick="showAddIngredientDialog"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_add_black_24dp"
+                        android:text="@string/text_addIngredient"
+                        app:backgroundTint="#cccccc"
+                        app:fabSize="mini"
+                        app:layout_constraintBottom_toTopOf="@+id/instruction_name"
+                        app:layout_constraintEnd_toStartOf="@id/end_guideline"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@id/start_guideline"
+                        app:layout_constraintTop_toBottomOf="@+id/ingredientList"
+                        app:tint="@null" />
+
+                    <TextView
+                        android:id="@+id/instruction_name"
+                        style="@style/RecifyTheme.Base.SubtitleRecipeDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/text_margin"
+                        android:text="@string/text_stepName"
+                        app:layout_constraintBottom_toTopOf="@+id/stepList"
+                        app:layout_constraintEnd_toStartOf="@id/end_guideline"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toEndOf="@id/start_guideline"
+                        app:layout_constraintTop_toBottomOf="@+id/addIngredientButton" />
+
+                    <LinearLayout
+                        android:id="@+id/stepList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:isScrollContainer="false"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toTopOf="@+id/addStepButton"
+                        app:layout_constraintEnd_toStartOf="@id/end_guideline"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@id/start_guideline"
+                        app:layout_constraintTop_toBottomOf="@+id/instruction_name" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/addStepButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/buttom_margin"
+                        android:layout_marginBottom="@dimen/buttom_margin"
+                        android:onClick="showCreateInstructionDialog"
+                        android:src="@drawable/ic_add_black_24dp"
+                        android:tag="@string/text_stepName"
+                        android:text="@string/text_addStep"
+                        app:backgroundTint="#cccccc"
+                        app:fabSize="mini"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/end_guideline"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@id/start_guideline"
+                        app:layout_constraintTop_toBottomOf="@+id/stepList"
+                        app:tint="@null" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/start_guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="@dimen/spacing_normal" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/end_guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_end="@dimen/spacing_normal" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

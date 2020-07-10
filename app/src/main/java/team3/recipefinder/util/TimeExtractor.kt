@@ -13,8 +13,8 @@ private data class Extractor(val regex: String, val factor: Int) {
 }
 
 private val extractors = listOf(
-    Extractor("^.*\\s+(\\d+)\\s*[sS]econd.*$", 1),
-    Extractor("^.*\\s+(\\d+)\\s*[mM]inute.*$", 60),
+    Extractor("^.*\\s+(\\d+)\\s*[sS]e[ck].*$", 1),
+    Extractor("^.*\\s+(\\d+)\\s*[mM]in.*$", 60),
     Extractor("^.*\\s+(\\d+)\\s*[hH]our.*$", 3600)
 )
 

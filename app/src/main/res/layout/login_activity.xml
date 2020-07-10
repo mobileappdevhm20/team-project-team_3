@@ -31,23 +31,26 @@
         app:layout_constraintTop_toBottomOf="@id/login_title">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_email_material_login"
             android:layout_width="match_parent"
-            android:layout_height="56dp">
+            android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/edit_email"
+                android:id="@+id/edit_email_login"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/email_hint" />
+                android:hint="@string/email_hint"
+                android:inputType="textEmailAddress"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_pass_material_login"
             android:layout_width="match_parent"
             android:layout_height="56dp">
 
             <EditText
-                android:id="@+id/edit_pass"
+                android:id="@+id/edit_pass_login"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/password_hint"

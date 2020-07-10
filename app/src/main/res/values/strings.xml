@@ -36,9 +36,11 @@
     <string name="text_recipeName">Recipe:</string>
     <string name="amount">amount</string>
     <string name="button_delete_recipe">Delete</string>
-    <string name="search_add_ingredient">Add Ingredient</string>
+    <string name="search_add_ingredient">Add Filter</string>
     <string name="text_recipe_url">Image Url:</string>
     <string name="import_recipe">Import Recipe</string>
     <string name="portionButton">calc Portion</string>
     <string name="incr_hint">1</string>
+    <string name="main_activity_recipes">Recipes</string>
+    <string name="defaultTextView">TextView</string>
 </resources>
